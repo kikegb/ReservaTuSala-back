@@ -13,11 +13,6 @@ public class Material {
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "room_id")
-    @NonNull
-    private Room room;
-
     @NonNull
     private String material;
 

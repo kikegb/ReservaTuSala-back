@@ -3,6 +3,7 @@ package com.enrique.reservatusalaback.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -12,11 +13,6 @@ public class Room {
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE)
     private Integer id;
-
-    @ManyToOne
-    @JoinColumn(name = "business_id")
-    @NonNull
-    private Business business;
 
     @ManyToOne
     @JoinColumn(name = "location_id")
@@ -31,6 +27,18 @@ public class Room {
 
     @NonNull
     private double price;
+
+    @OneToMany
+    @JoinColumn(name = "room_id")
+    private List<Operation> operations;
+
+    @OneToMany
+    @JoinColumn(name = "room_id")
+    private List<Schedule> schedule;
+
+    @OneToMany
+    @JoinColumn(name = "room_id")
+    private List<Material> materials;
 
     private boolean deleted = Boolean.FALSE;
 }

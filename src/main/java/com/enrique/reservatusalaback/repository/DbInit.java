@@ -9,6 +9,7 @@ import javax.annotation.PreDestroy;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Component
 public class DbInit {
@@ -42,23 +43,30 @@ public class DbInit {
         locationRepository.save(l1);
 
         double rCost = 17.5;
-        Room r1 = new Room(b1, l1, "Sala reuniones 1", 9.76, rCost);
+        Room r1 = new Room(l1, "Sala reuniones 1", 9.76, rCost);
         roomRepository.save(r1);
 
         LocalTime sStart = LocalTime.of(8, 0);
         LocalTime sEnd = LocalTime.of(18, 30);
         Schedule s1 = new Schedule(r1, 0, sStart, sEnd);
+        r1.setSchedule(List.of(s1));
         scheduleRepository.save(s1);
 
-        Material m1 = new Material(r1, "Chair", 10);
-        Material m2 = new Material(r1, "Table", 1);
+        Material m1 = new Material("Chair", 10);
+        Material m2 = new Material("Table", 1);
         materialRepository.save(m1);
         materialRepository.save(m2);
+        r1.setMaterials(List.of(m1, m2));
+
+        b1.setRooms(List.of(r1));
 
         LocalDateTime oStart = LocalDateTime.of(2022, 11, 23, 15, 0);
         LocalDateTime oEnd = LocalDateTime.of(2022, 11, 23, 18,0);
-        Operation o1 = new Operation(c1, b1, r1, oStart, oEnd, oStart.until(oEnd, ChronoUnit.HOURS), 0);
+        Operation o1 = new Operation(oStart, oEnd, oStart.until(oEnd, ChronoUnit.HOURS), 0);
         operationRepository.save(o1);
+        c1.setOperations(List.of(o1));
+        b1.setOperations(List.of(o1));
+        r1.setOperations(List.of(o1));
 
     }
 

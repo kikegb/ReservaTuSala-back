@@ -3,6 +3,7 @@ package com.enrique.reservatusalaback.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -27,6 +28,10 @@ public class Customer {
 
     @NonNull
     private String email;
+
+    @OneToMany
+    @JoinColumn(name = "customer_id")
+    private List<Operation> operations;
 
     private boolean deleted = Boolean.FALSE;
 }
