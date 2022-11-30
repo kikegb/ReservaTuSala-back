@@ -1,0 +1,12 @@
+#PostgreSQL connection config
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/reservatusala-db
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create
+#Application config
+server:
+  port: 8081
