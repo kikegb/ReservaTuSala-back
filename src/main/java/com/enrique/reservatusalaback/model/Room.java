@@ -18,9 +18,10 @@ import java.util.List;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class Room {
+public class Room extends DbEntity{
+
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE)
     private Integer id;
 
     @ManyToOne
@@ -49,5 +50,4 @@ public class Room {
     @JoinColumn(name = "room_id")
     private List<Material> materials;
 
-    private boolean deleted = Boolean.FALSE;
 }

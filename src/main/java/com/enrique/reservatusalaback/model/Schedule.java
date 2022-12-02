@@ -18,9 +18,10 @@ import java.time.LocalTime;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class Schedule {
+public class Schedule extends DbEntity {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE)
     private Integer id;
 
     @ManyToOne
@@ -39,5 +40,4 @@ public class Schedule {
     @Column(name = "s_end")
     private LocalTime end;
 
-    private boolean deleted = Boolean.FALSE;
 }

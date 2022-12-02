@@ -17,9 +17,10 @@ import java.util.List;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class Business {
+public class Business extends DbEntity {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE)
     private Integer id;
 
     @NonNull
@@ -44,6 +45,4 @@ public class Business {
     @OneToMany
     @JoinColumn(name = "business_id")
     private List<Operation> operations;
-
-    private boolean deleted = Boolean.FALSE;
 }

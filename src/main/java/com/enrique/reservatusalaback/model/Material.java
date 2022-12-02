@@ -14,7 +14,8 @@ import javax.persistence.Id;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class Material {
+public class Material extends DbEntity {
+
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
     private Integer id;
@@ -25,5 +26,4 @@ public class Material {
     @NonNull
     private int quantity;
 
-    private boolean deleted = Boolean.FALSE;
 }

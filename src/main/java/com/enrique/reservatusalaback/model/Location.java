@@ -14,9 +14,10 @@ import javax.persistence.Id;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class Location {
+public class Location extends DbEntity {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE)
     private Integer id;
 
     @NonNull
@@ -37,5 +38,4 @@ public class Location {
     @NonNull
     private String country;
 
-    private boolean deleted = Boolean.FALSE;
 }

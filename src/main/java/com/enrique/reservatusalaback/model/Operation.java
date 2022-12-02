@@ -16,9 +16,10 @@ import java.time.LocalDateTime;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class Operation {
+public class Operation extends DbEntity {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE)
     private Integer id;
 
     @NonNull
@@ -35,5 +36,4 @@ public class Operation {
     @NonNull
     private int status;
 
-    private boolean deleted = Boolean.FALSE;
 }
