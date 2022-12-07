@@ -6,6 +6,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +22,7 @@ public class Business extends DbEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
-    private Integer id;
+    private Long id;
 
     @NonNull
     private String cif;
@@ -38,11 +39,11 @@ public class Business extends DbEntity {
     @NonNull
     private String email;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "business_id")
     private List<Room> rooms;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "business_id")
     private List<Operation> operations;
 }

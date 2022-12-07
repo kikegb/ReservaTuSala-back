@@ -6,6 +6,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,11 +23,11 @@ public class Room extends DbEntity{
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
-    private Integer id;
+    private Long id;
 
+    @NonNull
     @ManyToOne
     @JoinColumn(name = "location_id")
-    @NonNull
     private Location location;
 
     @NonNull
@@ -38,15 +39,15 @@ public class Room extends DbEntity{
     @NonNull
     private double price;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private List<Operation> operations;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private List<Schedule> schedule;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
     private List<Material> materials;
 

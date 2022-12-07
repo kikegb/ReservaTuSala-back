@@ -18,7 +18,7 @@ public class Location extends DbEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
-    private Integer id;
+    private Long id;
 
     @NonNull
     private String street;

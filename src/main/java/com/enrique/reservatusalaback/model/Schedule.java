@@ -10,8 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.time.LocalTime;
 
 @Entity
@@ -22,12 +20,7 @@ public class Schedule extends DbEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
-    private Integer id;
-
-    @ManyToOne
-    @JoinColumn(name = "room_id")
-    @NonNull
-    private Room room;
+    private Long id;
 
     @NonNull
     private int weekDay;

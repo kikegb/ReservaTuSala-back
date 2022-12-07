@@ -20,7 +20,7 @@ public class Operation extends DbEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
-    private Integer id;
+    private Long id;
 
     @NonNull
     @Column(name = "op_start")
