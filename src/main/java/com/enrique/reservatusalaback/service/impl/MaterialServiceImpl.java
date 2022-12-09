@@ -40,7 +40,10 @@ public class MaterialServiceImpl implements MaterialService {
 
     @Override
     public Material update(Material material) {
-        return materialRepository.save(material);
+        if (materialRepository.existsById(material.getId())) {
+            return materialRepository.save(material);
+        }
+        return null;
     }
 
     @Override

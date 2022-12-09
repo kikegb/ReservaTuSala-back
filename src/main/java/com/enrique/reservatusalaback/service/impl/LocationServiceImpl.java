@@ -32,7 +32,10 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public Location update(Location location) {
-        return locationRepository.save(location);
+        if (locationRepository.existsById(location.getId())) {
+            return locationRepository.save(location);
+        }
+        return null;
     }
 
     @Override
