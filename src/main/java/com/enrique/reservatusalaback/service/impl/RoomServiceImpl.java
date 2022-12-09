@@ -7,23 +7,18 @@ import com.enrique.reservatusalaback.model.Schedule;
 import com.enrique.reservatusalaback.repository.RoomRepository;
 import com.enrique.reservatusalaback.service.BusinessService;
 import com.enrique.reservatusalaback.service.RoomService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class RoomServiceImpl implements RoomService {
 
     private final RoomRepository roomRepository;
     private final BusinessService businessService;
-
-    @Autowired
-    public RoomServiceImpl(RoomRepository roomRepository, BusinessService businessService) {
-        this.roomRepository = roomRepository;
-        this.businessService = businessService;
-    }
 
     @Override
     public Room add(Long businessId, Room room) {

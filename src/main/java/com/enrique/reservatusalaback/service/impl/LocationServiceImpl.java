@@ -3,22 +3,17 @@ package com.enrique.reservatusalaback.service.impl;
 import com.enrique.reservatusalaback.model.Location;
 import com.enrique.reservatusalaback.repository.LocationRepository;
 import com.enrique.reservatusalaback.service.LocationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class LocationServiceImpl implements LocationService {
 
     private final LocationRepository locationRepository;
-
-    @Autowired
-    public LocationServiceImpl(LocationRepository locationRepository) {
-        this.locationRepository = locationRepository;
-    }
-
 
     @Override
     public Location add(Location location) {
@@ -47,7 +42,7 @@ public class LocationServiceImpl implements LocationService {
             Location location = result.get();
             location.setDeleted(true);
             locationRepository.save(location);
-            return 1;
+            return 0;
         }
         return -1;
     }

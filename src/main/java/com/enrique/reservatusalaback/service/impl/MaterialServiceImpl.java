@@ -4,23 +4,18 @@ import com.enrique.reservatusalaback.model.Material;
 import com.enrique.reservatusalaback.repository.MaterialRepository;
 import com.enrique.reservatusalaback.service.MaterialService;
 import com.enrique.reservatusalaback.service.RoomService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class MaterialServiceImpl implements MaterialService {
 
     private final MaterialRepository materialRepository;
     private final RoomService roomService;
-
-    @Autowired
-    public MaterialServiceImpl(MaterialRepository materialRepository, RoomService roomService) {
-        this.materialRepository = materialRepository;
-        this.roomService = roomService;
-    }
 
     @Override
     public Material add(Long roomId, Material material) {
@@ -55,7 +50,7 @@ public class MaterialServiceImpl implements MaterialService {
             Material material = result.get();
             material.setDeleted(true);
             materialRepository.save(material);
-            return 1;
+            return 0;
         }
         return -1;
     }

@@ -4,22 +4,17 @@ import com.enrique.reservatusalaback.model.Customer;
 import com.enrique.reservatusalaback.model.Operation;
 import com.enrique.reservatusalaback.repository.CustomerRepository;
 import com.enrique.reservatusalaback.service.CustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
-
-    @Autowired
-    public CustomerServiceImpl(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
-
     @Override
     public Customer add(final Customer customer) {
         return customerRepository.save(customer);
