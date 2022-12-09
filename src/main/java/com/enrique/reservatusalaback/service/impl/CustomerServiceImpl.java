@@ -1,6 +1,7 @@
 package com.enrique.reservatusalaback.service.impl;
 
 import com.enrique.reservatusalaback.model.Customer;
+import com.enrique.reservatusalaback.model.Operation;
 import com.enrique.reservatusalaback.repository.CustomerRepository;
 import com.enrique.reservatusalaback.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,19 @@ public class CustomerServiceImpl implements CustomerService {
             Customer customer = result.get();
             customer.setDeleted(true);
             customerRepository.save(customer);
-            return 1;
+            return 0;
+        }
+        return -1;
+    }
+
+    @Override
+    public int addOperation(Long id, Operation operation) {
+        Optional<Customer> result = customerRepository.findById(id);
+        if (result.isPresent()) {
+            Customer customer = result.get();
+            customer.getOperations().add(operation);
+            customerRepository.save(customer);
+            return 0;
         }
         return -1;
     }
