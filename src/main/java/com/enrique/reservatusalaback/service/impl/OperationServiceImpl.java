@@ -1,18 +1,66 @@
 package com.enrique.reservatusalaback.service.impl;
 
+import com.enrique.reservatusalaback.model.Operation;
 import com.enrique.reservatusalaback.repository.OperationRepository;
+import com.enrique.reservatusalaback.service.BusinessService;
+import com.enrique.reservatusalaback.service.CustomerService;
 import com.enrique.reservatusalaback.service.OperationService;
+import com.enrique.reservatusalaback.service.RoomService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-@NoArgsConstructor
 public class OperationServiceImpl implements OperationService {
 
-    @Autowired
-    private OperationRepository operationRepository;
+    private final OperationRepository operationRepository;
+    private final BusinessService businessService;
+    private final CustomerService customerService;
+    private final RoomService roomService;
 
+    @Override
+    public Operation add(Long businessId, Long customerId, Long roomId, Operation operation) {
+        Operation newOperation = operationRepository.save(operation);
+        int resultB = businessService.addOperation(businessId, operation);
+        int resultC = customerService.addOperation(customerId, operation);
+        int resultR = roomService.addOperation(roomId, operation);
+        if (resultB < 0 || resultC < 0 || resultR < 0) {
+            operationRepository.deleteById(newOperation.getId());
+            return null;
+        }
+        return newOperation;
+    }
+
+    @Override
+    public List<Operation> findAll() {
+        return operationRepository.findAll();
+    }
+
+    @Override
+    public Operation findById(Long id) {
+        return operationRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Operation update(Operation operation) {
+        if (operationRepository.existsById(operation.getId())) {
+            return operationRepository.save(operation);
+        }
+        return null;
+    }
+
+    @Override
+    public int deleteById(Long id) {
+        Optional<Operation> result = operationRepository.findById(id);
+        if (result.isPresent()) {
+            Operation operation = result.get();
+            operation.setDeleted(true);
+            operationRepository.save(operation);
+            return 0;
+        }
+        return -1;
+    }
 }
