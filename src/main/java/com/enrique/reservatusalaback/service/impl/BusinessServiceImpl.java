@@ -3,8 +3,6 @@ package com.enrique.reservatusalaback.service.impl;
 import com.enrique.reservatusalaback.model.Business;
 import com.enrique.reservatusalaback.repository.BusinessRepository;
 import com.enrique.reservatusalaback.service.BusinessService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
-@NoArgsConstructor
 public class BusinessServiceImpl implements BusinessService {
 
+    private final BusinessRepository businessRepository;
+
     @Autowired
-    private BusinessRepository businessRepository;
+    public BusinessServiceImpl(BusinessRepository businessRepository) {
+        this.businessRepository = businessRepository;
+    }
 
     @Override
     public Business add(final Business business) {
