@@ -5,8 +5,10 @@ import com.enrique.reservatusalaback.model.Operation;
 import com.enrique.reservatusalaback.model.Room;
 import com.enrique.reservatusalaback.model.Schedule;
 import com.enrique.reservatusalaback.repository.RoomRepository;
-import com.enrique.reservatusalaback.service.BusinessService;
+import com.enrique.reservatusalaback.service.MaterialService;
+import com.enrique.reservatusalaback.service.OperationService;
 import com.enrique.reservatusalaback.service.RoomService;
+import com.enrique.reservatusalaback.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -16,17 +18,13 @@ import java.util.Optional;
 public class RoomServiceImpl implements RoomService {
 
     private final RoomRepository roomRepository;
-    private final BusinessService businessService;
+    private final MaterialService materialService;
+    private final ScheduleService scheduleService;
+    private final OperationService operationService;
 
     @Override
-    public Room add(final Long businessId, final Room room) {
-        Room newRoom = roomRepository.save(room);
-        int result = businessService.addRoom(businessId, newRoom);
-        if (result < 0) {
-            roomRepository.deleteById(newRoom.getId());
-            return null;
-        }
-        return newRoom;
+    public Room add(final Room room) {
+        return roomRepository.save(room);
     }
 
     @Override
@@ -64,7 +62,11 @@ public class RoomServiceImpl implements RoomService {
         Optional<Room> result = roomRepository.findById(id);
         if (result.isPresent()) {
             Room room = result.get();
-            room.getOperations().add(operation);
+            Operation newOperation = operationService.add(operation);
+            if (newOperation == null) {
+                return -2;
+            }
+            room.getOperations().add(newOperation);
             roomRepository.save(room);
             return 0;
         }
@@ -76,7 +78,11 @@ public class RoomServiceImpl implements RoomService {
         Optional<Room> result = roomRepository.findById(id);
         if (result.isPresent()) {
             Room room = result.get();
-            room.getSchedule().add(schedule);
+            Schedule newSchedule = scheduleService.add(schedule);
+            if (newSchedule == null) {
+                return -2;
+            }
+            room.getSchedule().add(newSchedule);
             roomRepository.save(room);
             return 0;
         }
@@ -88,7 +94,11 @@ public class RoomServiceImpl implements RoomService {
         Optional<Room> result = roomRepository.findById(id);
         if (result.isPresent()) {
             Room room = result.get();
-            room.getMaterials().add(material);
+            Material newMaterial = materialService.add(material);
+            if (newMaterial == null) {
+                return -2;
+            }
+            room.getMaterials().add(newMaterial);
             roomRepository.save(room);
             return 0;
         }

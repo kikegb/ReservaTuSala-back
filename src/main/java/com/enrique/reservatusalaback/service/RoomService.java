@@ -8,7 +8,7 @@ import com.enrique.reservatusalaback.model.Schedule;
 import java.util.List;
 
 public interface RoomService {
-    Room add(Long businessId, Room room);
+    Room add(Room room);
     List<Room> findAll();
     Room findById(Long id);
     Room update(Room room);

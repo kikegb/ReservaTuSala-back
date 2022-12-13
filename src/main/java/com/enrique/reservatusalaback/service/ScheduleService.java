@@ -5,7 +5,7 @@ import com.enrique.reservatusalaback.model.Schedule;
 import java.util.List;
 
 public interface ScheduleService {
-    Schedule add(Long roomId, Schedule schedule);
+    Schedule add(Schedule schedule);
     List<Schedule> findAll();
     Schedule findById(Long id);
     Schedule update(Schedule schedule);

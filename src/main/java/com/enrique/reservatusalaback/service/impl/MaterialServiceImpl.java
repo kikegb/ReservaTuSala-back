@@ -3,7 +3,6 @@ package com.enrique.reservatusalaback.service.impl;
 import com.enrique.reservatusalaback.model.Material;
 import com.enrique.reservatusalaback.repository.MaterialRepository;
 import com.enrique.reservatusalaback.service.MaterialService;
-import com.enrique.reservatusalaback.service.RoomService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -13,17 +12,10 @@ import java.util.Optional;
 public class MaterialServiceImpl implements MaterialService {
 
     private final MaterialRepository materialRepository;
-    private final RoomService roomService;
 
     @Override
-    public Material add(final Long roomId, final Material material) {
-        Material newMaterial = materialRepository.save(material);
-        int result = roomService.addMaterial(roomId, material);
-        if (result < 0) {
-            materialRepository.deleteById(newMaterial.getId());
-            return null;
-        }
-        return newMaterial;
+    public Material add(final Material material) {
+        return materialRepository.save(material);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.enrique.reservatusalaback.model.Customer;
 import com.enrique.reservatusalaback.model.Operation;
 import com.enrique.reservatusalaback.repository.CustomerRepository;
 import com.enrique.reservatusalaback.service.CustomerService;
+import com.enrique.reservatusalaback.service.OperationService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Optional;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
+    private final OperationService operationService;
     @Override
     public Customer add(final Customer customer) {
         return customerRepository.save(customer);
@@ -53,7 +55,11 @@ public class CustomerServiceImpl implements CustomerService {
         Optional<Customer> result = customerRepository.findById(id);
         if (result.isPresent()) {
             Customer customer = result.get();
-            customer.getOperations().add(operation);
+            Operation newOperation = operationService.add(operation);
+            if (newOperation == null) {
+                return -2;
+            }
+            customer.getOperations().add(newOperation);
             customerRepository.save(customer);
             return 0;
         }

@@ -28,40 +28,41 @@ import org.springframework.context.annotation.Configuration;
 public class ServiceConfig {
 
     @Bean
-    public BusinessService businessService(BusinessRepository businessRepository) {
-        return new BusinessServiceImpl(businessRepository);
-    }
-
-    @Bean
-    public CustomerService customerService(CustomerRepository customerRepository) {
-        return new CustomerServiceImpl(customerRepository);
-    }
-
-    @Bean
-    public RoomService roomService(RoomRepository roomRepository, BusinessService businessService) {
-        return new RoomServiceImpl(roomRepository, businessService);
-    }
-
-    @Bean
     public LocationService locationService(LocationRepository locationRepository) {
         return new LocationServiceImpl(locationRepository);
     }
 
     @Bean
-    public MaterialService materialService(MaterialRepository materialRepository, RoomService roomService) {
-        return new MaterialServiceImpl(materialRepository, roomService);
+    public MaterialService materialService(MaterialRepository materialRepository) {
+        return new MaterialServiceImpl(materialRepository);
     }
 
     @Bean
-    public ScheduleService scheduleService(ScheduleRepository scheduleRepository, RoomService roomService) {
-        return new ScheduleServiceImpl(scheduleRepository, roomService);
+    public ScheduleService scheduleService(ScheduleRepository scheduleRepository) {
+        return new ScheduleServiceImpl(scheduleRepository);
     }
 
     @Bean
-    public OperationService operationService(OperationRepository operationRepository, BusinessService businessService,
-                                             CustomerService customerService, RoomService roomService)
+    public OperationService operationService(OperationRepository operationRepository)
     {
-        return new OperationServiceImpl(operationRepository, businessService, customerService, roomService);
+        return new OperationServiceImpl(operationRepository);
+    }
+
+    @Bean
+    public BusinessService businessService(BusinessRepository businessRepository, RoomService roomService,
+                                           OperationService operationService) {
+        return new BusinessServiceImpl(businessRepository, roomService, operationService);
+    }
+
+    @Bean
+    public CustomerService customerService(CustomerRepository customerRepository, OperationService operationService) {
+        return new CustomerServiceImpl(customerRepository, operationService);
+    }
+
+    @Bean
+    public RoomService roomService(RoomRepository roomRepository, MaterialService materialService,
+                                   ScheduleService scheduleService, OperationService operationService) {
+        return new RoomServiceImpl(roomRepository, materialService, scheduleService, operationService);
     }
 
 }

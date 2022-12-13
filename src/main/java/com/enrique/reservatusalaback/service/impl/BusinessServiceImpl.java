@@ -5,6 +5,8 @@ import com.enrique.reservatusalaback.model.Operation;
 import com.enrique.reservatusalaback.model.Room;
 import com.enrique.reservatusalaback.repository.BusinessRepository;
 import com.enrique.reservatusalaback.service.BusinessService;
+import com.enrique.reservatusalaback.service.OperationService;
+import com.enrique.reservatusalaback.service.RoomService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -14,6 +16,8 @@ import java.util.Optional;
 public class BusinessServiceImpl implements BusinessService {
 
     private final BusinessRepository businessRepository;
+    private final RoomService roomService;
+    private final OperationService operationService;
 
     @Override
     public Business add(final Business business) {
@@ -55,7 +59,11 @@ public class BusinessServiceImpl implements BusinessService {
         Optional<Business> result = businessRepository.findById(id);
         if (result.isPresent()) {
             Business business = result.get();
-            business.getRooms().add(room);
+            Room newRoom = roomService.add(room);
+            if (newRoom == null) {
+                return -2;
+            }
+            business.getRooms().add(newRoom);
             businessRepository.save(business);
             return 0;
         }
@@ -67,7 +75,11 @@ public class BusinessServiceImpl implements BusinessService {
         Optional<Business> result = businessRepository.findById(id);
         if (result.isPresent()) {
             Business business = result.get();
-            business.getOperations().add(operation);
+            Operation newOperation = operationService.add(operation);
+            if (newOperation == null) {
+                return -2;
+            }
+            business.getOperations().add(newOperation);
             businessRepository.save(business);
             return 0;
         }
