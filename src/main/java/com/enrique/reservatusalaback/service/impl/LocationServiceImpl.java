@@ -14,7 +14,7 @@ public class LocationServiceImpl implements LocationService {
     private final LocationRepository locationRepository;
 
     @Override
-    public Location add(Location location) {
+    public Location add(final Location location) {
         return locationRepository.save(location);
     }
 
@@ -24,12 +24,12 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public Location findById(Long id) {
+    public Location findById(final Long id) {
         return locationRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Location update(Location location) {
+    public Location update(final Location location) {
         if (locationRepository.existsById(location.getId())) {
             return locationRepository.save(location);
         }
@@ -37,7 +37,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public int deleteById(Long id) {
+    public int deleteById(final Long id) {
         Optional<Location> result = locationRepository.findById(id);
         if (result.isPresent()) {
             Location location = result.get();

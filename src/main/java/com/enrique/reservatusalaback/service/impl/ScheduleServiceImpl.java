@@ -16,7 +16,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     private final RoomService roomService;
 
     @Override
-    public Schedule add(Long roomId, Schedule schedule) {
+    public Schedule add(final Long roomId, final Schedule schedule) {
         Schedule newSchedule = scheduleRepository.save(schedule);
         int result = roomService.addSchedule(roomId, newSchedule);
         if (result < 0) {
@@ -32,12 +32,12 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public Schedule findById(Long id) {
+    public Schedule findById(final Long id) {
         return scheduleRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Schedule update(Schedule schedule) {
+    public Schedule update(final Schedule schedule) {
         if (scheduleRepository.existsById(schedule.getId())) {
             return scheduleRepository.save(schedule);
         }
@@ -45,7 +45,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public int deleteById(Long id) {
+    public int deleteById(final Long id) {
         Optional<Schedule> result = scheduleRepository.findById(id);
         if (result.isPresent()) {
             Schedule schedule = result.get();

@@ -16,7 +16,7 @@ public class MaterialServiceImpl implements MaterialService {
     private final RoomService roomService;
 
     @Override
-    public Material add(Long roomId, Material material) {
+    public Material add(final Long roomId, final Material material) {
         Material newMaterial = materialRepository.save(material);
         int result = roomService.addMaterial(roomId, material);
         if (result < 0) {

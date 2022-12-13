@@ -19,7 +19,7 @@ public class RoomServiceImpl implements RoomService {
     private final BusinessService businessService;
 
     @Override
-    public Room add(Long businessId, Room room) {
+    public Room add(final Long businessId, final Room room) {
         Room newRoom = roomRepository.save(room);
         int result = businessService.addRoom(businessId, newRoom);
         if (result < 0) {
@@ -35,12 +35,12 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Room findById(Long id) {
+    public Room findById(final Long id) {
         return roomRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Room update(Room room) {
+    public Room update(final Room room) {
         if (roomRepository.existsById(room.getId())) {
             return roomRepository.save(room);
         }
@@ -48,7 +48,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public int deleteById(Long id) {
+    public int deleteById(final Long id) {
         Optional<Room> result = roomRepository.findById(id);
         if (result.isPresent()) {
             Room room = result.get();
@@ -60,7 +60,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public int addOperation(Long id, Operation operation) {
+    public int addOperation(final Long id, final Operation operation) {
         Optional<Room> result = roomRepository.findById(id);
         if (result.isPresent()) {
             Room room = result.get();
@@ -72,7 +72,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public int addSchedule(Long id, Schedule schedule) {
+    public int addSchedule(final Long id, final Schedule schedule) {
         Optional<Room> result = roomRepository.findById(id);
         if (result.isPresent()) {
             Room room = result.get();
@@ -84,7 +84,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public int addMaterial(Long id, Material material) {
+    public int addMaterial(final Long id, final Material material) {
         Optional<Room> result = roomRepository.findById(id);
         if (result.isPresent()) {
             Room room = result.get();

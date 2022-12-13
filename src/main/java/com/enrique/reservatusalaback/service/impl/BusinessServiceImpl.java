@@ -51,7 +51,7 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
-    public int addRoom(Long id, Room room) {
+    public int addRoom(final Long id, final Room room) {
         Optional<Business> result = businessRepository.findById(id);
         if (result.isPresent()) {
             Business business = result.get();
@@ -63,7 +63,7 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
-    public int addOperation(Long id, Operation operation) {
+    public int addOperation(final Long id, final Operation operation) {
         Optional<Business> result = businessRepository.findById(id);
         if (result.isPresent()) {
             Business business = result.get();

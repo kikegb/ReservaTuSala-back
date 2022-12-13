@@ -20,7 +20,7 @@ public class OperationServiceImpl implements OperationService {
     private final RoomService roomService;
 
     @Override
-    public Operation add(Long businessId, Long customerId, Long roomId, Operation operation) {
+    public Operation add(final Long businessId, final Long customerId, final Long roomId, final Operation operation) {
         Operation newOperation = operationRepository.save(operation);
         int addedToBusiness = businessService.addOperation(businessId, operation);
         int addedToCustomer = customerService.addOperation(customerId, operation);
@@ -38,12 +38,12 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public Operation findById(Long id) {
+    public Operation findById(final Long id) {
         return operationRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Operation update(Operation operation) {
+    public Operation update(final Operation operation) {
         if (operationRepository.existsById(operation.getId())) {
             return operationRepository.save(operation);
         }
@@ -51,7 +51,7 @@ public class OperationServiceImpl implements OperationService {
     }
 
     @Override
-    public int deleteById(Long id) {
+    public int deleteById(final Long id) {
         Optional<Operation> result = operationRepository.findById(id);
         if (result.isPresent()) {
             Operation operation = result.get();
