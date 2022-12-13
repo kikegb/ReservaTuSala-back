@@ -6,12 +6,12 @@ import com.enrique.reservatusalaback.service.BusinessService;
 import com.enrique.reservatusalaback.service.CustomerService;
 import com.enrique.reservatusalaback.service.OperationService;
 import com.enrique.reservatusalaback.service.RoomService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class OperationServiceImpl implements OperationService {
 
     private final OperationRepository operationRepository;

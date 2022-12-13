@@ -4,12 +4,12 @@ import com.enrique.reservatusalaback.model.Customer;
 import com.enrique.reservatusalaback.model.Operation;
 import com.enrique.reservatusalaback.repository.CustomerRepository;
 import com.enrique.reservatusalaback.service.CustomerService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;

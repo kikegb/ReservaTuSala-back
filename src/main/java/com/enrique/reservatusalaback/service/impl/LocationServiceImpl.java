@@ -3,12 +3,12 @@ package com.enrique.reservatusalaback.service.impl;
 import com.enrique.reservatusalaback.model.Location;
 import com.enrique.reservatusalaback.repository.LocationRepository;
 import com.enrique.reservatusalaback.service.LocationService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class LocationServiceImpl implements LocationService {
 
     private final LocationRepository locationRepository;

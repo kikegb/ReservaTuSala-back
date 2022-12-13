@@ -7,12 +7,12 @@ import com.enrique.reservatusalaback.model.Schedule;
 import com.enrique.reservatusalaback.repository.RoomRepository;
 import com.enrique.reservatusalaback.service.BusinessService;
 import com.enrique.reservatusalaback.service.RoomService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class RoomServiceImpl implements RoomService {
 
     private final RoomRepository roomRepository;

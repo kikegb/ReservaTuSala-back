@@ -4,12 +4,12 @@ import com.enrique.reservatusalaback.model.Material;
 import com.enrique.reservatusalaback.repository.MaterialRepository;
 import com.enrique.reservatusalaback.service.MaterialService;
 import com.enrique.reservatusalaback.service.RoomService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MaterialServiceImpl implements MaterialService {
 
     private final MaterialRepository materialRepository;
