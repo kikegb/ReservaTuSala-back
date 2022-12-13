@@ -5,12 +5,10 @@ import com.enrique.reservatusalaback.repository.MaterialRepository;
 import com.enrique.reservatusalaback.service.MaterialService;
 import com.enrique.reservatusalaback.service.RoomService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
 @AllArgsConstructor
 public class MaterialServiceImpl implements MaterialService {
 

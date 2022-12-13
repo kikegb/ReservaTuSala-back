@@ -5,12 +5,10 @@ import com.enrique.reservatusalaback.model.Operation;
 import com.enrique.reservatusalaback.repository.CustomerRepository;
 import com.enrique.reservatusalaback.service.CustomerService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
 @AllArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 

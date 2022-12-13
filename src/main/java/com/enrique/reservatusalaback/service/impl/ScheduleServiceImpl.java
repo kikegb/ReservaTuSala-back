@@ -5,12 +5,10 @@ import com.enrique.reservatusalaback.repository.ScheduleRepository;
 import com.enrique.reservatusalaback.service.RoomService;
 import com.enrique.reservatusalaback.service.ScheduleService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
 @AllArgsConstructor
 public class ScheduleServiceImpl implements ScheduleService {
 

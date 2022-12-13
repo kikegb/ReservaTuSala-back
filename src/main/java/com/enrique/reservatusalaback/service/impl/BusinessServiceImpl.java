@@ -6,12 +6,10 @@ import com.enrique.reservatusalaback.model.Room;
 import com.enrique.reservatusalaback.repository.BusinessRepository;
 import com.enrique.reservatusalaback.service.BusinessService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
 @AllArgsConstructor
 public class BusinessServiceImpl implements BusinessService {
 

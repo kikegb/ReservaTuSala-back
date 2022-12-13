@@ -7,12 +7,10 @@ import com.enrique.reservatusalaback.service.CustomerService;
 import com.enrique.reservatusalaback.service.OperationService;
 import com.enrique.reservatusalaback.service.RoomService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
 @AllArgsConstructor
 public class OperationServiceImpl implements OperationService {
 

@@ -4,12 +4,10 @@ import com.enrique.reservatusalaback.model.Location;
 import com.enrique.reservatusalaback.repository.LocationRepository;
 import com.enrique.reservatusalaback.service.LocationService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
 @AllArgsConstructor
 public class LocationServiceImpl implements LocationService {
 
