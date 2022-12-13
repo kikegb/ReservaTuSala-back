@@ -22,10 +22,10 @@ public class OperationServiceImpl implements OperationService {
     @Override
     public Operation add(Long businessId, Long customerId, Long roomId, Operation operation) {
         Operation newOperation = operationRepository.save(operation);
-        int resultBusiness = businessService.addOperation(businessId, operation);
-        int resultCustomer = customerService.addOperation(customerId, operation);
-        int resultRoom = roomService.addOperation(roomId, operation);
-        if (resultBusiness < 0 || resultCustomer < 0 || resultRoom < 0) {
+        int addedToBusiness = businessService.addOperation(businessId, operation);
+        int addedToCustomer = customerService.addOperation(customerId, operation);
+        int addedToRoom = roomService.addOperation(roomId, operation);
+        if (addedToBusiness < 0 || addedToCustomer < 0 || addedToRoom < 0) {
             operationRepository.deleteById(newOperation.getId());
             return null;
         }
