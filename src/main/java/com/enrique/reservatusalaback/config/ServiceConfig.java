@@ -22,11 +22,9 @@ import com.enrique.reservatusalaback.service.impl.OperationServiceImpl;
 import com.enrique.reservatusalaback.service.impl.RoomServiceImpl;
 import com.enrique.reservatusalaback.service.impl.ScheduleServiceImpl;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan("com.enrique.reservatusalaback")
 public class ServiceConfig {
 
     @Bean
