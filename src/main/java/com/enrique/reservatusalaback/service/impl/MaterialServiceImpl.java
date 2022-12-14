@@ -24,12 +24,12 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     @Override
-    public Material findById(Long id) {
+    public Material findById(final Long id) {
         return materialRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Material update(Material material) {
+    public Material update(final Material material) {
         if (materialRepository.existsById(material.getId())) {
             return materialRepository.save(material);
         }
@@ -37,7 +37,7 @@ public class MaterialServiceImpl implements MaterialService {
     }
 
     @Override
-    public int deleteById(Long id) {
+    public int deleteById(final Long id) {
         Optional<Material> result = materialRepository.findById(id);
         if (result.isPresent()) {
             Material material = result.get();
