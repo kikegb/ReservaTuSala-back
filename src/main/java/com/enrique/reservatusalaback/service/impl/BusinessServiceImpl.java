@@ -51,7 +51,7 @@ public class BusinessServiceImpl implements BusinessService {
             businessRepository.save(business);
             return 0;
         }
-        return -1;
+        return 1;
     }
 
     @Override
@@ -61,13 +61,13 @@ public class BusinessServiceImpl implements BusinessService {
             Business business = result.get();
             Room newRoom = roomService.add(room);
             if (newRoom == null) {
-                return -2;
+                return 2;
             }
             business.getRooms().add(newRoom);
             businessRepository.save(business);
             return 0;
         }
-        return -1;
+        return 1;
     }
 
     @Override
@@ -77,12 +77,12 @@ public class BusinessServiceImpl implements BusinessService {
             Business business = result.get();
             Operation newOperation = operationService.add(operation);
             if (newOperation == null) {
-                return -2;
+                return 2;
             }
             business.getOperations().add(newOperation);
             businessRepository.save(business);
             return 0;
         }
-        return -1;
+        return 1;
     }
 }
