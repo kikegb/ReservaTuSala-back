@@ -21,6 +21,9 @@ public class BusinessServiceImpl implements BusinessService {
 
     @Override
     public Business add(final Business business) {
+        if (businessRepository.existsByCifAndEmail(business.getCif(), business.getEmail())) {
+            return null;
+        }
         return businessRepository.save(business);
     }
 

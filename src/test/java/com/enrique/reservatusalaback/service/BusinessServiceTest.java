@@ -54,9 +54,20 @@ public class BusinessServiceTest {
     @Test
     public void whenAddingNewBusiness_thenReturnBusiness() {
         Business business = mockGenerator.nextObject(Business.class);
+        when(businessRepository.existsByCifAndEmail(business.getCif(), business.getEmail())).thenReturn(false);
         when(businessRepository.save(any(Business.class))).then(AdditionalAnswers.returnsFirstArg());
 
         assertEquals(business, businessService.add(business));
+    }
+
+    @DisplayName("Test add already existent business")
+    @Test
+    public void whenAddingAlreadyExistentBusiness_thenReturnNull() {
+        Business business = mockGenerator.nextObject(Business.class);
+        when(businessRepository.existsByCifAndEmail(business.getCif(), business.getEmail())).thenReturn(true);
+
+        assertNull(businessService.add(business));
+        verify(businessRepository, never()).save(business);
     }
 
     @DisplayName("Test find all businesses")
