@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.any;
@@ -51,7 +52,7 @@ public class BusinessServiceTest {
 
     @DisplayName("Test add a business")
     @Test
-    public void whenAddingNewBusiness_thenReturnsBusinessWithId() {
+    public void whenAddingNewBusiness_thenReturnBusiness() {
         Business business = mockGenerator.nextObject(Business.class);
         when(businessRepository.save(any(Business.class))).then(AdditionalAnswers.returnsFirstArg());
 
@@ -85,6 +86,31 @@ public class BusinessServiceTest {
         when(businessRepository.findById(business.getId())).thenReturn(Optional.empty());
 
         assertNull(businessService.findById(business.getId()));
+    }
+
+    @DisplayName("Test update existent business")
+    @Test
+    public void givenExistentBusiness_whenUpdate_thenReturnUpdatedBusiness() {
+        Business business = mockGenerator.nextObject(Business.class);
+        Business updatedBusiness = mockGenerator.nextObject(Business.class);
+        updatedBusiness.setId(business.getId());
+        when(businessRepository.existsById(business.getId())).thenReturn(true);
+        when(businessRepository.save(any(Business.class))).then(AdditionalAnswers.returnsFirstArg());
+
+        assertNotEquals(business, businessService.update(updatedBusiness));
+        assertEquals(updatedBusiness, businessService.update(updatedBusiness));
+    }
+
+    @DisplayName("Test update non-existent business")
+    @Test
+    public void givenNonExistentBusiness_whenUpdate_thenDontSave_andReturnNull() {
+        Business business = mockGenerator.nextObject(Business.class);
+        Business updatedBusiness = mockGenerator.nextObject(Business.class);
+        updatedBusiness.setId(business.getId());
+        when(businessRepository.existsById(business.getId())).thenReturn(false);
+
+        verify(businessRepository, never()).save(updatedBusiness);
+        assertNull(businessService.update(updatedBusiness));
     }
 
     @DisplayName("Test delete business valid id")
