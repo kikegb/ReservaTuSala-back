@@ -47,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
             customerRepository.save(customer);
             return 0;
         }
-        return -1;
+        return 1;
     }
 
     @Override
@@ -57,12 +57,12 @@ public class CustomerServiceImpl implements CustomerService {
             Customer customer = result.get();
             Operation newOperation = operationService.add(operation);
             if (newOperation == null) {
-                return -2;
+                return 2;
             }
             customer.getOperations().add(newOperation);
             customerRepository.save(customer);
             return 0;
         }
-        return -1;
+        return 1;
     }
 }

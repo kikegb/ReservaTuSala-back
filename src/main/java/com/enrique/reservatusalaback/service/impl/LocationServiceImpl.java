@@ -45,6 +45,6 @@ public class LocationServiceImpl implements LocationService {
             locationRepository.save(location);
             return 0;
         }
-        return -1;
+        return 1;
     }
 }

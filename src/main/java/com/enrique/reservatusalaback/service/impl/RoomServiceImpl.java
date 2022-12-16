@@ -54,7 +54,7 @@ public class RoomServiceImpl implements RoomService {
             roomRepository.save(room);
             return 0;
         }
-        return -1;
+        return 1;
     }
 
     @Override
@@ -64,13 +64,13 @@ public class RoomServiceImpl implements RoomService {
             Room room = result.get();
             Operation newOperation = operationService.add(operation);
             if (newOperation == null) {
-                return -2;
+                return 2;
             }
             room.getOperations().add(newOperation);
             roomRepository.save(room);
             return 0;
         }
-        return -1;
+        return 1;
     }
 
     @Override
@@ -80,13 +80,13 @@ public class RoomServiceImpl implements RoomService {
             Room room = result.get();
             Schedule newSchedule = scheduleService.add(schedule);
             if (newSchedule == null) {
-                return -2;
+                return 2;
             }
-            room.getSchedule().add(newSchedule);
+            room.getSchedules().add(newSchedule);
             roomRepository.save(room);
             return 0;
         }
-        return -1;
+        return 1;
     }
 
     @Override
@@ -96,12 +96,12 @@ public class RoomServiceImpl implements RoomService {
             Room room = result.get();
             Material newMaterial = materialService.add(material);
             if (newMaterial == null) {
-                return -2;
+                return 2;
             }
             room.getMaterials().add(newMaterial);
             roomRepository.save(room);
             return 0;
         }
-        return -1;
+        return 1;
     }
 }

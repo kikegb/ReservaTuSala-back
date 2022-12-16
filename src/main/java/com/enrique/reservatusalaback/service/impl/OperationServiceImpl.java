@@ -45,6 +45,6 @@ public class OperationServiceImpl implements OperationService {
             operationRepository.save(operation);
             return 0;
         }
-        return -1;
+        return 1;
     }
 }

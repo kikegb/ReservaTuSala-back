@@ -45,6 +45,6 @@ public class ScheduleServiceImpl implements ScheduleService {
             scheduleRepository.save(schedule);
             return 0;
         }
-        return -1;
+        return 1;
     }
 }
