@@ -45,7 +45,7 @@ public class Room extends DbEntity{
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
-    private List<Schedule> schedule;
+    private List<Schedule> schedules;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
