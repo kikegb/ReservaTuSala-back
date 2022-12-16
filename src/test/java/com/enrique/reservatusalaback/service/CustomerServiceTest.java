@@ -51,9 +51,20 @@ public class CustomerServiceTest {
     @Test
     public void whenAddingNewCustomer_thenReturnCustomer() {
         Customer customer = mockGenerator.nextObject(Customer.class);
+        when(customerRepository.existsByCnifAndEmail(customer.getCnif(), customer.getEmail())).thenReturn(false);
         when(customerRepository.save(any(Customer.class))).then(AdditionalAnswers.returnsFirstArg());
 
         assertEquals(customer, customerService.add(customer));
+    }
+
+    @DisplayName("Test add already existent customer")
+    @Test
+    public void whenAddingAlreadyExistentCustomer_thenReturnNull() {
+        Customer customer = mockGenerator.nextObject(Customer.class);
+        when(customerRepository.existsByCnifAndEmail(customer.getCnif(), customer.getEmail())).thenReturn(true);
+
+        assertNull(customerService.add(customer));
+        verify(customerRepository, never()).save(customer);
     }
 
     @DisplayName("Test find all customers")

@@ -17,6 +17,9 @@ public class CustomerServiceImpl implements CustomerService {
     private final OperationService operationService;
     @Override
     public Customer add(final Customer customer) {
+        if (customerRepository.existsByCnifAndEmail(customer.getCnif(), customer.getEmail())) {
+            return null;
+        }
         return customerRepository.save(customer);
     }
 
