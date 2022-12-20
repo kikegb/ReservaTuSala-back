@@ -34,6 +34,6 @@ public class Operation extends DbEntity {
     private double cost;
 
     @NonNull
-    private int status;
+    private StatusCode status;
 
 }
