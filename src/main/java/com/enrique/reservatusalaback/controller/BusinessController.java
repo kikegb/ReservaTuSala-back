@@ -70,9 +70,6 @@ public class BusinessController {
         if (resultCode == 1) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
-        if (resultCode == 2) {
-            return new ResponseEntity<>(ResponseCode.ALREADY_EXISTENT_ROOM, HttpStatus.CONFLICT);
-        }
         return ResponseEntity.ok(ResponseCode.OK);
     }
 
@@ -81,9 +78,6 @@ public class BusinessController {
         int resultCode = businessService.addOperation(id, operation);
         if (resultCode == 1) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
-        }
-        if (resultCode == 2) {
-            return new ResponseEntity<>(ResponseCode.ALREADY_EXISTENT_OPERATION, HttpStatus.CONFLICT);
         }
         return ResponseEntity.ok(ResponseCode.OK);
     }
