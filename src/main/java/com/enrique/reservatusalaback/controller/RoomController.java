@@ -26,11 +26,7 @@ public class RoomController {
 
     @PostMapping
     public ResponseEntity<?> add(@RequestBody Room room) {
-        Room addedRoom = roomService.add(room);
-        if (addedRoom == null) {
-            return new ResponseEntity<>(ResponseCode.ALREADY_EXISTENT_USER, HttpStatus.CONFLICT);
-        }
-        return ResponseEntity.ok(addedRoom);
+        return ResponseEntity.ok(roomService.add(room));
     }
 
     @GetMapping("/findAll")
