@@ -59,9 +59,6 @@ public class CustomerServiceImpl implements CustomerService {
         if (result.isPresent()) {
             Customer customer = result.get();
             Operation newOperation = operationService.add(operation);
-            if (newOperation == null) {
-                return 2;
-            }
             customer.getOperations().add(newOperation);
             customerRepository.save(customer);
             return 0;

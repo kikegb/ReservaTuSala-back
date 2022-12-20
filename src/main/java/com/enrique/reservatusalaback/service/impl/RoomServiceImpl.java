@@ -63,9 +63,6 @@ public class RoomServiceImpl implements RoomService {
         if (result.isPresent()) {
             Room room = result.get();
             Operation newOperation = operationService.add(operation);
-            if (newOperation == null) {
-                return 2;
-            }
             room.getOperations().add(newOperation);
             roomRepository.save(room);
             return 0;
@@ -79,9 +76,6 @@ public class RoomServiceImpl implements RoomService {
         if (result.isPresent()) {
             Room room = result.get();
             Schedule newSchedule = scheduleService.add(schedule);
-            if (newSchedule == null) {
-                return 2;
-            }
             room.getSchedules().add(newSchedule);
             roomRepository.save(room);
             return 0;
@@ -95,9 +89,6 @@ public class RoomServiceImpl implements RoomService {
         if (result.isPresent()) {
             Room room = result.get();
             Material newMaterial = materialService.add(material);
-            if (newMaterial == null) {
-                return 2;
-            }
             room.getMaterials().add(newMaterial);
             roomRepository.save(room);
             return 0;

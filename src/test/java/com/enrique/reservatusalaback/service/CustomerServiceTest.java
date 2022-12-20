@@ -170,16 +170,4 @@ public class CustomerServiceTest {
         verify(operationService, never()).add(operation);
     }
 
-    @DisplayName("Test add operation error saving operation")
-    @Test
-    public void givenValidId_whenAddingAOperation_andErrorSavingOperation_thenNotAddOperation_andReturnCode2() {
-        Customer customer = mockGenerator.nextObject(Customer.class);
-        Operation operation = mockGenerator.nextObject(Operation.class);
-        when(customerRepository.findById(customer.getId())).thenReturn(Optional.of(customer));
-        when(operationService.add(operation)).thenReturn(null);
-
-        assertEquals(2, customerService.addOperation(customer.getId(), operation));
-        verify(operationService).add(operation);
-        verify(customerRepository, never()).save(customer);
-    }
 }

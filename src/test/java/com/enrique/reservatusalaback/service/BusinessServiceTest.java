@@ -173,19 +173,6 @@ public class BusinessServiceTest {
         verify(roomService, never()).add(room);
     }
 
-    @DisplayName("Test add a room error saving room")
-    @Test
-    public void givenValidId_whenAddingARoom_andErrorSavingRoom_thenNotAddRoom_andReturnCode2() {
-        Business business = mockGenerator.nextObject(Business.class);
-        Room room = mockGenerator.nextObject(Room.class);
-        when(businessRepository.findById(business.getId())).thenReturn(Optional.of(business));
-        when(roomService.add(room)).thenReturn(null);
-
-        assertEquals(2, businessService.addRoom(business.getId(), room));
-        verify(roomService).add(room);
-        verify(businessRepository, never()).save(business);
-    }
-
     @DisplayName("Test add operation successfully")
     @Test
     public void givenValidId_whenAddingAOperation_thenBusinessHasNewOperation_andReturnCode0() {
@@ -213,16 +200,4 @@ public class BusinessServiceTest {
         verify(operationService, never()).add(operation);
     }
 
-    @DisplayName("Test add operation error saving operation")
-    @Test
-    public void givenValidId_whenAddingAOperation_andErrorSavingOperation_thenNotAddOperation_andReturnCode2() {
-        Business business = mockGenerator.nextObject(Business.class);
-        Operation operation = mockGenerator.nextObject(Operation.class);
-        when(businessRepository.findById(business.getId())).thenReturn(Optional.of(business));
-        when(operationService.add(operation)).thenReturn(null);
-
-        assertEquals(2, businessService.addOperation(business.getId(), operation));
-        verify(operationService).add(operation);
-        verify(businessRepository, never()).save(business);
-    }
 }

@@ -165,19 +165,6 @@ public class RoomServiceTest {
         verify(operationService, never()).add(operation);
     }
 
-    @DisplayName("Test add operation error saving operation")
-    @Test
-    public void givenValidId_whenAddingAOperation_andErrorSavingOperation_thenNotAddOperation_andReturnCode2() {
-        Room room = mockGenerator.nextObject(Room.class);
-        Operation operation = mockGenerator.nextObject(Operation.class);
-        when(roomRepository.findById(room.getId())).thenReturn(Optional.of(room));
-        when(operationService.add(operation)).thenReturn(null);
-
-        assertEquals(2, roomService.addOperation(room.getId(), operation));
-        verify(operationService).add(operation);
-        verify(roomRepository, never()).save(room);
-    }
-
     @DisplayName("Test add schedule successfully")
     @Test
     public void givenValidId_whenAddingASchedule_thenRoomHasNewSchedule_andReturnCode0() {
@@ -205,19 +192,6 @@ public class RoomServiceTest {
         verify(scheduleService, never()).add(schedule);
     }
 
-    @DisplayName("Test add schedule error saving schedule")
-    @Test
-    public void givenValidId_whenAddingASchedule_andErrorSavingSchedule_thenNotAddSchedule_andReturnCode2() {
-        Room room = mockGenerator.nextObject(Room.class);
-        Schedule schedule = mockGenerator.nextObject(Schedule.class);
-        when(roomRepository.findById(room.getId())).thenReturn(Optional.of(room));
-        when(scheduleService.add(schedule)).thenReturn(null);
-
-        assertEquals(2, roomService.addSchedule(room.getId(), schedule));
-        verify(scheduleService).add(schedule);
-        verify(roomRepository, never()).save(room);
-    }
-
     @DisplayName("Test add material successfully")
     @Test
     public void givenValidId_whenAddingAMaterial_thenRoomHasNewMaterial_andReturnCode0() {
@@ -243,18 +217,5 @@ public class RoomServiceTest {
         assertEquals(1, roomService.addMaterial(room.getId(), material));
         verify(roomRepository, never()).save(room);
         verify(materialService, never()).add(material);
-    }
-
-    @DisplayName("Test add material error saving material")
-    @Test
-    public void givenValidId_whenAddingAMaterial_andErrorSavingMaterial_thenNotAddMaterial_andReturnCode2() {
-        Room room = mockGenerator.nextObject(Room.class);
-        Material material = mockGenerator.nextObject(Material.class);
-        when(roomRepository.findById(room.getId())).thenReturn(Optional.of(room));
-        when(materialService.add(material)).thenReturn(null);
-
-        assertEquals(2, roomService.addMaterial(room.getId(), material));
-        verify(materialService).add(material);
-        verify(roomRepository, never()).save(room);
     }
 }
