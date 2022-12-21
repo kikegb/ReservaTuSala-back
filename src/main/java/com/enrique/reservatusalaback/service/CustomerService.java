@@ -11,5 +11,5 @@ public interface CustomerService {
     Customer findById(Long id);
     Customer update(Customer customer);
     int deleteById(Long id);
-    int addOperation(Long id, Operation operation);
+    Operation addOperation(Long id, Operation operation);
 }

@@ -54,15 +54,15 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public int addOperation(final Long id, final Operation operation) {
+    public Operation addOperation(final Long id, final Operation operation) {
         Optional<Customer> result = customerRepository.findById(id);
         if (result.isPresent()) {
             Customer customer = result.get();
             Operation newOperation = operationService.add(operation);
             customer.getOperations().add(newOperation);
             customerRepository.save(customer);
-            return 0;
+            return newOperation;
         }
-        return 1;
+        return null;
     }
 }

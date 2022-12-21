@@ -153,7 +153,7 @@ public class CustomerServiceTest {
         when(customerRepository.save(any(Customer.class))).then(AdditionalAnswers.returnsFirstArg());
         when(operationService.add(any(Operation.class))).then(AdditionalAnswers.returnsFirstArg());
 
-        assertEquals(0, customerService.addOperation(customer.getId(), operation));
+        assertEquals(operation, customerService.addOperation(customer.getId(), operation));
         verify(customerRepository).save(customerCaptor.capture());
         assertEquals(oldOperationsSize + 1, customerCaptor.getValue().getOperations().size());
     }
@@ -165,7 +165,7 @@ public class CustomerServiceTest {
         Operation operation = mockGenerator.nextObject(Operation.class);
         when(customerRepository.findById(customer.getId())).thenReturn(Optional.empty());
 
-        assertEquals(1, customerService.addOperation(customer.getId(), operation));
+        assertNull(customerService.addOperation(customer.getId(), operation));
         verify(customerRepository, never()).save(customer);
         verify(operationService, never()).add(operation);
     }
