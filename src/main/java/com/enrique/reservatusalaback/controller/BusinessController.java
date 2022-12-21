@@ -66,8 +66,8 @@ public class BusinessController {
 
     @PostMapping("/addRoom")
     public ResponseEntity<ResponseCode> addRoom(@RequestParam Long id, @RequestBody Room room) {
-        int resultCode = businessService.addRoom(id, room);
-        if (resultCode == 1) {
+        Room addedRoom = businessService.addRoom(id, room);
+        if (addedRoom == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(ResponseCode.OK);
@@ -75,8 +75,8 @@ public class BusinessController {
 
     @PostMapping("/addOperation")
     public ResponseEntity<ResponseCode> addOperation(@RequestParam Long id, @RequestBody Operation operation) {
-        int resultCode = businessService.addOperation(id, operation);
-        if (resultCode == 1) {
+        Operation addedOperation = businessService.addOperation(id, operation);
+        if (addedOperation == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(ResponseCode.OK);

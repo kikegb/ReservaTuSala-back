@@ -12,6 +12,6 @@ public interface BusinessService {
     Business findById(Long id);
     Business update(Business business);
     int deleteById(Long id);
-    int addRoom(Long id, Room room);
-    int addOperation(Long id, Operation operation);
+    Room addRoom(Long id, Room room);
+    Operation addOperation(Long id, Operation operation);
 }

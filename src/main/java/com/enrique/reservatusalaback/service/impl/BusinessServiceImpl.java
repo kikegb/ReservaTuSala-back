@@ -58,28 +58,28 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
-    public int addRoom(final Long id, final Room room) {
+    public Room addRoom(final Long id, final Room room) {
         Optional<Business> result = businessRepository.findById(id);
         if (result.isPresent()) {
             Business business = result.get();
             Room newRoom = roomService.add(room);
             business.getRooms().add(newRoom);
             businessRepository.save(business);
-            return 0;
+            return newRoom;
         }
-        return 1;
+        return null;
     }
 
     @Override
-    public int addOperation(final Long id, final Operation operation) {
+    public Operation addOperation(final Long id, final Operation operation) {
         Optional<Business> result = businessRepository.findById(id);
         if (result.isPresent()) {
             Business business = result.get();
             Operation newOperation = operationService.add(operation);
             business.getOperations().add(newOperation);
             businessRepository.save(business);
-            return 0;
+            return newOperation;
         }
-        return 1;
+        return null;
     }
 }

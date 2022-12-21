@@ -156,7 +156,7 @@ public class BusinessServiceTest {
         when(businessRepository.save(any(Business.class))).then(AdditionalAnswers.returnsFirstArg());
         when(roomService.add(any(Room.class))).then(AdditionalAnswers.returnsFirstArg());
 
-        assertEquals(0, businessService.addRoom(business.getId(), room));
+        assertEquals(room, businessService.addRoom(business.getId(), room));
         verify(businessRepository).save(businessCaptor.capture());
         assertEquals(oldRoomsSize + 1, businessCaptor.getValue().getRooms().size());
     }
@@ -168,7 +168,7 @@ public class BusinessServiceTest {
         Room room = mockGenerator.nextObject(Room.class);
         when(businessRepository.findById(business.getId())).thenReturn(Optional.empty());
 
-        assertEquals(1, businessService.addRoom(business.getId(), room));
+        assertNull(businessService.addRoom(business.getId(), room));
         verify(businessRepository, never()).save(business);
         verify(roomService, never()).add(room);
     }
@@ -183,7 +183,7 @@ public class BusinessServiceTest {
         when(businessRepository.save(any(Business.class))).then(AdditionalAnswers.returnsFirstArg());
         when(operationService.add(any(Operation.class))).then(AdditionalAnswers.returnsFirstArg());
 
-        assertEquals(0, businessService.addOperation(business.getId(), operation));
+        assertEquals(operation, businessService.addOperation(business.getId(), operation));
         verify(businessRepository).save(businessCaptor.capture());
         assertEquals(oldOperationsSize + 1, businessCaptor.getValue().getOperations().size());
     }
@@ -195,7 +195,7 @@ public class BusinessServiceTest {
         Operation operation = mockGenerator.nextObject(Operation.class);
         when(businessRepository.findById(business.getId())).thenReturn(Optional.empty());
 
-        assertEquals(1, businessService.addOperation(business.getId(), operation));
+        assertNull(businessService.addOperation(business.getId(), operation));
         verify(businessRepository, never()).save(business);
         verify(operationService, never()).add(operation);
     }
