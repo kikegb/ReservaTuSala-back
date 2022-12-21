@@ -13,7 +13,7 @@ public interface RoomService {
     Room findById(Long id);
     Room update(Room room);
     int deleteById(Long id);
-    int addOperation(Long id, Operation operation);
-    int addSchedule(Long id, Schedule schedule);
-    int addMaterial(Long id, Material material);
+    Operation addOperation(Long id, Operation operation);
+    Schedule addSchedule(Long id, Schedule schedule);
+    Material addMaterial(Long id, Material material);
 }

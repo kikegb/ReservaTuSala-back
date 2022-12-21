@@ -148,7 +148,7 @@ public class RoomServiceTest {
         when(roomRepository.save(any(Room.class))).then(AdditionalAnswers.returnsFirstArg());
         when(operationService.add(any(Operation.class))).then(AdditionalAnswers.returnsFirstArg());
 
-        assertEquals(0, roomService.addOperation(room.getId(), operation));
+        assertEquals(operation, roomService.addOperation(room.getId(), operation));
         verify(roomRepository).save(roomCaptor.capture());
         assertEquals(oldOperationsSize + 1, roomCaptor.getValue().getOperations().size());
     }
@@ -160,7 +160,7 @@ public class RoomServiceTest {
         Operation operation = mockGenerator.nextObject(Operation.class);
         when(roomRepository.findById(room.getId())).thenReturn(Optional.empty());
 
-        assertEquals(1, roomService.addOperation(room.getId(), operation));
+        assertNull(roomService.addOperation(room.getId(), operation));
         verify(roomRepository, never()).save(room);
         verify(operationService, never()).add(operation);
     }
@@ -175,7 +175,7 @@ public class RoomServiceTest {
         when(roomRepository.save(any(Room.class))).then(AdditionalAnswers.returnsFirstArg());
         when(scheduleService.add(any(Schedule.class))).then(AdditionalAnswers.returnsFirstArg());
 
-        assertEquals(0, roomService.addSchedule(room.getId(), schedule));
+        assertEquals(schedule, roomService.addSchedule(room.getId(), schedule));
         verify(roomRepository).save(roomCaptor.capture());
         assertEquals(oldSchedulesSize + 1, roomCaptor.getValue().getSchedules().size());
     }
@@ -187,7 +187,7 @@ public class RoomServiceTest {
         Schedule schedule = mockGenerator.nextObject(Schedule.class);
         when(roomRepository.findById(room.getId())).thenReturn(Optional.empty());
 
-        assertEquals(1, roomService.addSchedule(room.getId(), schedule));
+        assertNull(roomService.addSchedule(room.getId(), schedule));
         verify(roomRepository, never()).save(room);
         verify(scheduleService, never()).add(schedule);
     }
@@ -202,7 +202,7 @@ public class RoomServiceTest {
         when(roomRepository.save(any(Room.class))).then(AdditionalAnswers.returnsFirstArg());
         when(materialService.add(any(Material.class))).then(AdditionalAnswers.returnsFirstArg());
 
-        assertEquals(0, roomService.addMaterial(room.getId(), material));
+        assertEquals(material, roomService.addMaterial(room.getId(), material));
         verify(roomRepository).save(roomCaptor.capture());
         assertEquals(oldMaterialsSize + 1, roomCaptor.getValue().getMaterials().size());
     }
@@ -214,7 +214,7 @@ public class RoomServiceTest {
         Material material = mockGenerator.nextObject(Material.class);
         when(roomRepository.findById(room.getId())).thenReturn(Optional.empty());
 
-        assertEquals(1, roomService.addMaterial(room.getId(), material));
+        assertNull(roomService.addMaterial(room.getId(), material));
         verify(roomRepository, never()).save(room);
         verify(materialService, never()).add(material);
     }

@@ -63,8 +63,8 @@ public class RoomController {
 
     @PostMapping("/addOperation")
     public ResponseEntity<ResponseCode> addOperation(@RequestParam Long id, @RequestBody Operation operation) {
-        int resultCode = roomService.addOperation(id, operation);
-        if (resultCode == 1) {
+        Operation addedOperation = roomService.addOperation(id, operation);
+        if (addedOperation == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(ResponseCode.OK);
@@ -72,8 +72,8 @@ public class RoomController {
 
     @PostMapping("/addSchedule")
     public ResponseEntity<ResponseCode> addSchedule(@RequestParam Long id, @RequestBody Schedule schedule) {
-        int resultCode = roomService.addSchedule(id, schedule);
-        if (resultCode == 1) {
+        Schedule addedSchedule = roomService.addSchedule(id, schedule);
+        if (addedSchedule == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(ResponseCode.OK);
@@ -81,8 +81,8 @@ public class RoomController {
 
     @PostMapping("/addMaterial")
     public ResponseEntity<ResponseCode> addMaterial(@RequestParam Long id, @RequestBody Material material) {
-        int resultCode = roomService.addMaterial(id, material);
-        if (resultCode == 1) {
+        Material addedMaterial = roomService.addMaterial(id, material);
+        if (addedMaterial == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(ResponseCode.OK);

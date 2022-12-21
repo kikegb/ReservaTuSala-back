@@ -58,41 +58,41 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public int addOperation(final Long id, final Operation operation) {
+    public Operation addOperation(final Long id, final Operation operation) {
         Optional<Room> result = roomRepository.findById(id);
         if (result.isPresent()) {
             Room room = result.get();
             Operation newOperation = operationService.add(operation);
             room.getOperations().add(newOperation);
             roomRepository.save(room);
-            return 0;
+            return newOperation;
         }
-        return 1;
+        return null;
     }
 
     @Override
-    public int addSchedule(final Long id, final Schedule schedule) {
+    public Schedule addSchedule(final Long id, final Schedule schedule) {
         Optional<Room> result = roomRepository.findById(id);
         if (result.isPresent()) {
             Room room = result.get();
             Schedule newSchedule = scheduleService.add(schedule);
             room.getSchedules().add(newSchedule);
             roomRepository.save(room);
-            return 0;
+            return newSchedule;
         }
-        return 1;
+        return null;
     }
 
     @Override
-    public int addMaterial(final Long id, final Material material) {
+    public Material addMaterial(final Long id, final Material material) {
         Optional<Room> result = roomRepository.findById(id);
         if (result.isPresent()) {
             Room room = result.get();
             Material newMaterial = materialService.add(material);
             room.getMaterials().add(newMaterial);
             roomRepository.save(room);
-            return 0;
+            return newMaterial;
         }
-        return 1;
+        return null;
     }
 }
