@@ -145,7 +145,7 @@ public class CustomerServiceTest {
 
     @DisplayName("Test add operation successfully")
     @Test
-    public void givenValidId_whenAddingAOperation_thenCustomerHasNewOperation_andReturnCode0() {
+    public void givenValidId_whenAddingAOperation_thenCustomerHasNewOperation_andReturnAddedOperation() {
         Customer customer = mockGenerator.nextObject(Customer.class);
         int oldOperationsSize = customer.getOperations().size();
         Operation operation = mockGenerator.nextObject(Operation.class);
@@ -160,7 +160,7 @@ public class CustomerServiceTest {
 
     @DisplayName("Test add operation invalid id")
     @Test
-    public void givenInvalidId_whenAddingAOperation_thenNotAddOperation_andReturnCode1() {
+    public void givenInvalidId_whenAddingAOperation_thenNotAddOperation_andReturnNull() {
         Customer customer = mockGenerator.nextObject(Customer.class);
         Operation operation = mockGenerator.nextObject(Operation.class);
         when(customerRepository.findById(customer.getId())).thenReturn(Optional.empty());

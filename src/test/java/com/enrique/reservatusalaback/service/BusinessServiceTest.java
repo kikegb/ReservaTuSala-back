@@ -148,7 +148,7 @@ public class BusinessServiceTest {
 
     @DisplayName("Test add a room successfully")
     @Test
-    public void givenValidId_whenAddingARoom_thenBusinessHasNewRoom_andReturnCode0() {
+    public void givenValidId_whenAddingARoom_thenBusinessHasNewRoom_andReturnAddedRoom() {
         Business business = mockGenerator.nextObject(Business.class);
         int oldRoomsSize = business.getRooms().size();
         Room room = mockGenerator.nextObject(Room.class);
@@ -163,7 +163,7 @@ public class BusinessServiceTest {
 
     @DisplayName("Test add a room invalid id")
     @Test
-    public void givenInvalidId_whenAddingARoom_thenNotAddRoom_andReturnCode1() {
+    public void givenInvalidId_whenAddingARoom_thenNotAddRoom_andReturnNull() {
         Business business = mockGenerator.nextObject(Business.class);
         Room room = mockGenerator.nextObject(Room.class);
         when(businessRepository.findById(business.getId())).thenReturn(Optional.empty());
@@ -175,7 +175,7 @@ public class BusinessServiceTest {
 
     @DisplayName("Test add operation successfully")
     @Test
-    public void givenValidId_whenAddingAOperation_thenBusinessHasNewOperation_andReturnCode0() {
+    public void givenValidId_whenAddingAOperation_thenBusinessHasNewOperation_andReturnAddedOperation() {
         Business business = mockGenerator.nextObject(Business.class);
         int oldOperationsSize = business.getOperations().size();
         Operation operation = mockGenerator.nextObject(Operation.class);
@@ -190,7 +190,7 @@ public class BusinessServiceTest {
 
     @DisplayName("Test add operation invalid id")
     @Test
-    public void givenInvalidId_whenAddingAOperation_thenNotAddOperation_andReturnCode1() {
+    public void givenInvalidId_whenAddingAOperation_thenNotAddOperation_andReturnNull() {
         Business business = mockGenerator.nextObject(Business.class);
         Operation operation = mockGenerator.nextObject(Operation.class);
         when(businessRepository.findById(business.getId())).thenReturn(Optional.empty());

@@ -140,7 +140,7 @@ public class RoomServiceTest {
 
     @DisplayName("Test add operation successfully")
     @Test
-    public void givenValidId_whenAddingAOperation_thenRoomHasNewOperation_andReturnCode0() {
+    public void givenValidId_whenAddingAOperation_thenRoomHasNewOperation_andReturnAddedOperation() {
         Room room = mockGenerator.nextObject(Room.class);
         int oldOperationsSize = room.getOperations().size();
         Operation operation = mockGenerator.nextObject(Operation.class);
@@ -155,7 +155,7 @@ public class RoomServiceTest {
 
     @DisplayName("Test add operation invalid id")
     @Test
-    public void givenInvalidId_whenAddingAOperation_thenNotAddOperation_andReturnCode1() {
+    public void givenInvalidId_whenAddingAOperation_thenNotAddOperation_andReturnNull() {
         Room room = mockGenerator.nextObject(Room.class);
         Operation operation = mockGenerator.nextObject(Operation.class);
         when(roomRepository.findById(room.getId())).thenReturn(Optional.empty());
@@ -167,7 +167,7 @@ public class RoomServiceTest {
 
     @DisplayName("Test add schedule successfully")
     @Test
-    public void givenValidId_whenAddingASchedule_thenRoomHasNewSchedule_andReturnCode0() {
+    public void givenValidId_whenAddingASchedule_thenRoomHasNewSchedule_andReturnAddedSchedule() {
         Room room = mockGenerator.nextObject(Room.class);
         int oldSchedulesSize = room.getSchedules().size();
         Schedule schedule = mockGenerator.nextObject(Schedule.class);
@@ -182,7 +182,7 @@ public class RoomServiceTest {
 
     @DisplayName("Test add schedule invalid id")
     @Test
-    public void givenInvalidId_whenAddingASchedule_thenNotAddSchedule_andReturnCode1() {
+    public void givenInvalidId_whenAddingASchedule_thenNotAddSchedule_andReturnNull() {
         Room room = mockGenerator.nextObject(Room.class);
         Schedule schedule = mockGenerator.nextObject(Schedule.class);
         when(roomRepository.findById(room.getId())).thenReturn(Optional.empty());
@@ -194,7 +194,7 @@ public class RoomServiceTest {
 
     @DisplayName("Test add material successfully")
     @Test
-    public void givenValidId_whenAddingAMaterial_thenRoomHasNewMaterial_andReturnCode0() {
+    public void givenValidId_whenAddingAMaterial_thenRoomHasNewMaterial_andReturnAddedMaterial() {
         Room room = mockGenerator.nextObject(Room.class);
         int oldMaterialsSize = room.getMaterials().size();
         Material material = mockGenerator.nextObject(Material.class);
@@ -209,7 +209,7 @@ public class RoomServiceTest {
 
     @DisplayName("Test add material invalid id")
     @Test
-    public void givenInvalidId_whenAddingAMaterial_thenNotAddMaterial_andReturnCode1() {
+    public void givenInvalidId_whenAddingAMaterial_thenNotAddMaterial_andReturnNull() {
         Room room = mockGenerator.nextObject(Room.class);
         Material material = mockGenerator.nextObject(Material.class);
         when(roomRepository.findById(room.getId())).thenReturn(Optional.empty());
