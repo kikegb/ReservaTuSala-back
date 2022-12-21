@@ -62,29 +62,29 @@ public class RoomController {
     }
 
     @PostMapping("/addOperation")
-    public ResponseEntity<ResponseCode> addOperation(@RequestParam Long id, @RequestBody Operation operation) {
+    public ResponseEntity<?> addOperation(@RequestParam Long id, @RequestBody Operation operation) {
         Operation addedOperation = roomService.addOperation(id, operation);
         if (addedOperation == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(ResponseCode.OK);
+        return ResponseEntity.ok(addedOperation);
     }
 
     @PostMapping("/addSchedule")
-    public ResponseEntity<ResponseCode> addSchedule(@RequestParam Long id, @RequestBody Schedule schedule) {
+    public ResponseEntity<?> addSchedule(@RequestParam Long id, @RequestBody Schedule schedule) {
         Schedule addedSchedule = roomService.addSchedule(id, schedule);
         if (addedSchedule == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(ResponseCode.OK);
+        return ResponseEntity.ok(addedSchedule);
     }
 
     @PostMapping("/addMaterial")
-    public ResponseEntity<ResponseCode> addMaterial(@RequestParam Long id, @RequestBody Material material) {
+    public ResponseEntity<?> addMaterial(@RequestParam Long id, @RequestBody Material material) {
         Material addedMaterial = roomService.addMaterial(id, material);
         if (addedMaterial == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(ResponseCode.OK);
+        return ResponseEntity.ok(addedMaterial);
     }
 }

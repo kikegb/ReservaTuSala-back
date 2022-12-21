@@ -64,11 +64,11 @@ public class CustomerController {
     }
 
     @PostMapping("/addOperation")
-    public ResponseEntity<ResponseCode> addOperation(@RequestParam Long id, @RequestBody Operation operation) {
+    public ResponseEntity<?> addOperation(@RequestParam Long id, @RequestBody Operation operation) {
         Operation addedOperation = customerService.addOperation(id, operation);
         if (addedOperation == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(ResponseCode.OK);
+        return ResponseEntity.ok(addedOperation);
     }
 }
