@@ -93,7 +93,7 @@ public class RoomControllerTest {
                 .andExpect(jsonPath("$[0].location.id", is(rooms.get(0).getLocation().getId())))
                 .andExpect(jsonPath("$[0].name", is(rooms.get(0).getName())))
                 .andExpect(jsonPath("$[0].size", is(rooms.get(0).getSize())))
-                .andExpect(jsonPath("$[0].price", is(Double.valueOf(rooms.get(0).getPrice()))))
+                .andExpect(jsonPath("$[0].price", is(rooms.get(0).getPrice())))
                 .andExpect(jsonPath("$[0].deleted", is(rooms.get(0).isDeleted())))
                 .andExpect(jsonPath("$[4].id", is(rooms.get(4).getId())))
                 .andExpect(jsonPath("$[4].location.id", is(rooms.get(4).getLocation().getId())))
