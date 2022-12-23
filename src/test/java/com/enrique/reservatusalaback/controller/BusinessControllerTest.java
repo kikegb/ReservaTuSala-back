@@ -4,7 +4,6 @@ import com.enrique.reservatusalaback.model.Business;
 import com.enrique.reservatusalaback.model.Location;
 import com.enrique.reservatusalaback.model.Operation;
 import com.enrique.reservatusalaback.model.Room;
-import com.enrique.reservatusalaback.repository.MaterialRepository;
 import com.enrique.reservatusalaback.service.BusinessService;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
@@ -23,6 +22,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -165,7 +165,7 @@ public class BusinessControllerTest {
     @Test
     public void whenUpdateBusinessWithValidId_ThenReturnOkAndUpdatedBusiness() throws Exception {
         Business updatedBusiness = mockGenerator.nextObject(Business.class);
-        doReturn(updatedBusiness).when(businessService).update(updatedBusiness);
+        doReturn(updatedBusiness).when(businessService).update(any(Business.class));
 
         this.mockMvc.perform(put("/business")
                         .contentType(MediaType.APPLICATION_JSON)
