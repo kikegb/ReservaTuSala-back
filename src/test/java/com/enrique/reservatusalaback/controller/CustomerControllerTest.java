@@ -98,7 +98,7 @@ public class CustomerControllerTest {
 
     @DisplayName("GET all customers")
     @Test
-    public void whenFindAllCustomeres_ThenReturnOkAndListOfCustomeres() throws Exception {
+    public void whenFindAllCustomers_ThenReturnOkAndListOfCustomers() throws Exception {
         List<Customer> customers = mockGenerator.objects(Customer.class, 5).toList();
         doReturn(customers).when(customerService).findAll();
 

@@ -73,7 +73,7 @@ public class ScheduleControllerTest {
 
     @DisplayName("GET all schedules")
     @Test
-    public void whenFindAllSchedulees_ThenReturnOkAndListOfSchedulees() throws Exception {
+    public void whenFindAllSchedules_ThenReturnOkAndListOfSchedules() throws Exception {
         List<Schedule> schedules = mockGenerator.objects(Schedule.class, 5).toList();
         doReturn(schedules).when(scheduleService).findAll();
 

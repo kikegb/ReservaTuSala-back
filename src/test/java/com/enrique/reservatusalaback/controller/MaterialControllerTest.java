@@ -71,7 +71,7 @@ public class MaterialControllerTest {
 
     @DisplayName("GET all materials")
     @Test
-    public void whenFindAllMateriales_ThenReturnOkAndListOfMateriales() throws Exception {
+    public void whenFindAllMaterials_ThenReturnOkAndListOfMaterials() throws Exception {
         List<Material> materials = mockGenerator.objects(Material.class, 5).toList();
         doReturn(materials).when(materialService).findAll();
 

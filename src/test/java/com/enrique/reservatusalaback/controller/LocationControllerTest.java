@@ -79,7 +79,7 @@ public class LocationControllerTest {
 
     @DisplayName("GET all locations")
     @Test
-    public void whenFindAllLocationes_ThenReturnOkAndListOfLocationes() throws Exception {
+    public void whenFindAllLocations_ThenReturnOkAndListOfLocations() throws Exception {
         List<Location> locations = mockGenerator.objects(Location.class, 5).toList();
         doReturn(locations).when(locationService).findAll();
 
