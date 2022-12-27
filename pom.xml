@@ -17,6 +17,7 @@
 		<java.version>17</java.version>
 		<testcontainers.version>1.17.6</testcontainers.version>
 		<easyrandom.version>5.0.0</easyrandom.version>
+		<openapi.version>1.6.14</openapi.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -57,6 +58,11 @@
 			<artifactId>easy-random-core</artifactId>
 			<version>${easyrandom.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>${openapi.version}</version>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>
