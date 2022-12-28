@@ -25,6 +25,9 @@ public class LocationController {
 
     @PostMapping
     public ResponseEntity<?> add(@RequestBody Location location) {
+        if (location == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_LOCATION, HttpStatus.BAD_REQUEST);
+        }
         return ResponseEntity.ok(locationService.add(location));
     }
 
@@ -35,6 +38,9 @@ public class LocationController {
 
     @GetMapping("/findById")
     public ResponseEntity<?> findById(@RequestParam Long id) {
+        if (id == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
+        }
         Location location = locationService.findById(id);
         if (location == null){
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
@@ -44,6 +50,9 @@ public class LocationController {
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody Location location) {
+        if (location == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_LOCATION, HttpStatus.BAD_REQUEST);
+        }
         Location updatedLocation = locationService.update(location);
         if (updatedLocation == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
@@ -53,6 +62,9 @@ public class LocationController {
 
     @DeleteMapping
     public ResponseEntity<ResponseCode> deleteById(@RequestParam Long id) {
+        if (id == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
+        }
         if (locationService.deleteById(id) > 0) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         } else {
