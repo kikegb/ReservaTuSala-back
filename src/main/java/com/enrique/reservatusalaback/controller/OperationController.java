@@ -25,6 +25,9 @@ public class OperationController {
 
     @PostMapping
     public ResponseEntity<?> add(@RequestBody Operation operation) {
+        if (operation == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_OPERATION, HttpStatus.BAD_REQUEST);
+        }
         return ResponseEntity.ok(operationService.add(operation));
     }
 
@@ -35,6 +38,9 @@ public class OperationController {
 
     @GetMapping("/findById")
     public ResponseEntity<?> findById(@RequestParam Long id) {
+        if (id == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
+        }
         Operation operation = operationService.findById(id);
         if (operation == null){
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
@@ -44,6 +50,9 @@ public class OperationController {
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody Operation operation) {
+        if (operation == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_OPERATION, HttpStatus.BAD_REQUEST);
+        }
         Operation updatedOperation = operationService.update(operation);
         if (updatedOperation == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
@@ -53,6 +62,9 @@ public class OperationController {
 
     @DeleteMapping
     public ResponseEntity<ResponseCode> deleteById(@RequestParam Long id) {
+        if (id == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
+        }
         if (operationService.deleteById(id) > 0) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         } else {
