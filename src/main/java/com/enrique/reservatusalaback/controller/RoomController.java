@@ -28,6 +28,9 @@ public class RoomController {
 
     @PostMapping
     public ResponseEntity<?> add(@RequestBody Room room) {
+        if (room == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_ROOM, HttpStatus.BAD_REQUEST);
+        }
         return ResponseEntity.ok(roomService.add(room));
     }
 
@@ -38,6 +41,9 @@ public class RoomController {
 
     @GetMapping("/findById")
     public ResponseEntity<?> findById(@RequestParam Long id) {
+        if (id == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
+        }
         Room room = roomService.findById(id);
         if (room == null){
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
@@ -47,6 +53,9 @@ public class RoomController {
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody Room room) {
+        if (room == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_ROOM, HttpStatus.BAD_REQUEST);
+        }
         Room updatedRoom = roomService.update(room);
         if (updatedRoom == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
@@ -56,6 +65,9 @@ public class RoomController {
 
     @DeleteMapping
     public ResponseEntity<ResponseCode> deleteById(@RequestParam Long id) {
+        if (id == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
+        }
         if (roomService.deleteById(id) > 0) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         } else {
@@ -65,6 +77,12 @@ public class RoomController {
 
     @PostMapping("/addOperation")
     public ResponseEntity<?> addOperation(@RequestParam Long id, @RequestBody Operation operation) {
+        if (id == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
+        }
+        if (operation == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_OPERATION, HttpStatus.BAD_REQUEST);
+        }
         Operation addedOperation = roomService.addOperation(id, operation);
         if (addedOperation == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
@@ -74,6 +92,12 @@ public class RoomController {
 
     @PostMapping("/addSchedule")
     public ResponseEntity<?> addSchedule(@RequestParam Long id, @RequestBody Schedule schedule) {
+        if (id == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
+        }
+        if (schedule == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_SCHEDULE, HttpStatus.BAD_REQUEST);
+        }
         Schedule addedSchedule = roomService.addSchedule(id, schedule);
         if (addedSchedule == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
@@ -83,6 +107,12 @@ public class RoomController {
 
     @PostMapping("/addMaterial")
     public ResponseEntity<?> addMaterial(@RequestParam Long id, @RequestBody Material material) {
+        if (id == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
+        }
+        if (material == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_MATERIAL, HttpStatus.BAD_REQUEST);
+        }
         Material addedMaterial = roomService.addMaterial(id, material);
         if (addedMaterial == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
