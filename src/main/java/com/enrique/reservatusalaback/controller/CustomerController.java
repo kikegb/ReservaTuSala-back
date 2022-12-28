@@ -26,6 +26,9 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<?> add(@RequestBody Customer customer) {
+        if (customer == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_CUSTOMER, HttpStatus.BAD_REQUEST);
+        }
         Customer addedCustomer = customerService.add(customer);
         if (addedCustomer == null) {
             return new ResponseEntity<>(ResponseCode.ALREADY_EXISTENT_USER, HttpStatus.CONFLICT);
@@ -40,6 +43,9 @@ public class CustomerController {
 
     @GetMapping("/findById")
     public ResponseEntity<?> findById(@RequestParam Long id) {
+        if (id == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
+        }
         Customer customer = customerService.findById(id);
         if (customer == null){
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
@@ -49,6 +55,9 @@ public class CustomerController {
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody Customer customer) {
+        if (customer == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_CUSTOMER, HttpStatus.BAD_REQUEST);
+        }
         Customer updatedCustomer = customerService.update(customer);
         if (updatedCustomer == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
@@ -58,6 +67,9 @@ public class CustomerController {
 
     @DeleteMapping
     public ResponseEntity<ResponseCode> deleteById(@RequestParam Long id) {
+        if (id == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
+        }
         if (customerService.deleteById(id) > 0) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         } else {
@@ -67,6 +79,12 @@ public class CustomerController {
 
     @PostMapping("/addOperation")
     public ResponseEntity<?> addOperation(@RequestParam Long id, @RequestBody Operation operation) {
+        if (id == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
+        }
+        if (operation == null) {
+            return new ResponseEntity<>(ResponseCode.NULL_OPERATION, HttpStatus.BAD_REQUEST);
+        }
         Operation addedOperation = customerService.addOperation(id, operation);
         if (addedOperation == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
