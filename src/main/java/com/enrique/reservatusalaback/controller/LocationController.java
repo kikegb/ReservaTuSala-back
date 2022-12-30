@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,10 +25,7 @@ public class LocationController {
     private final LocationService locationService;
 
     @PostMapping
-    public ResponseEntity<?> add(@RequestBody Location location) {
-        if (location == null) {
-            return new ResponseEntity<>(ResponseCode.NULL_LOCATION, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> add(@Valid @RequestBody Location location) {
         return ResponseEntity.ok(locationService.add(location));
     }
 
@@ -38,9 +36,6 @@ public class LocationController {
 
     @GetMapping("/findById")
     public ResponseEntity<?> findById(@RequestParam Long id) {
-        if (id == null) {
-            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
-        }
         Location location = locationService.findById(id);
         if (location == null){
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
@@ -49,10 +44,7 @@ public class LocationController {
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody Location location) {
-        if (location == null) {
-            return new ResponseEntity<>(ResponseCode.NULL_LOCATION, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> update(@Valid @RequestBody Location location) {
         Location updatedLocation = locationService.update(location);
         if (updatedLocation == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
@@ -62,9 +54,6 @@ public class LocationController {
 
     @DeleteMapping
     public ResponseEntity<ResponseCode> deleteById(@RequestParam Long id) {
-        if (id == null) {
-            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
-        }
         if (locationService.deleteById(id) > 0) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         } else {

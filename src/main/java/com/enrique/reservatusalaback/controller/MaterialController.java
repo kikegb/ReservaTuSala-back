@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,10 +25,7 @@ public class MaterialController {
     private final MaterialService materialService;
 
     @PostMapping
-    public ResponseEntity<?> add(@RequestBody Material material) {
-        if (material == null) {
-            return new ResponseEntity<>(ResponseCode.NULL_MATERIAL, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> add(@Valid @RequestBody Material material) {
         return ResponseEntity.ok(materialService.add(material));
     }
 
@@ -38,9 +36,6 @@ public class MaterialController {
 
     @GetMapping("/findById")
     public ResponseEntity<?> findById(@RequestParam Long id) {
-        if (id == null) {
-            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
-        }
         Material material = materialService.findById(id);
         if (material == null){
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
@@ -49,10 +44,7 @@ public class MaterialController {
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody Material material) {
-        if (material == null) {
-            return new ResponseEntity<>(ResponseCode.NULL_MATERIAL, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> update(@Valid @RequestBody Material material) {
         Material updatedMaterial = materialService.update(material);
         if (updatedMaterial == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
@@ -62,9 +54,6 @@ public class MaterialController {
 
     @DeleteMapping
     public ResponseEntity<ResponseCode> deleteById(@RequestParam Long id) {
-        if (id == null) {
-            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
-        }
         if (materialService.deleteById(id) > 0) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         } else {

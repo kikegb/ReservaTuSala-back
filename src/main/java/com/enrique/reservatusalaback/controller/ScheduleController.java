@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,10 +25,7 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
 
     @PostMapping
-    public ResponseEntity<?> add(@RequestBody Schedule schedule) {
-        if (schedule == null) {
-            return new ResponseEntity<>(ResponseCode.NULL_SCHEDULE, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> add(@Valid @RequestBody Schedule schedule) {
         return ResponseEntity.ok(scheduleService.add(schedule));
     }
 
@@ -38,9 +36,6 @@ public class ScheduleController {
 
     @GetMapping("/findById")
     public ResponseEntity<?> findById(@RequestParam Long id) {
-        if (id == null) {
-            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
-        }
         Schedule schedule = scheduleService.findById(id);
         if (schedule == null){
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
@@ -49,10 +44,7 @@ public class ScheduleController {
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody Schedule schedule) {
-        if (schedule == null) {
-            return new ResponseEntity<>(ResponseCode.NULL_SCHEDULE, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> update(@Valid @RequestBody Schedule schedule) {
         Schedule updatedSchedule = scheduleService.update(schedule);
         if (updatedSchedule == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
@@ -62,9 +54,6 @@ public class ScheduleController {
 
     @DeleteMapping
     public ResponseEntity<ResponseCode> deleteById(@RequestParam Long id) {
-        if (id == null) {
-            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
-        }
         if (scheduleService.deleteById(id) > 0) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         } else {

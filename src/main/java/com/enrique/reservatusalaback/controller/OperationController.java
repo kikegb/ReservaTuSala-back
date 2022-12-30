@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,10 +25,7 @@ public class OperationController {
     private final OperationService operationService;
 
     @PostMapping
-    public ResponseEntity<?> add(@RequestBody Operation operation) {
-        if (operation == null) {
-            return new ResponseEntity<>(ResponseCode.NULL_OPERATION, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> add(@Valid @RequestBody Operation operation) {
         return ResponseEntity.ok(operationService.add(operation));
     }
 
@@ -38,9 +36,6 @@ public class OperationController {
 
     @GetMapping("/findById")
     public ResponseEntity<?> findById(@RequestParam Long id) {
-        if (id == null) {
-            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
-        }
         Operation operation = operationService.findById(id);
         if (operation == null){
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
@@ -49,10 +44,7 @@ public class OperationController {
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody Operation operation) {
-        if (operation == null) {
-            return new ResponseEntity<>(ResponseCode.NULL_OPERATION, HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> update(@Valid @RequestBody Operation operation) {
         Operation updatedOperation = operationService.update(operation);
         if (updatedOperation == null) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
@@ -62,9 +54,6 @@ public class OperationController {
 
     @DeleteMapping
     public ResponseEntity<ResponseCode> deleteById(@RequestParam Long id) {
-        if (id == null) {
-            return new ResponseEntity<>(ResponseCode.NULL_ID, HttpStatus.BAD_REQUEST);
-        }
         if (operationService.deleteById(id) > 0) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         } else {
