@@ -35,7 +35,7 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleService.findAll());
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public ResponseEntity<?> findById(@RequestParam Long id) {
         Schedule schedule = scheduleService.findById(id);
         if (Objects.isNull(schedule)){
