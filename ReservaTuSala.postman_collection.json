@@ -43,15 +43,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/business/findAll",
+							"raw": "http://localhost:8081/business",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"business",
-								"findAll"
+								"business"
 							]
 						}
 					},
@@ -63,15 +62,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/business/findById?id=1",
+							"raw": "http://localhost:8081/business?id=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"business",
-								"findById"
+								"business"
 							],
 							"query": [
 								{
@@ -126,7 +124,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/business/addRoom?id=1",
+							"raw": "http://localhost:8081/business/room?id=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -134,7 +132,7 @@
 							"port": "8081",
 							"path": [
 								"business",
-								"addRoom"
+								"room"
 							],
 							"query": [
 								{
@@ -161,7 +159,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/business/addOperation?id=1",
+							"raw": "http://localhost:8081/business/operation?id=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -169,7 +167,7 @@
 							"port": "8081",
 							"path": [
 								"business",
-								"addOperation"
+								"operation"
 							],
 							"query": [
 								{
@@ -245,15 +243,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/customer/findAll",
+							"raw": "http://localhost:8081/customer",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"customer",
-								"findAll"
+								"customer"
 							]
 						}
 					},
@@ -265,15 +262,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/customer/findById?id=2",
+							"raw": "http://localhost:8081/customer?id=2",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"customer",
-								"findById"
+								"customer"
 							],
 							"query": [
 								{
@@ -328,7 +324,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/customer/addOperation?id=2",
+							"raw": "http://localhost:8081/customer/operation?id=2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -336,7 +332,7 @@
 							"port": "8081",
 							"path": [
 								"customer",
-								"addOperation"
+								"operation"
 							],
 							"query": [
 								{
@@ -412,15 +408,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/location/findAll",
+							"raw": "http://localhost:8081/location",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"location",
-								"findAll"
+								"location"
 							]
 						}
 					},
@@ -432,15 +427,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/location/findById?id=3",
+							"raw": "http://localhost:8081/location?id=3",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"location",
-								"findById"
+								"location"
 							],
 							"query": [
 								{
@@ -544,15 +538,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/material/findAll",
+							"raw": "http://localhost:8081/material",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"material",
-								"findAll"
+								"material"
 							]
 						}
 					},
@@ -564,15 +557,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/material/findById?id=4",
+							"raw": "http://localhost:8081/material?id=4",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"material",
-								"findById"
+								"material"
 							],
 							"query": [
 								{
@@ -676,15 +668,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/operation/findAll",
+							"raw": "http://localhost:8081/operation",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"operation",
-								"findAll"
+								"operation"
 							]
 						}
 					},
@@ -696,15 +687,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/operation/findById?id=5",
+							"raw": "http://localhost:8081/operation?id=5",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"operation",
-								"findById"
+								"operation"
 							],
 							"query": [
 								{
@@ -808,35 +798,33 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/room/findAll",
+							"raw": "http://localhost:8081/room",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"room",
-								"findAll"
+								"room"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "GET find by id Copy",
+					"name": "GET find by id",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/room/findById?id=6",
+							"raw": "http://localhost:8081/room?id=6",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"room",
-								"findById"
+								"room"
 							],
 							"query": [
 								{
@@ -916,7 +904,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/room/addOperation?id=6",
+							"raw": "http://localhost:8081/room/operation?id=6",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -924,7 +912,7 @@
 							"port": "8081",
 							"path": [
 								"room",
-								"addOperation"
+								"operation"
 							],
 							"query": [
 								{
@@ -951,7 +939,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/room/addMaterial?id=6",
+							"raw": "http://localhost:8081/room/material?id=6",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -959,7 +947,7 @@
 							"port": "8081",
 							"path": [
 								"room",
-								"addMaterial"
+								"material"
 							],
 							"query": [
 								{
@@ -986,7 +974,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/room/addSchedule?id=6",
+							"raw": "http://localhost:8081/room/schedule?id=6",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -994,7 +982,7 @@
 							"port": "8081",
 							"path": [
 								"room",
-								"addSchedule"
+								"schedule"
 							],
 							"query": [
 								{
@@ -1045,15 +1033,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/schedule/findAll",
+							"raw": "http://localhost:8081/schedule",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"schedule",
-								"findAll"
+								"schedule"
 							]
 						}
 					},
@@ -1065,15 +1052,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/schedule/findById?id=7",
+							"raw": "http://localhost:8081/schedule?id=7",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"schedule",
-								"findById"
+								"schedule"
 							],
 							"query": [
 								{
