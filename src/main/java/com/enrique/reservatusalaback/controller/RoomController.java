@@ -33,12 +33,12 @@ public class RoomController {
         return ResponseEntity.ok(roomService.add(room));
     }
 
-    @GetMapping("/findAll")
+    @GetMapping
     public ResponseEntity<List<Room>> findAll() {
         return ResponseEntity.ok(roomService.findAll());
     }
 
-    @GetMapping("/findById")
+    @GetMapping
     public ResponseEntity<?> findById(@Valid @RequestParam Long id) {
         Room room = roomService.findById(id);
         if (Objects.isNull(room)){
@@ -64,7 +64,7 @@ public class RoomController {
         return ResponseEntity.ok(ResponseCode.OK);
     }
 
-    @PostMapping("/addOperation")
+    @PostMapping("/operation")
     public ResponseEntity<?> addOperation(@RequestParam Long id, @Valid @RequestBody Operation operation) {
         Operation addedOperation = roomService.addOperation(id, operation);
         if (Objects.isNull(addedOperation)) {
@@ -73,7 +73,7 @@ public class RoomController {
         return ResponseEntity.ok(addedOperation);
     }
 
-    @PostMapping("/addSchedule")
+    @PostMapping("/schedule")
     public ResponseEntity<?> addSchedule(@RequestParam Long id, @Valid @RequestBody Schedule schedule) {
         Schedule addedSchedule = roomService.addSchedule(id, schedule);
         if (Objects.isNull(addedSchedule)) {
@@ -82,7 +82,7 @@ public class RoomController {
         return ResponseEntity.ok(addedSchedule);
     }
 
-    @PostMapping("/addMaterial")
+    @PostMapping("/material")
     public ResponseEntity<?> addMaterial(@RequestParam Long id, @Valid @RequestBody Material material) {
         Material addedMaterial = roomService.addMaterial(id, material);
         if (Objects.isNull(addedMaterial)) {

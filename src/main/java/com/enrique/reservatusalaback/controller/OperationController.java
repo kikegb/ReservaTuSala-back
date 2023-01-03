@@ -30,12 +30,12 @@ public class OperationController {
         return ResponseEntity.ok(operationService.add(operation));
     }
 
-    @GetMapping("/findAll")
+    @GetMapping
     public ResponseEntity<List<Operation>> findAll() {
         return ResponseEntity.ok(operationService.findAll());
     }
 
-    @GetMapping("/findById")
+    @GetMapping
     public ResponseEntity<?> findById(@RequestParam Long id) {
         Operation operation = operationService.findById(id);
         if (Objects.isNull(operation)){

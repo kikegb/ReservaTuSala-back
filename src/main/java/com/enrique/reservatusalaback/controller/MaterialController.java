@@ -30,12 +30,12 @@ public class MaterialController {
         return ResponseEntity.ok(materialService.add(material));
     }
 
-    @GetMapping("/findAll")
+    @GetMapping
     public ResponseEntity<List<Material>> findAll() {
         return ResponseEntity.ok(materialService.findAll());
     }
 
-    @GetMapping("/findById")
+    @GetMapping
     public ResponseEntity<?> findById(@RequestParam Long id) {
         Material material = materialService.findById(id);
         if (Objects.isNull(material)){

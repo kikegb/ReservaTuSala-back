@@ -36,12 +36,12 @@ public class BusinessController {
         return ResponseEntity.ok(addedBusiness);
     }
 
-    @GetMapping("/findAll")
+    @GetMapping
     public ResponseEntity<List<Business>> findAll() {
         return ResponseEntity.ok(businessService.findAll());
     }
 
-    @GetMapping("/findById")
+    @GetMapping
     public ResponseEntity<?> findById(@RequestParam Long id) {
         Business business = businessService.findById(id);
         if (Objects.isNull(business)){
@@ -67,7 +67,7 @@ public class BusinessController {
         return ResponseEntity.ok(ResponseCode.OK);
     }
 
-    @PostMapping("/addRoom")
+    @PostMapping("/room")
     public ResponseEntity<?> addRoom(@RequestParam Long id, @Valid @RequestBody Room room) {
         Room addedRoom = businessService.addRoom(id, room);
         if (Objects.isNull(addedRoom)) {
@@ -76,7 +76,7 @@ public class BusinessController {
         return ResponseEntity.ok(addedRoom);
     }
 
-    @PostMapping("/addOperation")
+    @PostMapping("/operation")
     public ResponseEntity<?> addOperation(@RequestParam Long id, @Valid @RequestBody Operation operation) {
         Operation addedOperation = businessService.addOperation(id, operation);
         if (Objects.isNull(addedOperation)) {

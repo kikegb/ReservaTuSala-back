@@ -30,12 +30,12 @@ public class LocationController {
         return ResponseEntity.ok(locationService.add(location));
     }
 
-    @GetMapping("/findAll")
+    @GetMapping
     public ResponseEntity<List<Location>> findAll() {
         return ResponseEntity.ok(locationService.findAll());
     }
 
-    @GetMapping("/findById")
+    @GetMapping
     public ResponseEntity<?> findById(@RequestParam Long id) {
         Location location = locationService.findById(id);
         if (Objects.isNull(location)){

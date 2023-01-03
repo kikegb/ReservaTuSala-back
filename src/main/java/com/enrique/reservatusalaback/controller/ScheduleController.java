@@ -30,12 +30,12 @@ public class ScheduleController {
         return ResponseEntity.ok(scheduleService.add(schedule));
     }
 
-    @GetMapping("/findAll")
+    @GetMapping
     public ResponseEntity<List<Schedule>> findAll() {
         return ResponseEntity.ok(scheduleService.findAll());
     }
 
-    @GetMapping("/findById")
+    @GetMapping
     public ResponseEntity<?> findById(@RequestParam Long id) {
         Schedule schedule = scheduleService.findById(id);
         if (Objects.isNull(schedule)){

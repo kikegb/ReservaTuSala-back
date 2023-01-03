@@ -35,12 +35,12 @@ public class CustomerController {
         return ResponseEntity.ok(addedCustomer);
     }
 
-    @GetMapping("/findAll")
+    @GetMapping
     public ResponseEntity<List<Customer>> findAll() {
         return ResponseEntity.ok(customerService.findAll());
     }
 
-    @GetMapping("/findById")
+    @GetMapping
     public ResponseEntity<?> findById(@RequestParam Long id) {
         Customer customer = customerService.findById(id);
         if (Objects.isNull(customer)){
@@ -66,7 +66,7 @@ public class CustomerController {
         return ResponseEntity.ok(ResponseCode.OK);
     }
 
-    @PostMapping("/addOperation")
+    @PostMapping("/operation")
     public ResponseEntity<?> addOperation(@RequestParam Long id, @Valid @RequestBody Operation operation) {
         Operation addedOperation = customerService.addOperation(id, operation);
         if (Objects.isNull(addedOperation)) {
