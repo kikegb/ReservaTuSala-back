@@ -40,7 +40,7 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/byId")
     public ResponseEntity<?> findById(@RequestParam Long id) {
         Customer customer = customerService.findById(id);
         if (Objects.isNull(customer)){

@@ -41,7 +41,7 @@ public class BusinessController {
         return ResponseEntity.ok(businessService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/byId")
     public ResponseEntity<?> findById(@RequestParam Long id) {
         Business business = businessService.findById(id);
         if (Objects.isNull(business)){
