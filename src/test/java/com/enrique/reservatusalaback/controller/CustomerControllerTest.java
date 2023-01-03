@@ -147,7 +147,7 @@ public class CustomerControllerTest {
         List<Customer> customers = mockGenerator.objects(Customer.class, 5).toList();
         doReturn(customers).when(customerService).findAll();
 
-        this.mockMvc.perform(get("/customer/findAll"))
+        this.mockMvc.perform(get("/customer"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -174,7 +174,7 @@ public class CustomerControllerTest {
         Customer customer = mockGenerator.nextObject(Customer.class);
         doReturn(customer).when(customerService).findById(customer.getId());
 
-        this.mockMvc.perform(get("/customer/findById")
+        this.mockMvc.perform(get("/customer/byId")
                         .param("id", customer.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -194,7 +194,7 @@ public class CustomerControllerTest {
         Customer customer = mockGenerator.nextObject(Customer.class);
         doReturn(null).when(customerService).findById(customer.getId());
 
-        this.mockMvc.perform(get("/customer/findById")
+        this.mockMvc.perform(get("/customer/byId")
                         .param("id", customer.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())
@@ -286,7 +286,7 @@ public class CustomerControllerTest {
         );
         doReturn(operation).when(customerService).addOperation(customer.getId(), operationNoId);
 
-        this.mockMvc.perform(post("/customer/addOperation")
+        this.mockMvc.perform(post("/customer/operation")
                         .param("id", customer.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(operationNoId)))
@@ -308,7 +308,7 @@ public class CustomerControllerTest {
         Operation operation = mockGenerator.nextObject(Operation.class);
         doReturn(null).when(customerService).addOperation(customer.getId(), operation);
 
-        this.mockMvc.perform(post("/customer/addOperation")
+        this.mockMvc.perform(post("/customer/operation")
                         .param("id", customer.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(operation)))

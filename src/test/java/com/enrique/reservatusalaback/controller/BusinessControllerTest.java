@@ -149,7 +149,7 @@ public class BusinessControllerTest {
         List<Business> businesses = mockGenerator.objects(Business.class, 5).toList();
         doReturn(businesses).when(businessService).findAll();
 
-        this.mockMvc.perform(get("/business/findAll"))
+        this.mockMvc.perform(get("/business"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -176,7 +176,7 @@ public class BusinessControllerTest {
         Business business = mockGenerator.nextObject(Business.class);
         doReturn(business).when(businessService).findById(business.getId());
 
-        this.mockMvc.perform(get("/business/findById")
+        this.mockMvc.perform(get("/business/byId")
                         .param("id", business.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -196,7 +196,7 @@ public class BusinessControllerTest {
         Business business = mockGenerator.nextObject(Business.class);
         doReturn(null).when(businessService).findById(business.getId());
 
-        this.mockMvc.perform(get("/business/findById")
+        this.mockMvc.perform(get("/business/byId")
                         .param("id", business.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())
@@ -288,7 +288,7 @@ public class BusinessControllerTest {
         );
         doReturn(room).when(businessService).addRoom(business.getId(), roomNoId);
 
-        this.mockMvc.perform(post("/business/addRoom")
+        this.mockMvc.perform(post("/business/room")
                         .param("id", business.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(roomNoId)))
@@ -311,7 +311,7 @@ public class BusinessControllerTest {
         Room room = mockGenerator.nextObject(Room.class);
         doReturn(null).when(businessService).addRoom(business.getId(), room);
 
-        this.mockMvc.perform(post("/business/addRoom")
+        this.mockMvc.perform(post("/business/room")
                         .param("id", business.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(room)))
@@ -336,7 +336,7 @@ public class BusinessControllerTest {
         );
         doReturn(operation).when(businessService).addOperation(business.getId(), operationNoId);
 
-        this.mockMvc.perform(post("/business/addOperation")
+        this.mockMvc.perform(post("/business/operation")
                         .param("id", business.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(operationNoId)))
@@ -358,7 +358,7 @@ public class BusinessControllerTest {
         Operation operation = mockGenerator.nextObject(Operation.class);
         doReturn(null).when(businessService).addOperation(business.getId(), operation);
 
-        this.mockMvc.perform(post("/business/addOperation")
+        this.mockMvc.perform(post("/business/operation")
                         .param("id", business.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(operation)))

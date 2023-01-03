@@ -94,7 +94,7 @@ public class MaterialControllerTest {
         List<Material> materials = mockGenerator.objects(Material.class, 5).toList();
         doReturn(materials).when(materialService).findAll();
 
-        this.mockMvc.perform(get("/material/findAll"))
+        this.mockMvc.perform(get("/material"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -115,7 +115,7 @@ public class MaterialControllerTest {
         Material material = mockGenerator.nextObject(Material.class);
         doReturn(material).when(materialService).findById(material.getId());
 
-        this.mockMvc.perform(get("/material/findById")
+        this.mockMvc.perform(get("/material/byId")
                         .param("id", material.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -132,7 +132,7 @@ public class MaterialControllerTest {
         Material material = mockGenerator.nextObject(Material.class);
         doReturn(null).when(materialService).findById(material.getId());
 
-        this.mockMvc.perform(get("/material/findById")
+        this.mockMvc.perform(get("/material/byId")
                         .param("id", material.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())

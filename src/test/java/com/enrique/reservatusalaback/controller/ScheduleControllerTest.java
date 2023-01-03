@@ -97,7 +97,7 @@ public class ScheduleControllerTest {
         List<Schedule> schedules = mockGenerator.objects(Schedule.class, 5).toList();
         doReturn(schedules).when(scheduleService).findAll();
 
-        this.mockMvc.perform(get("/schedule/findAll"))
+        this.mockMvc.perform(get("/schedule"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -120,7 +120,7 @@ public class ScheduleControllerTest {
         Schedule schedule = mockGenerator.nextObject(Schedule.class);
         doReturn(schedule).when(scheduleService).findById(schedule.getId());
 
-        this.mockMvc.perform(get("/schedule/findById")
+        this.mockMvc.perform(get("/schedule/byId")
                         .param("id", schedule.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -138,7 +138,7 @@ public class ScheduleControllerTest {
         Schedule schedule = mockGenerator.nextObject(Schedule.class);
         doReturn(null).when(scheduleService).findById(schedule.getId());
 
-        this.mockMvc.perform(get("/schedule/findById")
+        this.mockMvc.perform(get("/schedule/byId")
                         .param("id", schedule.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())

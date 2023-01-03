@@ -105,7 +105,7 @@ public class RoomControllerTest {
         List<Room> rooms = mockGenerator.objects(Room.class, 5).toList();
         doReturn(rooms).when(roomService).findAll();
 
-        this.mockMvc.perform(get("/room/findAll"))
+        this.mockMvc.perform(get("/room"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -130,7 +130,7 @@ public class RoomControllerTest {
         Room room = mockGenerator.nextObject(Room.class);
         doReturn(room).when(roomService).findById(room.getId());
 
-        this.mockMvc.perform(get("/room/findById")
+        this.mockMvc.perform(get("/room/byId")
                         .param("id", room.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -149,7 +149,7 @@ public class RoomControllerTest {
         Room room = mockGenerator.nextObject(Room.class);
         doReturn(null).when(roomService).findById(room.getId());
 
-        this.mockMvc.perform(get("/room/findById")
+        this.mockMvc.perform(get("/room/byId")
                         .param("id", room.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())
@@ -240,7 +240,7 @@ public class RoomControllerTest {
         );
         doReturn(operation).when(roomService).addOperation(room.getId(), operationNoId);
 
-        this.mockMvc.perform(post("/room/addOperation")
+        this.mockMvc.perform(post("/room/operation")
                         .param("id", room.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(operationNoId)))
@@ -262,7 +262,7 @@ public class RoomControllerTest {
         Operation operation = mockGenerator.nextObject(Operation.class);
         doReturn(null).when(roomService).addOperation(room.getId(), operation);
 
-        this.mockMvc.perform(post("/room/addOperation")
+        this.mockMvc.perform(post("/room/operation")
                         .param("id", room.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(operation)))
@@ -285,7 +285,7 @@ public class RoomControllerTest {
         );
         doReturn(material).when(roomService).addMaterial(room.getId(), materialNoId);
 
-        this.mockMvc.perform(post("/room/addMaterial")
+        this.mockMvc.perform(post("/room/material")
                         .param("id", room.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(materialNoId)))
@@ -305,7 +305,7 @@ public class RoomControllerTest {
         Material material = mockGenerator.nextObject(Material.class);
         doReturn(null).when(roomService).addMaterial(room.getId(), material);
 
-        this.mockMvc.perform(post("/room/addMaterial")
+        this.mockMvc.perform(post("/room/material")
                         .param("id", room.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(material)))
@@ -329,7 +329,7 @@ public class RoomControllerTest {
         );
         doReturn(schedule).when(roomService).addSchedule(room.getId(), scheduleNoId);
 
-        this.mockMvc.perform(post("/room/addSchedule")
+        this.mockMvc.perform(post("/room/schedule")
                         .param("id", room.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(scheduleNoId)))
@@ -350,7 +350,7 @@ public class RoomControllerTest {
         Schedule schedule = mockGenerator.nextObject(Schedule.class);
         doReturn(null).when(roomService).addSchedule(room.getId(), schedule);
 
-        this.mockMvc.perform(post("/room/addSchedule")
+        this.mockMvc.perform(post("/room/schedule")
                         .param("id", room.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(schedule)))

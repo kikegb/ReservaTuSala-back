@@ -106,7 +106,7 @@ public class LocationControllerTest {
         List<Location> locations = mockGenerator.objects(Location.class, 5).toList();
         doReturn(locations).when(locationService).findAll();
 
-        this.mockMvc.perform(get("/location/findAll"))
+        this.mockMvc.perform(get("/location"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -135,7 +135,7 @@ public class LocationControllerTest {
         Location location = mockGenerator.nextObject(Location.class);
         doReturn(location).when(locationService).findById(location.getId());
 
-        this.mockMvc.perform(get("/location/findById")
+        this.mockMvc.perform(get("/location/byId")
                         .param("id", location.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -156,7 +156,7 @@ public class LocationControllerTest {
         Location location = mockGenerator.nextObject(Location.class);
         doReturn(null).when(locationService).findById(location.getId());
 
-        this.mockMvc.perform(get("/location/findById")
+        this.mockMvc.perform(get("/location/byId")
                         .param("id", location.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())
