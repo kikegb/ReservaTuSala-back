@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/room")
@@ -40,7 +41,7 @@ public class RoomController {
     @GetMapping("/findById")
     public ResponseEntity<?> findById(@Valid @RequestParam Long id) {
         Room room = roomService.findById(id);
-        if (room == null){
+        if (Objects.isNull(room)){
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(room);
@@ -49,7 +50,7 @@ public class RoomController {
     @PutMapping
     public ResponseEntity<?> update(@Valid @RequestBody Room room) {
         Room updatedRoom = roomService.update(room);
-        if (updatedRoom == null) {
+        if (Objects.isNull(updatedRoom)) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(updatedRoom);
@@ -66,7 +67,7 @@ public class RoomController {
     @PostMapping("/addOperation")
     public ResponseEntity<?> addOperation(@RequestParam Long id, @Valid @RequestBody Operation operation) {
         Operation addedOperation = roomService.addOperation(id, operation);
-        if (addedOperation == null) {
+        if (Objects.isNull(addedOperation)) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(addedOperation);
@@ -75,7 +76,7 @@ public class RoomController {
     @PostMapping("/addSchedule")
     public ResponseEntity<?> addSchedule(@RequestParam Long id, @Valid @RequestBody Schedule schedule) {
         Schedule addedSchedule = roomService.addSchedule(id, schedule);
-        if (addedSchedule == null) {
+        if (Objects.isNull(addedSchedule)) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(addedSchedule);
@@ -84,7 +85,7 @@ public class RoomController {
     @PostMapping("/addMaterial")
     public ResponseEntity<?> addMaterial(@RequestParam Long id, @Valid @RequestBody Material material) {
         Material addedMaterial = roomService.addMaterial(id, material);
-        if (addedMaterial == null) {
+        if (Objects.isNull(addedMaterial)) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(addedMaterial);

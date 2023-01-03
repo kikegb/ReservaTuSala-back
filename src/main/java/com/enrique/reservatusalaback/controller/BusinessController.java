@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/business")
@@ -29,7 +30,7 @@ public class BusinessController {
     @PostMapping
     public ResponseEntity<?> add(@Valid @RequestBody Business business) {
         Business addedBusiness = businessService.add(business);
-        if (addedBusiness == null) {
+        if (Objects.isNull(addedBusiness)) {
             return new ResponseEntity<>(ResponseCode.ALREADY_EXISTENT_USER, HttpStatus.CONFLICT);
         }
         return ResponseEntity.ok(addedBusiness);
@@ -43,7 +44,7 @@ public class BusinessController {
     @GetMapping("/findById")
     public ResponseEntity<?> findById(@RequestParam Long id) {
         Business business = businessService.findById(id);
-        if (business == null){
+        if (Objects.isNull(business)){
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(business);
@@ -52,7 +53,7 @@ public class BusinessController {
     @PutMapping
     public ResponseEntity<?> update(@Valid @RequestBody Business business) {
         Business updatedBusiness = businessService.update(business);
-        if (updatedBusiness == null) {
+        if (Objects.isNull(updatedBusiness)) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(updatedBusiness);
@@ -69,7 +70,7 @@ public class BusinessController {
     @PostMapping("/addRoom")
     public ResponseEntity<?> addRoom(@RequestParam Long id, @Valid @RequestBody Room room) {
         Room addedRoom = businessService.addRoom(id, room);
-        if (addedRoom == null) {
+        if (Objects.isNull(addedRoom)) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(addedRoom);
@@ -78,7 +79,7 @@ public class BusinessController {
     @PostMapping("/addOperation")
     public ResponseEntity<?> addOperation(@RequestParam Long id, @Valid @RequestBody Operation operation) {
         Operation addedOperation = businessService.addOperation(id, operation);
-        if (addedOperation == null) {
+        if (Objects.isNull(addedOperation)) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(addedOperation);

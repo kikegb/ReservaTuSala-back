@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/operation")
@@ -37,7 +38,7 @@ public class OperationController {
     @GetMapping("/findById")
     public ResponseEntity<?> findById(@RequestParam Long id) {
         Operation operation = operationService.findById(id);
-        if (operation == null){
+        if (Objects.isNull(operation)){
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(operation);
@@ -46,7 +47,7 @@ public class OperationController {
     @PutMapping
     public ResponseEntity<?> update(@Valid @RequestBody Operation operation) {
         Operation updatedOperation = operationService.update(operation);
-        if (updatedOperation == null) {
+        if (Objects.isNull(updatedOperation)) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(updatedOperation);

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/schedule")
@@ -37,7 +38,7 @@ public class ScheduleController {
     @GetMapping("/findById")
     public ResponseEntity<?> findById(@RequestParam Long id) {
         Schedule schedule = scheduleService.findById(id);
-        if (schedule == null){
+        if (Objects.isNull(schedule)){
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(schedule);
@@ -46,7 +47,7 @@ public class ScheduleController {
     @PutMapping
     public ResponseEntity<?> update(@Valid @RequestBody Schedule schedule) {
         Schedule updatedSchedule = scheduleService.update(schedule);
-        if (updatedSchedule == null) {
+        if (Objects.isNull(updatedSchedule)) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(updatedSchedule);

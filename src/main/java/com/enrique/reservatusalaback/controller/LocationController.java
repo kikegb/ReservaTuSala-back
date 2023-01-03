@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/location")
@@ -37,7 +38,7 @@ public class LocationController {
     @GetMapping("/findById")
     public ResponseEntity<?> findById(@RequestParam Long id) {
         Location location = locationService.findById(id);
-        if (location == null){
+        if (Objects.isNull(location)){
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(location);
@@ -46,7 +47,7 @@ public class LocationController {
     @PutMapping
     public ResponseEntity<?> update(@Valid @RequestBody Location location) {
         Location updatedLocation = locationService.update(location);
-        if (updatedLocation == null) {
+        if (Objects.isNull(updatedLocation)) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(updatedLocation);

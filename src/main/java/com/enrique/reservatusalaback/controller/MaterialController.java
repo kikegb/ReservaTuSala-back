@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/material")
@@ -37,7 +38,7 @@ public class MaterialController {
     @GetMapping("/findById")
     public ResponseEntity<?> findById(@RequestParam Long id) {
         Material material = materialService.findById(id);
-        if (material == null){
+        if (Objects.isNull(material)){
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(material);
@@ -46,7 +47,7 @@ public class MaterialController {
     @PutMapping
     public ResponseEntity<?> update(@Valid @RequestBody Material material) {
         Material updatedMaterial = materialService.update(material);
-        if (updatedMaterial == null) {
+        if (Objects.isNull(updatedMaterial)) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(updatedMaterial);

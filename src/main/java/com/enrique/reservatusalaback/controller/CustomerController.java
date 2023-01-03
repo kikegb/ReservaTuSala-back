@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/customer")
@@ -28,7 +29,7 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<?> add(@Valid @RequestBody Customer customer) {
         Customer addedCustomer = customerService.add(customer);
-        if (addedCustomer == null) {
+        if (Objects.isNull(addedCustomer)) {
             return new ResponseEntity<>(ResponseCode.ALREADY_EXISTENT_USER, HttpStatus.CONFLICT);
         }
         return ResponseEntity.ok(addedCustomer);
@@ -42,7 +43,7 @@ public class CustomerController {
     @GetMapping("/findById")
     public ResponseEntity<?> findById(@RequestParam Long id) {
         Customer customer = customerService.findById(id);
-        if (customer == null){
+        if (Objects.isNull(customer)){
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(customer);
@@ -51,7 +52,7 @@ public class CustomerController {
     @PutMapping
     public ResponseEntity<?> update(@Valid @RequestBody Customer customer) {
         Customer updatedCustomer = customerService.update(customer);
-        if (updatedCustomer == null) {
+        if (Objects.isNull(updatedCustomer)) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(updatedCustomer);
@@ -68,7 +69,7 @@ public class CustomerController {
     @PostMapping("/addOperation")
     public ResponseEntity<?> addOperation(@RequestParam Long id, @Valid @RequestBody Operation operation) {
         Operation addedOperation = customerService.addOperation(id, operation);
-        if (addedOperation == null) {
+        if (Objects.isNull(addedOperation)) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(addedOperation);
