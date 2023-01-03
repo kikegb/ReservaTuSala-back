@@ -1,5 +1,6 @@
 package com.enrique.reservatusalaback.exception;
 
+import com.enrique.reservatusalaback.controller.ResponseCode;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +21,15 @@ public class ControllerExceptionHandler
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
-        Map<String, String> errors = new HashMap<>();
+        Map<String, String> response = new HashMap<>();
+        response.put("code", String.valueOf(ResponseCode.BAD_REQUEST.code));
+        response.put("description", ResponseCode.BAD_REQUEST.description);
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
+            response.put(fieldName, errorMessage);
         });
 
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }
