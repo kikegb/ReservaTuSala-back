@@ -62,9 +62,8 @@ public class BusinessController {
     public ResponseEntity<ResponseCode> deleteById(@RequestParam Long id) {
         if (businessService.deleteById(id) > 0) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
-        } else {
-            return ResponseEntity.ok(ResponseCode.OK);
         }
+        return ResponseEntity.ok(ResponseCode.OK);
     }
 
     @PostMapping("/addRoom")

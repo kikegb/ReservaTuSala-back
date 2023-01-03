@@ -56,8 +56,7 @@ public class MaterialController {
     public ResponseEntity<ResponseCode> deleteById(@RequestParam Long id) {
         if (materialService.deleteById(id) > 0) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
-        } else {
-            return ResponseEntity.ok(ResponseCode.OK);
         }
+        return ResponseEntity.ok(ResponseCode.OK);
     }
 }
