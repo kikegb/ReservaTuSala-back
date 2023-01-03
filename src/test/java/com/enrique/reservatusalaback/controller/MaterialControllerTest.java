@@ -50,6 +50,7 @@ public class MaterialControllerTest {
     @Test
     public void whenAddNewMaterial_ThenReturnOkAndMaterialWithId() throws Exception {
         Material material = mockGenerator.nextObject(Material.class);
+        material.setQuantity(mockGenerator.nextInt(1,  999));
         Material materialNoId = new Material(
                 material.getMaterial(),
                 material.getQuantity()
@@ -146,6 +147,7 @@ public class MaterialControllerTest {
     @Test
     public void whenUpdateMaterialWithValidId_ThenReturnOkAndUpdatedMaterial() throws Exception {
         Material updatedMaterial = mockGenerator.nextObject(Material.class);
+        updatedMaterial.setQuantity(mockGenerator.nextInt(1,  999));
         doReturn(updatedMaterial).when(materialService).update(any(Material.class));
 
         this.mockMvc.perform(put("/material")
@@ -164,6 +166,7 @@ public class MaterialControllerTest {
     @Test
     public void whenUpdateMaterialWithInvalidId_ThenReturnNotFoundAndNotFoundIdError() throws Exception {
         Material updatedMaterial = mockGenerator.nextObject(Material.class);
+        updatedMaterial.setQuantity(mockGenerator.nextInt(1,  999));
         doReturn(null).when(materialService).update(updatedMaterial);
 
         this.mockMvc.perform(put("/material")

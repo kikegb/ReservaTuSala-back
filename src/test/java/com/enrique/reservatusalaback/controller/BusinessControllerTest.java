@@ -47,12 +47,14 @@ public class BusinessControllerTest {
             new EasyRandomParameters()
                     .randomizationDepth(2)
                     .collectionSizeRange(0,5)
+                    .stringLengthRange(9,9)
     );
 
     @DisplayName("POST add business")
     @Test
     public void whenAddNewBusiness_ThenReturnOkAndBusinessWithId() throws Exception {
         Business business = mockGenerator.nextObject(Business.class);
+        business.setEmail("some@email.com");
         Business businessNoId = new Business(
                 business.getCif(),
                 business.getName(),
@@ -82,6 +84,7 @@ public class BusinessControllerTest {
     @Test
     public void whenAddExistentBusiness_ThenReturnConflictAndAlreadyExistentUserError() throws Exception {
         Business business = mockGenerator.nextObject(Business.class);
+        business.setEmail("some@email.com");
         doReturn(null).when(businessService).add(business);
 
         this.mockMvc.perform(post("/business")
@@ -210,6 +213,7 @@ public class BusinessControllerTest {
     @Test
     public void whenUpdateBusinessWithValidId_ThenReturnOkAndUpdatedBusiness() throws Exception {
         Business updatedBusiness = mockGenerator.nextObject(Business.class);
+        updatedBusiness.setEmail("some@email.com");
         doReturn(updatedBusiness).when(businessService).update(any(Business.class));
 
         this.mockMvc.perform(put("/business")
@@ -231,6 +235,7 @@ public class BusinessControllerTest {
     @Test
     public void whenUpdateBusinessWithInvalidId_ThenReturnNotFoundAndNotFoundIdError() throws Exception {
         Business updatedBusiness = mockGenerator.nextObject(Business.class);
+        updatedBusiness.setEmail("some@email.com");
         doReturn(null).when(businessService).update(updatedBusiness);
 
         this.mockMvc.perform(put("/business")

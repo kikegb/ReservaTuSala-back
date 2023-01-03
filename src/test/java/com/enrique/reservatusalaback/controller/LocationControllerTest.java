@@ -44,6 +44,7 @@ public class LocationControllerTest {
             new EasyRandomParameters()
                     .randomizationDepth(2)
                     .collectionSizeRange(0,5)
+                    .stringLengthRange(5,5)
     );
 
     @DisplayName("POST add location")

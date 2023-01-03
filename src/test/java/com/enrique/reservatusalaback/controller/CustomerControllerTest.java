@@ -45,12 +45,14 @@ public class CustomerControllerTest {
             new EasyRandomParameters()
                     .randomizationDepth(2)
                     .collectionSizeRange(0,5)
+                    .stringLengthRange(9,9)
     );
 
     @DisplayName("POST add customer")
     @Test
     public void whenAddNewCustomer_ThenReturnOkAndCustomerWithId() throws Exception {
         Customer customer = mockGenerator.nextObject(Customer.class);
+        customer.setEmail("some@email.com");
         Customer customerNoId = new Customer(
                 customer.getCnif(),
                 customer.getName(),
@@ -80,6 +82,7 @@ public class CustomerControllerTest {
     @Test
     public void whenAddExistentCustomer_ThenReturnConflictAndAlreadyExistentUserError() throws Exception {
         Customer customer = mockGenerator.nextObject(Customer.class);
+        customer.setEmail("some@email.com");
         doReturn(null).when(customerService).add(customer);
 
         this.mockMvc.perform(post("/customer")
@@ -208,6 +211,7 @@ public class CustomerControllerTest {
     @Test
     public void whenUpdateCustomerWithValidId_ThenReturnOkAndUpdatedCustomer() throws Exception {
         Customer updatedCustomer = mockGenerator.nextObject(Customer.class);
+        updatedCustomer.setEmail("some@email.com");
         doReturn(updatedCustomer).when(customerService).update(any(Customer.class));
 
         this.mockMvc.perform(put("/customer")
@@ -229,6 +233,7 @@ public class CustomerControllerTest {
     @Test
     public void whenUpdateCustomerWithInvalidId_ThenReturnNotFoundAndNotFoundIdError() throws Exception {
         Customer updatedCustomer = mockGenerator.nextObject(Customer.class);
+        updatedCustomer.setEmail("some@email.com");
         doReturn(null).when(customerService).update(updatedCustomer);
 
         this.mockMvc.perform(put("/customer")
