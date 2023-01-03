@@ -73,6 +73,27 @@ public class OperationControllerTest {
                 .andExpect(jsonPath("$.deleted", is(operation.isDeleted())));
     }
 
+    @DisplayName("POST add operation empty start")
+    @Test
+    public void whenAddNewOperationWithNoStart_ThenReturnBadRequestAndError() throws Exception {
+        Operation operation = mockGenerator.nextObject(Operation.class);
+        JSONObject object = new JSONObject();
+        object.put("end", operation.getEnd());
+        object.put("cost", operation.getCost());
+        object.put("status", operation.getStatus());
+
+        this.mockMvc.perform(post("/operation")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(object.toString()))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.code", is("3")))
+                .andExpect(jsonPath("$.description",
+                        is("Bad request: Request body has empty or wrong formatted data.")))
+                .andExpect(jsonPath("$.start", is("Start is required")));
+    }
+
     @DisplayName("GET all operations")
     @Test
     public void whenFindAllOperations_ThenReturnOkAndListOfOperations() throws Exception {

@@ -7,7 +7,7 @@ public enum ResponseCode {
     OK(0, "OK"),
     NOT_FOUND_ID(1, "Invalid ID: ID not found in database."),
     ALREADY_EXISTENT_USER(2, "User conflict: There is already a user with that email or cif/nif."),
-    BAD_REQUEST(3, "Bad request: Request body has empty or wrong formatted data");
+    BAD_REQUEST(3, "Bad request: Request body has empty or wrong formatted data.");
 
     public final int code;
     public final String description;

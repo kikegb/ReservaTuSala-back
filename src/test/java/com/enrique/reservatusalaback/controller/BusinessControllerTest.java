@@ -98,6 +98,51 @@ public class BusinessControllerTest {
 
     }
 
+    @DisplayName("POST add business empty CIF")
+    @Test
+    public void whenAddNewBusinessWithNoCif_ThenReturnBadRequestAndError() throws Exception {
+        Business business = mockGenerator.nextObject(Business.class);
+        JSONObject object = new JSONObject();
+        object.put("name", business.getName());
+        object.put("phone", business.getPhone());
+        object.put("password", business.getPassword());
+        object.put("email", business.getEmail());
+
+        this.mockMvc.perform(post("/business")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(object.toString()))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.code", is("3")))
+                .andExpect(jsonPath("$.description",
+                        is("Bad request: Request body has empty or wrong formatted data.")))
+                .andExpect(jsonPath("$.cif", is("CIF is required")));
+    }
+
+    @DisplayName("POST add business short phone")
+    @Test
+    public void whenAddNewBusinessWithWrongPhone_ThenReturnBadRequestAndError() throws Exception {
+        Business business = mockGenerator.nextObject(Business.class);
+        JSONObject object = new JSONObject();
+        object.put("cif", business.getCif());
+        object.put("name", business.getName());
+        object.put("phone", "1234567");
+        object.put("password", business.getPassword());
+        object.put("email", business.getEmail());
+
+        this.mockMvc.perform(post("/business")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(object.toString()))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.code", is("3")))
+                .andExpect(jsonPath("$.description",
+                        is("Bad request: Request body has empty or wrong formatted data.")))
+                .andExpect(jsonPath("$.phone", is("Phone must be 9 characters long")));
+    }
+
     @DisplayName("GET all businesses")
     @Test
     public void whenFindAllBusinesses_ThenReturnOkAndListOfBusinesses() throws Exception {

@@ -77,6 +77,29 @@ public class LocationControllerTest {
                 .andExpect(jsonPath("$.deleted", is(location.isDeleted())));
     }
 
+    @DisplayName("POST add location empty street")
+    @Test
+    public void whenAddNewLocationWithNoStreet_ThenReturnBadRequestAndError() throws Exception {
+        Location location = mockGenerator.nextObject(Location.class);
+        JSONObject object = new JSONObject();
+        object.put("number", location.getNumber());
+        object.put("postcode", location.getPostcode());
+        object.put("town", location.getTown());
+        object.put("province", location.getProvince());
+        object.put("country", location.getCountry());
+
+        this.mockMvc.perform(post("/location")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(object.toString()))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.code", is("3")))
+                .andExpect(jsonPath("$.description",
+                        is("Bad request: Request body has empty or wrong formatted data.")))
+                .andExpect(jsonPath("$.street", is("Street is required")));
+    }
+
     @DisplayName("GET all locations")
     @Test
     public void whenFindAllLocations_ThenReturnOkAndListOfLocations() throws Exception {

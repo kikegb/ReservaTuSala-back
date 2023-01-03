@@ -71,6 +71,26 @@ public class ScheduleControllerTest {
                 .andExpect(jsonPath("$.deleted", is(schedule.isDeleted())));
     }
 
+    @DisplayName("POST add schedule empty start")
+    @Test
+    public void whenAddNewScheduleWithNoStart_ThenReturnBadRequestAndError() throws Exception {
+        Schedule schedule = mockGenerator.nextObject(Schedule.class);
+        JSONObject object = new JSONObject();
+        object.put("weekDay", schedule.getWeekDay());
+        object.put("end", schedule.getEnd());
+
+        this.mockMvc.perform(post("/schedule")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(object.toString()))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.code", is("3")))
+                .andExpect(jsonPath("$.description",
+                        is("Bad request: Request body has empty or wrong formatted data.")))
+                .andExpect(jsonPath("$.start", is("Start is required")));
+    }
+
     @DisplayName("GET all schedules")
     @Test
     public void whenFindAllSchedules_ThenReturnOkAndListOfSchedules() throws Exception {

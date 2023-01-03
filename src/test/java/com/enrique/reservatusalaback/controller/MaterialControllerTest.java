@@ -69,6 +69,25 @@ public class MaterialControllerTest {
                 .andExpect(jsonPath("$.deleted", is(material.isDeleted())));
     }
 
+    @DisplayName("POST add material empty material")
+    @Test
+    public void whenAddNewMaterialWithNoMaterial_ThenReturnBadRequestAndError() throws Exception {
+        Material material = mockGenerator.nextObject(Material.class);
+        JSONObject object = new JSONObject();
+        object.put("quantity", material.getQuantity());
+
+        this.mockMvc.perform(post("/material")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(object.toString()))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.code", is("3")))
+                .andExpect(jsonPath("$.description",
+                        is("Bad request: Request body has empty or wrong formatted data.")))
+                .andExpect(jsonPath("$.material", is("Material is required")));
+    }
+
     @DisplayName("GET all materials")
     @Test
     public void whenFindAllMaterials_ThenReturnOkAndListOfMaterials() throws Exception {

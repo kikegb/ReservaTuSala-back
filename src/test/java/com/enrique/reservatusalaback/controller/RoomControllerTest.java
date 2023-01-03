@@ -78,6 +78,27 @@ public class RoomControllerTest {
                 .andExpect(jsonPath("$.deleted", is(room.isDeleted())));
     }
 
+    @DisplayName("POST add room empty location")
+    @Test
+    public void whenAddNewRoomWithNoLocation_ThenReturnBadRequestAndError() throws Exception {
+        Room room = mockGenerator.nextObject(Room.class);
+        JSONObject object = new JSONObject();
+        object.put("name", room.getName());
+        object.put("size", room.getSize());
+        object.put("price", room.getPrice());
+
+        this.mockMvc.perform(post("/room")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(object.toString()))
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.code", is("3")))
+                .andExpect(jsonPath("$.description",
+                        is("Bad request: Request body has empty or wrong formatted data.")))
+                .andExpect(jsonPath("$.location", is("Location is required")));
+    }
+
     @DisplayName("GET all rooms")
     @Test
     public void whenFindAllRooms_ThenReturnOkAndListOfRooms() throws Exception {
