@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
@@ -21,9 +23,12 @@ public class Material extends DbEntity {
     private Long id;
 
     @NonNull
+    @NotNull(message = "Material is required")
     private String material;
 
     @NonNull
+    @NotNull(message = "Quantity is required")
+    @Min(value = 1, message = "Quantity must be at least 1")
     private int quantity;
 
 }

@@ -51,9 +51,20 @@ public class CustomerServiceTest {
     @Test
     public void whenAddingNewCustomer_thenReturnCustomer() {
         Customer customer = mockGenerator.nextObject(Customer.class);
+        when(customerRepository.existsByCnifAndEmail(customer.getCnif(), customer.getEmail())).thenReturn(false);
         when(customerRepository.save(any(Customer.class))).then(AdditionalAnswers.returnsFirstArg());
 
         assertEquals(customer, customerService.add(customer));
+    }
+
+    @DisplayName("Test add already existent customer")
+    @Test
+    public void whenAddingAlreadyExistentCustomer_thenReturnNull() {
+        Customer customer = mockGenerator.nextObject(Customer.class);
+        when(customerRepository.existsByCnifAndEmail(customer.getCnif(), customer.getEmail())).thenReturn(true);
+
+        assertNull(customerService.add(customer));
+        verify(customerRepository, never()).save(customer);
     }
 
     @DisplayName("Test find all customers")
@@ -134,7 +145,7 @@ public class CustomerServiceTest {
 
     @DisplayName("Test add operation successfully")
     @Test
-    public void givenValidId_whenAddingAOperation_thenCustomerHasNewOperation_andReturnCode0() {
+    public void givenValidId_whenAddingAOperation_thenCustomerHasNewOperation_andReturnAddedOperation() {
         Customer customer = mockGenerator.nextObject(Customer.class);
         int oldOperationsSize = customer.getOperations().size();
         Operation operation = mockGenerator.nextObject(Operation.class);
@@ -142,33 +153,21 @@ public class CustomerServiceTest {
         when(customerRepository.save(any(Customer.class))).then(AdditionalAnswers.returnsFirstArg());
         when(operationService.add(any(Operation.class))).then(AdditionalAnswers.returnsFirstArg());
 
-        assertEquals(0, customerService.addOperation(customer.getId(), operation));
+        assertEquals(operation, customerService.addOperation(customer.getId(), operation));
         verify(customerRepository).save(customerCaptor.capture());
         assertEquals(oldOperationsSize + 1, customerCaptor.getValue().getOperations().size());
     }
 
     @DisplayName("Test add operation invalid id")
     @Test
-    public void givenInvalidId_whenAddingAOperation_thenNotAddOperation_andReturnCode1() {
+    public void givenInvalidId_whenAddingAOperation_thenNotAddOperation_andReturnNull() {
         Customer customer = mockGenerator.nextObject(Customer.class);
         Operation operation = mockGenerator.nextObject(Operation.class);
         when(customerRepository.findById(customer.getId())).thenReturn(Optional.empty());
 
-        assertEquals(1, customerService.addOperation(customer.getId(), operation));
+        assertNull(customerService.addOperation(customer.getId(), operation));
         verify(customerRepository, never()).save(customer);
         verify(operationService, never()).add(operation);
     }
 
-    @DisplayName("Test add operation error saving operation")
-    @Test
-    public void givenValidId_whenAddingAOperation_andErrorSavingOperation_thenNotAddOperation_andReturnCode2() {
-        Customer customer = mockGenerator.nextObject(Customer.class);
-        Operation operation = mockGenerator.nextObject(Operation.class);
-        when(customerRepository.findById(customer.getId())).thenReturn(Optional.of(customer));
-        when(operationService.add(operation)).thenReturn(null);
-
-        assertEquals(2, customerService.addOperation(customer.getId(), operation));
-        verify(operationService).add(operation);
-        verify(customerRepository, never()).save(customer);
-    }
 }

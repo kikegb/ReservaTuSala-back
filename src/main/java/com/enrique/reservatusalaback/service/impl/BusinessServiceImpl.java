@@ -21,6 +21,9 @@ public class BusinessServiceImpl implements BusinessService {
 
     @Override
     public Business add(final Business business) {
+        if (businessRepository.existsByCifAndEmail(business.getCif(), business.getEmail())) {
+            return null;
+        }
         return businessRepository.save(business);
     }
 
@@ -55,34 +58,28 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
-    public int addRoom(final Long id, final Room room) {
+    public Room addRoom(final Long id, final Room room) {
         Optional<Business> result = businessRepository.findById(id);
         if (result.isPresent()) {
             Business business = result.get();
             Room newRoom = roomService.add(room);
-            if (newRoom == null) {
-                return 2;
-            }
             business.getRooms().add(newRoom);
             businessRepository.save(business);
-            return 0;
+            return newRoom;
         }
-        return 1;
+        return null;
     }
 
     @Override
-    public int addOperation(final Long id, final Operation operation) {
+    public Operation addOperation(final Long id, final Operation operation) {
         Optional<Business> result = businessRepository.findById(id);
         if (result.isPresent()) {
             Business business = result.get();
             Operation newOperation = operationService.add(operation);
-            if (newOperation == null) {
-                return 2;
-            }
             business.getOperations().add(newOperation);
             businessRepository.save(business);
-            return 0;
+            return newOperation;
         }
-        return 1;
+        return null;
     }
 }

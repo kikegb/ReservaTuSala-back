@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
 
 @Entity
@@ -23,13 +24,16 @@ public class Schedule extends DbEntity {
     private Long id;
 
     @NonNull
+    @NotNull(message = "Week day is required")
     private int weekDay;
 
     @NonNull
+    @NotNull(message = "Start is required")
     @Column(name = "s_start")
     private LocalTime start;
 
     @NonNull
+    @NotNull(message = "End is required")
     @Column(name = "s_end")
     private LocalTime end;
 

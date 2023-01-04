@@ -17,6 +17,9 @@ public class CustomerServiceImpl implements CustomerService {
     private final OperationService operationService;
     @Override
     public Customer add(final Customer customer) {
+        if (customerRepository.existsByCnifAndEmail(customer.getCnif(), customer.getEmail())) {
+            return null;
+        }
         return customerRepository.save(customer);
     }
 
@@ -51,18 +54,15 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public int addOperation(final Long id, final Operation operation) {
+    public Operation addOperation(final Long id, final Operation operation) {
         Optional<Customer> result = customerRepository.findById(id);
         if (result.isPresent()) {
             Customer customer = result.get();
             Operation newOperation = operationService.add(operation);
-            if (newOperation == null) {
-                return 2;
-            }
             customer.getOperations().add(newOperation);
             customerRepository.save(customer);
-            return 0;
+            return newOperation;
         }
-        return 1;
+        return null;
     }
 }

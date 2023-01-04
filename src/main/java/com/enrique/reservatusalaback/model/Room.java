@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -26,17 +27,21 @@ public class Room extends DbEntity{
     private Long id;
 
     @NonNull
+    @NotNull(message = "Location is required")
     @ManyToOne
     @JoinColumn(name = "location_id")
     private Location location;
 
     @NonNull
+    @NotNull(message = "Name is required")
     private String name;
 
     @NonNull
+    @NotNull(message = "Size is required")
     private double size;
 
     @NonNull
+    @NotNull(message = "Price is required")
     private double price;
 
     @OneToMany(fetch = FetchType.LAZY)

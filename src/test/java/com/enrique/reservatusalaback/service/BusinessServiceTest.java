@@ -54,9 +54,20 @@ public class BusinessServiceTest {
     @Test
     public void whenAddingNewBusiness_thenReturnBusiness() {
         Business business = mockGenerator.nextObject(Business.class);
+        when(businessRepository.existsByCifAndEmail(business.getCif(), business.getEmail())).thenReturn(false);
         when(businessRepository.save(any(Business.class))).then(AdditionalAnswers.returnsFirstArg());
 
         assertEquals(business, businessService.add(business));
+    }
+
+    @DisplayName("Test add already existent business")
+    @Test
+    public void whenAddingAlreadyExistentBusiness_thenReturnNull() {
+        Business business = mockGenerator.nextObject(Business.class);
+        when(businessRepository.existsByCifAndEmail(business.getCif(), business.getEmail())).thenReturn(true);
+
+        assertNull(businessService.add(business));
+        verify(businessRepository, never()).save(business);
     }
 
     @DisplayName("Test find all businesses")
@@ -137,7 +148,7 @@ public class BusinessServiceTest {
 
     @DisplayName("Test add a room successfully")
     @Test
-    public void givenValidId_whenAddingARoom_thenBusinessHasNewRoom_andReturnCode0() {
+    public void givenValidId_whenAddingARoom_thenBusinessHasNewRoom_andReturnAddedRoom() {
         Business business = mockGenerator.nextObject(Business.class);
         int oldRoomsSize = business.getRooms().size();
         Room room = mockGenerator.nextObject(Room.class);
@@ -145,39 +156,26 @@ public class BusinessServiceTest {
         when(businessRepository.save(any(Business.class))).then(AdditionalAnswers.returnsFirstArg());
         when(roomService.add(any(Room.class))).then(AdditionalAnswers.returnsFirstArg());
 
-        assertEquals(0, businessService.addRoom(business.getId(), room));
+        assertEquals(room, businessService.addRoom(business.getId(), room));
         verify(businessRepository).save(businessCaptor.capture());
         assertEquals(oldRoomsSize + 1, businessCaptor.getValue().getRooms().size());
     }
 
     @DisplayName("Test add a room invalid id")
     @Test
-    public void givenInvalidId_whenAddingARoom_thenNotAddRoom_andReturnCode1() {
+    public void givenInvalidId_whenAddingARoom_thenNotAddRoom_andReturnNull() {
         Business business = mockGenerator.nextObject(Business.class);
         Room room = mockGenerator.nextObject(Room.class);
         when(businessRepository.findById(business.getId())).thenReturn(Optional.empty());
 
-        assertEquals(1, businessService.addRoom(business.getId(), room));
+        assertNull(businessService.addRoom(business.getId(), room));
         verify(businessRepository, never()).save(business);
         verify(roomService, never()).add(room);
     }
 
-    @DisplayName("Test add a room error saving room")
-    @Test
-    public void givenValidId_whenAddingARoom_andErrorSavingRoom_thenNotAddRoom_andReturnCode2() {
-        Business business = mockGenerator.nextObject(Business.class);
-        Room room = mockGenerator.nextObject(Room.class);
-        when(businessRepository.findById(business.getId())).thenReturn(Optional.of(business));
-        when(roomService.add(room)).thenReturn(null);
-
-        assertEquals(2, businessService.addRoom(business.getId(), room));
-        verify(roomService).add(room);
-        verify(businessRepository, never()).save(business);
-    }
-
     @DisplayName("Test add operation successfully")
     @Test
-    public void givenValidId_whenAddingAOperation_thenBusinessHasNewOperation_andReturnCode0() {
+    public void givenValidId_whenAddingAOperation_thenBusinessHasNewOperation_andReturnAddedOperation() {
         Business business = mockGenerator.nextObject(Business.class);
         int oldOperationsSize = business.getOperations().size();
         Operation operation = mockGenerator.nextObject(Operation.class);
@@ -185,33 +183,21 @@ public class BusinessServiceTest {
         when(businessRepository.save(any(Business.class))).then(AdditionalAnswers.returnsFirstArg());
         when(operationService.add(any(Operation.class))).then(AdditionalAnswers.returnsFirstArg());
 
-        assertEquals(0, businessService.addOperation(business.getId(), operation));
+        assertEquals(operation, businessService.addOperation(business.getId(), operation));
         verify(businessRepository).save(businessCaptor.capture());
         assertEquals(oldOperationsSize + 1, businessCaptor.getValue().getOperations().size());
     }
 
     @DisplayName("Test add operation invalid id")
     @Test
-    public void givenInvalidId_whenAddingAOperation_thenNotAddOperation_andReturnCode1() {
+    public void givenInvalidId_whenAddingAOperation_thenNotAddOperation_andReturnNull() {
         Business business = mockGenerator.nextObject(Business.class);
         Operation operation = mockGenerator.nextObject(Operation.class);
         when(businessRepository.findById(business.getId())).thenReturn(Optional.empty());
 
-        assertEquals(1, businessService.addOperation(business.getId(), operation));
+        assertNull(businessService.addOperation(business.getId(), operation));
         verify(businessRepository, never()).save(business);
         verify(operationService, never()).add(operation);
     }
 
-    @DisplayName("Test add operation error saving operation")
-    @Test
-    public void givenValidId_whenAddingAOperation_andErrorSavingOperation_thenNotAddOperation_andReturnCode2() {
-        Business business = mockGenerator.nextObject(Business.class);
-        Operation operation = mockGenerator.nextObject(Operation.class);
-        when(businessRepository.findById(business.getId())).thenReturn(Optional.of(business));
-        when(operationService.add(operation)).thenReturn(null);
-
-        assertEquals(2, businessService.addOperation(business.getId(), operation));
-        verify(operationService).add(operation);
-        verify(businessRepository, never()).save(business);
-    }
 }
