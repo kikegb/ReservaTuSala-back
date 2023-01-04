@@ -33,12 +33,12 @@ public class RoomController {
         return ResponseEntity.ok(roomService.add(room));
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Room>> findAll() {
         return ResponseEntity.ok(roomService.findAll());
     }
 
-    @GetMapping("/byId")
+    @GetMapping
     public ResponseEntity<?> findById(@Valid @RequestParam Long id) {
         Room room = roomService.findById(id);
         if (Objects.isNull(room)){

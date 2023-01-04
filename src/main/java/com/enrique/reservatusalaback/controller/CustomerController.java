@@ -35,12 +35,12 @@ public class CustomerController {
         return ResponseEntity.ok(addedCustomer);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Customer>> findAll() {
         return ResponseEntity.ok(customerService.findAll());
     }
 
-    @GetMapping("/byId")
+    @GetMapping
     public ResponseEntity<?> findById(@RequestParam Long id) {
         Customer customer = customerService.findById(id);
         if (Objects.isNull(customer)){
