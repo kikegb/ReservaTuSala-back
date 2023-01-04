@@ -105,7 +105,7 @@ public class RoomControllerTest {
         List<Room> rooms = mockGenerator.objects(Room.class, 5).toList();
         doReturn(rooms).when(roomService).findAll();
 
-        this.mockMvc.perform(get("/room"))
+        this.mockMvc.perform(get("/room/all"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -130,7 +130,7 @@ public class RoomControllerTest {
         Room room = mockGenerator.nextObject(Room.class);
         doReturn(room).when(roomService).findById(room.getId());
 
-        this.mockMvc.perform(get("/room/byId")
+        this.mockMvc.perform(get("/room")
                         .param("id", room.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -149,7 +149,7 @@ public class RoomControllerTest {
         Room room = mockGenerator.nextObject(Room.class);
         doReturn(null).when(roomService).findById(room.getId());
 
-        this.mockMvc.perform(get("/room/byId")
+        this.mockMvc.perform(get("/room")
                         .param("id", room.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())

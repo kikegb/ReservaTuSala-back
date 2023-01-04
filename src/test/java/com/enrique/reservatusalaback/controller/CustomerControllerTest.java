@@ -150,7 +150,7 @@ public class CustomerControllerTest {
         List<Customer> customers = mockGenerator.objects(Customer.class, 5).toList();
         doReturn(customers).when(customerService).findAll();
 
-        this.mockMvc.perform(get("/customer"))
+        this.mockMvc.perform(get("/customer/all"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -177,7 +177,7 @@ public class CustomerControllerTest {
         Customer customer = mockGenerator.nextObject(Customer.class);
         doReturn(customer).when(customerService).findById(customer.getId());
 
-        this.mockMvc.perform(get("/customer/byId")
+        this.mockMvc.perform(get("/customer")
                         .param("id", customer.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -197,7 +197,7 @@ public class CustomerControllerTest {
         Customer customer = mockGenerator.nextObject(Customer.class);
         doReturn(null).when(customerService).findById(customer.getId());
 
-        this.mockMvc.perform(get("/customer/byId")
+        this.mockMvc.perform(get("/customer")
                         .param("id", customer.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())

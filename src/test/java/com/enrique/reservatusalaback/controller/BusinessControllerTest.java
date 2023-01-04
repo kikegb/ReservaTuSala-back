@@ -152,7 +152,7 @@ public class BusinessControllerTest {
         List<Business> businesses = mockGenerator.objects(Business.class, 5).toList();
         doReturn(businesses).when(businessService).findAll();
 
-        this.mockMvc.perform(get("/business"))
+        this.mockMvc.perform(get("/business/all"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -179,7 +179,7 @@ public class BusinessControllerTest {
         Business business = mockGenerator.nextObject(Business.class);
         doReturn(business).when(businessService).findById(business.getId());
 
-        this.mockMvc.perform(get("/business/byId")
+        this.mockMvc.perform(get("/business")
                         .param("id", business.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -199,7 +199,7 @@ public class BusinessControllerTest {
         Business business = mockGenerator.nextObject(Business.class);
         doReturn(null).when(businessService).findById(business.getId());
 
-        this.mockMvc.perform(get("/business/byId")
+        this.mockMvc.perform(get("/business")
                         .param("id", business.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())

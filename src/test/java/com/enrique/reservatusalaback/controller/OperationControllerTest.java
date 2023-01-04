@@ -100,7 +100,7 @@ public class OperationControllerTest {
         List<Operation> operations = mockGenerator.objects(Operation.class, 5).toList();
         doReturn(operations).when(operationService).findAll();
 
-        this.mockMvc.perform(get("/operation"))
+        this.mockMvc.perform(get("/operation/all"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -125,7 +125,7 @@ public class OperationControllerTest {
         Operation operation = mockGenerator.nextObject(Operation.class);
         doReturn(operation).when(operationService).findById(operation.getId());
 
-        this.mockMvc.perform(get("/operation/byId")
+        this.mockMvc.perform(get("/operation")
                         .param("id", operation.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -144,7 +144,7 @@ public class OperationControllerTest {
         Operation operation = mockGenerator.nextObject(Operation.class);
         doReturn(null).when(operationService).findById(operation.getId());
 
-        this.mockMvc.perform(get("/operation/byId")
+        this.mockMvc.perform(get("/operation")
                         .param("id", operation.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())
