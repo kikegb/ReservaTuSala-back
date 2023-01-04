@@ -43,14 +43,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/business",
+							"raw": "http://localhost:8081/business/all",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"business"
+								"business",
+								"all"
 							]
 						}
 					},
@@ -62,15 +63,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/business/byId?id=1",
+							"raw": "http://localhost:8081/business?id=1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"business",
-								"byId"
+								"business"
 							],
 							"query": [
 								{
@@ -244,14 +244,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/customer",
+							"raw": "http://localhost:8081/customer/all",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"customer"
+								"customer",
+								"all"
 							]
 						}
 					},
@@ -263,15 +264,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/customer/byId?id=2",
+							"raw": "http://localhost:8081/customer?id=2",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"customer",
-								"byId"
+								"customer"
 							],
 							"query": [
 								{
@@ -410,14 +410,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/location",
+							"raw": "http://localhost:8081/location/all",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"location"
+								"location",
+								"all"
 							]
 						}
 					},
@@ -429,15 +430,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/location/byId?id=3",
+							"raw": "http://localhost:8081/location?id=3",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"location",
-								"byId"
+								"location"
 							],
 							"query": [
 								{
@@ -541,14 +541,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/material",
+							"raw": "http://localhost:8081/material/all",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"material"
+								"material",
+								"all"
 							]
 						}
 					},
@@ -560,15 +561,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/material/byId?id=4",
+							"raw": "http://localhost:8081/material?id=4",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"material",
-								"byId"
+								"material"
 							],
 							"query": [
 								{
@@ -672,14 +672,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/operation",
+							"raw": "http://localhost:8081/operation/all",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"operation"
+								"operation",
+								"all"
 							]
 						}
 					},
@@ -691,15 +692,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/operation/byId?id=5",
+							"raw": "http://localhost:8081/operation?id=5",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"operation",
-								"byId"
+								"operation"
 							],
 							"query": [
 								{
@@ -803,14 +803,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/room",
+							"raw": "http://localhost:8081/room/all",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"room"
+								"room",
+								"all"
 							]
 						}
 					},
@@ -822,15 +823,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/room/byId?id=6",
+							"raw": "http://localhost:8081/room?id=6",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"room",
-								"byId"
+								"room"
 							],
 							"query": [
 								{
@@ -1039,14 +1039,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/schedule",
+							"raw": "http://localhost:8081/schedule/all",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"schedule"
+								"schedule",
+								"all"
 							]
 						}
 					},
@@ -1058,15 +1059,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/schedule/byId?id=7",
+							"raw": "http://localhost:8081/schedule?id=7",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8081",
 							"path": [
-								"schedule",
-								"byId"
+								"schedule"
 							],
 							"query": [
 								{
