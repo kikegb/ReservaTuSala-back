@@ -1,9 +1,12 @@
 package com.enrique.reservatusalaback.model;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,7 +21,9 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
 @RequiredArgsConstructor
 @NoArgsConstructor
 public class Business extends DbEntity {
@@ -29,11 +34,13 @@ public class Business extends DbEntity {
 
     @NonNull
     @NotNull(message = "CIF is required")
+    @ToString.Include
     @Size(min = 9, max = 9, message = "CIF must be 9 characters long")
     private String cif;
 
     @NonNull
     @NotNull(message = "Name is required")
+    @ToString.Include
     private String name;
 
     @NonNull
