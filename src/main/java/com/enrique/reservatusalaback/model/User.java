@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -21,7 +22,8 @@ import java.util.List;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class Customer extends DbEntity{
+@Table(name = "users")
+public class User extends DbEntity{
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
@@ -50,7 +52,19 @@ public class Customer extends DbEntity{
     @Email(message = "Please provide a valid email address")
     private String email;
 
+    @NonNull
+    @NotNull(message = "User role is required")
+    private Role role;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "business_id")
+    private List<Room> rooms;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "business_id")
+    private List<Operation> BusinessOperations;
+
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
-    private List<Operation> operations;
+    private List<Operation> CustomerOperations;
 }
