@@ -1,6 +1,6 @@
 package com.enrique.reservatusalaback.security;
 
-import com.enrique.reservatusalaback.model.Business;
+import com.enrique.reservatusalaback.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +11,7 @@ import java.util.Collections;
 @AllArgsConstructor
 public class UserDetailsImpl implements UserDetails {
 
-    private final Business business;
+    private final User user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -20,12 +20,12 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public String getPassword() {
-        return business.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return business.getEmail();
+        return user.getEmail();
     }
 
     @Override
@@ -49,6 +49,6 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public String getName() {
-        return business.getName();
+        return user.getName();
     }
 }

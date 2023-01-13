@@ -1,23 +1,19 @@
 package com.enrique.reservatusalaback.service.impl;
 
-import com.enrique.reservatusalaback.model.User;
 import com.enrique.reservatusalaback.model.Operation;
 import com.enrique.reservatusalaback.model.Room;
+import com.enrique.reservatusalaback.model.User;
 import com.enrique.reservatusalaback.repository.UserRepository;
-import com.enrique.reservatusalaback.security.UserDetailsImpl;
 import com.enrique.reservatusalaback.service.OperationService;
 import com.enrique.reservatusalaback.service.RoomService;
 import com.enrique.reservatusalaback.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoomService roomService;
@@ -98,14 +94,5 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             return newOperation;
         }
         return null;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository
-                .findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User with email " + email + "not exists."));
-
-        return new UserDetailsImpl(user);
     }
 }
