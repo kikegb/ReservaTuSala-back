@@ -1,9 +1,9 @@
 package com.enrique.reservatusalaback.controller;
 
-import com.enrique.reservatusalaback.model.Business;
+import com.enrique.reservatusalaback.model.User;
 import com.enrique.reservatusalaback.model.Operation;
 import com.enrique.reservatusalaback.model.Room;
-import com.enrique.reservatusalaback.service.BusinessService;
+import com.enrique.reservatusalaback.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,64 +21,73 @@ import java.util.List;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/business")
+@RequestMapping("/user")
 @RequiredArgsConstructor
-public class BusinessController {
+public class UserController {
 
-    private final BusinessService businessService;
+    private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<?> add(@Valid @RequestBody Business business) {
-        Business addedBusiness = businessService.add(business);
-        if (Objects.isNull(addedBusiness)) {
+    public ResponseEntity<?> add(@Valid @RequestBody User user) {
+        User addedUser = userService.add(user);
+        if (Objects.isNull(addedUser)) {
             return new ResponseEntity<>(ResponseCode.ALREADY_EXISTENT_USER, HttpStatus.CONFLICT);
         }
-        return ResponseEntity.ok(addedBusiness);
+        return ResponseEntity.ok(addedUser);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Business>> findAll() {
-        return ResponseEntity.ok(businessService.findAll());
+    public ResponseEntity<List<User>> findAll() {
+        return ResponseEntity.ok(userService.findAll());
     }
 
     @GetMapping
     public ResponseEntity<?> findById(@RequestParam Long id) {
-        Business business = businessService.findById(id);
-        if (Objects.isNull(business)){
+        User user = userService.findById(id);
+        if (Objects.isNull(user)){
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(business);
+        return ResponseEntity.ok(user);
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@Valid @RequestBody Business business) {
-        Business updatedBusiness = businessService.update(business);
-        if (Objects.isNull(updatedBusiness)) {
+    public ResponseEntity<?> update(@Valid @RequestBody User user) {
+        User updatedUser = userService.update(user);
+        if (Objects.isNull(updatedUser)) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity.ok(updatedBusiness);
+        return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping
     public ResponseEntity<ResponseCode> deleteById(@RequestParam Long id) {
-        if (businessService.deleteById(id) > 0) {
+        if (userService.deleteById(id) > 0) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(ResponseCode.OK);
     }
 
-    @PostMapping("/room")
+    @PostMapping("/business/room")
     public ResponseEntity<?> addRoom(@RequestParam Long id, @Valid @RequestBody Room room) {
-        Room addedRoom = businessService.addRoom(id, room);
+        Room addedRoom = userService.addRoom(id, room);
         if (Objects.isNull(addedRoom)) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(addedRoom);
     }
 
-    @PostMapping("/operation")
-    public ResponseEntity<?> addOperation(@RequestParam Long id, @Valid @RequestBody Operation operation) {
-        Operation addedOperation = businessService.addOperation(id, operation);
+    @PostMapping("/business/operation")
+    public ResponseEntity<?> addBusinessOperation(@RequestParam Long id, @Valid @RequestBody Operation operation) {
+        Operation addedOperation = userService.addBusinessOperation(id, operation);
+        if (Objects.isNull(addedOperation)) {
+            return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(addedOperation);
+    }
+
+    @PostMapping("/customer/operation")
+    public ResponseEntity<?> addCustomerOperation(@RequestParam Long id, @Valid @RequestBody Operation operation) {
+        Operation addedOperation = userService.addCustomerOperation(id, operation);
         if (Objects.isNull(addedOperation)) {
             return new ResponseEntity<>(ResponseCode.NOT_FOUND_ID, HttpStatus.NOT_FOUND);
         }

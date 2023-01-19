@@ -1,26 +1,23 @@
 package com.enrique.reservatusalaback.config;
 
-import com.enrique.reservatusalaback.repository.BusinessRepository;
-import com.enrique.reservatusalaback.repository.CustomerRepository;
 import com.enrique.reservatusalaback.repository.LocationRepository;
 import com.enrique.reservatusalaback.repository.MaterialRepository;
 import com.enrique.reservatusalaback.repository.OperationRepository;
 import com.enrique.reservatusalaback.repository.RoomRepository;
 import com.enrique.reservatusalaback.repository.ScheduleRepository;
-import com.enrique.reservatusalaback.service.BusinessService;
-import com.enrique.reservatusalaback.service.CustomerService;
+import com.enrique.reservatusalaback.repository.UserRepository;
 import com.enrique.reservatusalaback.service.LocationService;
 import com.enrique.reservatusalaback.service.MaterialService;
 import com.enrique.reservatusalaback.service.OperationService;
 import com.enrique.reservatusalaback.service.RoomService;
 import com.enrique.reservatusalaback.service.ScheduleService;
-import com.enrique.reservatusalaback.service.impl.BusinessServiceImpl;
-import com.enrique.reservatusalaback.service.impl.CustomerServiceImpl;
+import com.enrique.reservatusalaback.service.UserService;
 import com.enrique.reservatusalaback.service.impl.LocationServiceImpl;
 import com.enrique.reservatusalaback.service.impl.MaterialServiceImpl;
 import com.enrique.reservatusalaback.service.impl.OperationServiceImpl;
 import com.enrique.reservatusalaback.service.impl.RoomServiceImpl;
 import com.enrique.reservatusalaback.service.impl.ScheduleServiceImpl;
+import com.enrique.reservatusalaback.service.impl.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -49,14 +46,9 @@ public class ServiceConfig {
     }
 
     @Bean
-    public BusinessService businessService(BusinessRepository businessRepository, RoomService roomService,
-                                           OperationService operationService) {
-        return new BusinessServiceImpl(businessRepository, roomService, operationService);
-    }
-
-    @Bean
-    public CustomerService customerService(CustomerRepository customerRepository, OperationService operationService) {
-        return new CustomerServiceImpl(customerRepository, operationService);
+    public UserService UserService(UserRepository userRepository, RoomService roomService,
+                                   OperationService operationService) {
+        return new UserServiceImpl(userRepository, roomService, operationService);
     }
 
     @Bean
