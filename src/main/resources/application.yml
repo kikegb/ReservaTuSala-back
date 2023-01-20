@@ -10,3 +10,6 @@ spring:
 #Application config
 server:
   port: 8081
+#JWT config
+jwt:
+  secret: S3CrEtK3Yh$$k3kjgk3j23jkgll.tt32h1gh21gh1gh1hjl1s&

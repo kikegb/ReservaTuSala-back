@@ -4,16 +4,20 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class TokenUtils {
 
-    private final static String ACCESS_TOKEN_SECRET = "S3CrEtK3Yh$$k3kjgk3j23jkgll.tt32h1gh21gh1gh1hjl1s&";
+    @Value("${jwt.secret}")
+    private static String ACCESS_TOKEN_SECRET;
     private final static Long ACCESS_TOKEN_VALIDITY_SECONDS = 365L * 24L * 60L * 60L;
 
     public static String createToken(String name, String email) {
