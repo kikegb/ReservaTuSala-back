@@ -16,9 +16,13 @@ import java.util.Map;
 @Component
 public class TokenUtils {
 
-    @Value("${jwt.secret}")
     private static String ACCESS_TOKEN_SECRET;
-    private final static Long ACCESS_TOKEN_VALIDITY_SECONDS = 365L * 24L * 60L * 60L;
+    private static Long ACCESS_TOKEN_VALIDITY_SECONDS;
+
+    public TokenUtils( @Value("${jwt.secret}") String secret, @Value("${jwt.expiration-seconds}") Long seconds){
+        ACCESS_TOKEN_SECRET = secret;
+        ACCESS_TOKEN_VALIDITY_SECONDS = seconds;
+    }
 
     public static String createToken(String name, String email) {
         long expirationTime = ACCESS_TOKEN_VALIDITY_SECONDS * 1000;

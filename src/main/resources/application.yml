@@ -13,3 +13,4 @@ server:
 #JWT config
 jwt:
   secret: S3CrEtK3Yh$$k3kjgk3j23jkgll.tt32h1gh21gh1gh1hjl1s&
+  expiration-seconds: 31536000
