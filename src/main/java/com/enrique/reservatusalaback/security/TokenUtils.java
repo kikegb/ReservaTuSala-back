@@ -1,7 +1,7 @@
 package com.enrique.reservatusalaback.security;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -41,8 +41,12 @@ public class TokenUtils {
 
             String email = claims.getSubject();
 
+            if (claims.getExpiration().after(new Date())) {
+                throw new ExpiredJwtException(null, claims, "Token is expired");
+            }
+
             return new UsernamePasswordAuthenticationToken(email, null, Collections.emptyList());
-        } catch (JwtException e) {
+        } catch (Exception e) {
             return null;
         }
     }
