@@ -1,20 +1,28 @@
 package com.enrique.reservatusalaback.security;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.stereotype.Component;
 
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class TokenUtils {
 
-    private final static String ACCESS_TOKEN_SECRET = "S3CrEtK3Yh$$k3kjgk3j23jkgll.tt32h1gh21gh1gh1hjl1s&";
-    private final static Long ACCESS_TOKEN_VALIDITY_SECONDS = 365L * 24L * 60L * 60L;
+    private static String ACCESS_TOKEN_SECRET;
+    private static Long ACCESS_TOKEN_VALIDITY_SECONDS;
+
+    public TokenUtils( @Value("${jwt.secret}") String secret, @Value("${jwt.expiration-seconds}") Long seconds){
+        ACCESS_TOKEN_SECRET = secret;
+        ACCESS_TOKEN_VALIDITY_SECONDS = seconds;
+    }
 
     public static String createToken(String name, String email) {
         long expirationTime = ACCESS_TOKEN_VALIDITY_SECONDS * 1000;
@@ -41,8 +49,12 @@ public class TokenUtils {
 
             String email = claims.getSubject();
 
+            if (claims.getExpiration().after(new Date())) {
+                throw new ExpiredJwtException(null, claims, "Token is expired");
+            }
+
             return new UsernamePasswordAuthenticationToken(email, null, Collections.emptyList());
-        } catch (JwtException e) {
+        } catch (Exception e) {
             return null;
         }
     }
