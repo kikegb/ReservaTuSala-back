@@ -23,7 +23,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cif\": \"87654321X\",\r\n    \"name\": \"Company S.A.\",\r\n    \"phone\": \"999999999\",\r\n    \"password\": \"p4ssw0rd\",\r\n    \"email\": \"company@gmail.com\",\r\n    \"role\": 0\r\n}",
+							"raw": "{\r\n    \"cnif\": \"87654321X\",\r\n    \"name\": \"Company S.A.\",\r\n    \"phone\": \"999999999\",\r\n    \"password\": \"p4ssw0rd\",\r\n    \"email\": \"company@gmail.com\",\r\n    \"role\": 0\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -117,7 +117,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 1,\r\n    \"cif\": \"87654321X\",\r\n    \"name\": \"Company S.L.\",\r\n    \"phone\": \"123456789\",\r\n    \"password\": \"NewP4ssw0rd123\",\r\n    \"email\": \"companysl@gmail.com\"\r\n}",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"cnif\": \"87654321X\",\r\n    \"name\": \"Company S.L.\",\r\n    \"phone\": \"123456789\",\r\n    \"password\": \"NewP4ssw0rd123\",\r\n    \"email\": \"companysl@gmail.com\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
