@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.management.InstanceAlreadyExistsException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
@@ -28,10 +29,10 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<?> add(@Valid @RequestBody User user) {
+    public ResponseEntity<?> add(@Valid @RequestBody User user) throws InstanceAlreadyExistsException {
         User addedUser = userService.add(user);
         if (Objects.isNull(addedUser)) {
-            return new ResponseEntity<>(ResponseCode.ALREADY_EXISTENT_USER, HttpStatus.CONFLICT);
+            throw new InstanceAlreadyExistsException();
         }
         return ResponseEntity.ok(addedUser);
     }
