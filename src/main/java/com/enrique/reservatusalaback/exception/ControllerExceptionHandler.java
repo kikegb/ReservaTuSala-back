@@ -7,9 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.management.InstanceAlreadyExistsException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,5 +33,15 @@ public class ControllerExceptionHandler
         });
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = { InstanceAlreadyExistsException.class })
+    protected ResponseEntity<Object> handleConflict(
+            Exception ex, WebRequest request) {
+        Map<String, String> response = new HashMap<>();
+        response.put("code", String.valueOf(ResponseCode.ALREADY_EXISTENT_USER.code));
+        response.put("description", ResponseCode.ALREADY_EXISTENT_USER.description);
+        return handleExceptionInternal(ex, response,
+                new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 }

@@ -49,7 +49,7 @@ public class TokenUtils {
 
             String email = claims.getSubject();
 
-            if (claims.getExpiration().after(new Date())) {
+            if (claims.getExpiration().before(new Date())) {
                 throw new ExpiredJwtException(null, claims, "Token is expired");
             }
 
