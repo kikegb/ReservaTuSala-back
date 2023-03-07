@@ -20,6 +20,7 @@ import com.enrique.reservatusalaback.service.impl.ScheduleServiceImpl;
 import com.enrique.reservatusalaback.service.impl.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class ServiceConfig {
@@ -47,8 +48,8 @@ public class ServiceConfig {
 
     @Bean
     public UserService UserService(UserRepository userRepository, RoomService roomService,
-                                   OperationService operationService) {
-        return new UserServiceImpl(userRepository, roomService, operationService);
+                                   OperationService operationService, PasswordEncoder passwordEncoder) {
+        return new UserServiceImpl(userRepository, roomService, operationService, passwordEncoder);
     }
 
     @Bean

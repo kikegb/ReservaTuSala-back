@@ -8,6 +8,7 @@ import com.enrique.reservatusalaback.service.OperationService;
 import com.enrique.reservatusalaback.service.RoomService;
 import com.enrique.reservatusalaback.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,13 +19,22 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoomService roomService;
     private final OperationService operationService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public User add(final User user) {
         if (userRepository.existsByCnifAndEmail(user.getCnif(), user.getEmail())) {
             return null;
         }
-        return userRepository.save(user);
+        User newUser = new User(
+                user.getCnif(),
+                user.getName(),
+                user.getPhone(),
+                passwordEncoder.encode(user.getPassword()),
+                user.getEmail(),
+                user.getRole()
+        );
+        return userRepository.save(newUser);
     }
 
     @Override
