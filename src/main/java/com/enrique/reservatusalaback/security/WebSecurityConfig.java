@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +24,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @AllArgsConstructor
+@EnableWebSecurity
 public class WebSecurityConfig {
 
     private final UserDetailsService userDetailsService;
@@ -36,7 +38,8 @@ public class WebSecurityConfig {
 
         http.csrf().disable();
         http.cors();
-        http.authorizeHttpRequests().anyRequest().authenticated();
+        http.authorizeRequests().antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll();
+        http.authorizeRequests().anyRequest().authenticated();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.httpBasic(withDefaults());
         http.addFilter(jwtAuthenticationFilter);
