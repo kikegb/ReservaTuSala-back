@@ -38,7 +38,7 @@ public class WebSecurityConfig {
 
         http.csrf().disable();
         http.cors();
-        http.authorizeRequests().antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll();
+        http.authorizeRequests().antMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.httpBasic(withDefaults());
