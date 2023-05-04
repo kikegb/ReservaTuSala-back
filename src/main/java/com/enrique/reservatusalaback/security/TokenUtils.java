@@ -24,12 +24,14 @@ public class TokenUtils {
         ACCESS_TOKEN_VALIDITY_SECONDS = seconds;
     }
 
-    public static String createToken(String name, String email) {
+    public static String createToken(double id, String name, String email, String role) {
         long expirationTime = ACCESS_TOKEN_VALIDITY_SECONDS * 1000;
         Date expirationDate = new Date(System.currentTimeMillis() + expirationTime);
 
         Map<String,Object> extra = new HashMap<>();
         extra.put("name", name);
+        extra.put("id", id);
+        extra.put("role", role);
 
         return Jwts.builder()
                 .setSubject(email)
