@@ -46,6 +46,10 @@ public class ScheduleControllerTest {
                     .collectionSizeRange(0,5)
     );
 
+    private final String token = "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzb21lQGVtYWlsLmNvbS" +
+        "IsImV4cCI6MTcwNTU3NDIzMywibmFtZSI6Ik5MV1VaTlJjQiJ9.EFqoeJd7vHC4E1" +
+        "BMaj3f-mQVVssyJHx7tFLuWrYPr8JQSxemy1j5BOHtb0Y3o7Zb";
+
     @DisplayName("POST add schedule")
     @Test
     public void whenAddNewSchedule_ThenReturnOkAndScheduleWithId() throws Exception {
@@ -58,6 +62,7 @@ public class ScheduleControllerTest {
         doReturn(schedule).when(scheduleService).add(scheduleNoId);
 
         this.mockMvc.perform(post("/schedule")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(scheduleNoId)))
                 .andDo(print())
@@ -80,6 +85,7 @@ public class ScheduleControllerTest {
         object.put("end", schedule.getEnd());
 
         this.mockMvc.perform(post("/schedule")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(object.toString()))
                 .andDo(print())
@@ -97,7 +103,8 @@ public class ScheduleControllerTest {
         List<Schedule> schedules = mockGenerator.objects(Schedule.class, 5).toList();
         doReturn(schedules).when(scheduleService).findAll();
 
-        this.mockMvc.perform(get("/schedule/all"))
+        this.mockMvc.perform(get("/schedule/all")
+                        .header("Authorization", token))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -121,6 +128,7 @@ public class ScheduleControllerTest {
         doReturn(schedule).when(scheduleService).findById(schedule.getId());
 
         this.mockMvc.perform(get("/schedule")
+                        .header("Authorization", token)
                         .param("id", schedule.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -139,6 +147,7 @@ public class ScheduleControllerTest {
         doReturn(null).when(scheduleService).findById(schedule.getId());
 
         this.mockMvc.perform(get("/schedule")
+                        .header("Authorization", token)
                         .param("id", schedule.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())
@@ -155,6 +164,7 @@ public class ScheduleControllerTest {
         doReturn(updatedSchedule).when(scheduleService).update(any(Schedule.class));
 
         this.mockMvc.perform(put("/schedule")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(updatedSchedule)))
                 .andDo(print())
@@ -174,6 +184,7 @@ public class ScheduleControllerTest {
         doReturn(null).when(scheduleService).update(updatedSchedule);
 
         this.mockMvc.perform(put("/schedule")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(updatedSchedule)))
                 .andDo(print())
@@ -191,6 +202,7 @@ public class ScheduleControllerTest {
         doReturn(0).when(scheduleService).deleteById(schedule.getId());
 
         this.mockMvc.perform(delete("/schedule")
+                        .header("Authorization", token)
                         .param("id", schedule.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -206,6 +218,7 @@ public class ScheduleControllerTest {
         doReturn(1).when(scheduleService).deleteById(schedule.getId());
 
         this.mockMvc.perform(delete("/schedule")
+                        .header("Authorization", token)
                         .param("id", schedule.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())

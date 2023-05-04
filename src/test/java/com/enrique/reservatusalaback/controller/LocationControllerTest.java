@@ -47,6 +47,10 @@ public class LocationControllerTest {
                     .stringLengthRange(5,5)
     );
 
+    private final String token = "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzb21lQGVtYWlsLmNvbS" +
+        "IsImV4cCI6MTcwNTU3NDIzMywibmFtZSI6Ik5MV1VaTlJjQiJ9.EFqoeJd7vHC4E1" +
+        "BMaj3f-mQVVssyJHx7tFLuWrYPr8JQSxemy1j5BOHtb0Y3o7Zb";
+
     @DisplayName("POST add location")
     @Test
     public void whenAddNewLocation_ThenReturnOkAndLocationWithId() throws Exception {
@@ -62,6 +66,7 @@ public class LocationControllerTest {
         doReturn(location).when(locationService).add(locationNoId);
 
         this.mockMvc.perform(post("/location")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(locationNoId)))
                 .andDo(print())
@@ -90,6 +95,7 @@ public class LocationControllerTest {
         object.put("country", location.getCountry());
 
         this.mockMvc.perform(post("/location")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(object.toString()))
                 .andDo(print())
@@ -107,7 +113,8 @@ public class LocationControllerTest {
         List<Location> locations = mockGenerator.objects(Location.class, 5).toList();
         doReturn(locations).when(locationService).findAll();
 
-        this.mockMvc.perform(get("/location/all"))
+        this.mockMvc.perform(get("/location/all")
+                        .header("Authorization", token))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -137,6 +144,7 @@ public class LocationControllerTest {
         doReturn(location).when(locationService).findById(location.getId());
 
         this.mockMvc.perform(get("/location")
+                        .header("Authorization", token)
                         .param("id", location.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -158,6 +166,7 @@ public class LocationControllerTest {
         doReturn(null).when(locationService).findById(location.getId());
 
         this.mockMvc.perform(get("/location")
+                        .header("Authorization", token)
                         .param("id", location.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())
@@ -174,6 +183,7 @@ public class LocationControllerTest {
         doReturn(updatedLocation).when(locationService).update(any(Location.class));
 
         this.mockMvc.perform(put("/location")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(updatedLocation)))
                 .andDo(print())
@@ -196,6 +206,7 @@ public class LocationControllerTest {
         doReturn(null).when(locationService).update(updatedLocation);
 
         this.mockMvc.perform(put("/location")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(updatedLocation)))
                 .andDo(print())
@@ -213,6 +224,7 @@ public class LocationControllerTest {
         doReturn(0).when(locationService).deleteById(location.getId());
 
         this.mockMvc.perform(delete("/location")
+                        .header("Authorization", token)
                         .param("id", location.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -228,6 +240,7 @@ public class LocationControllerTest {
         doReturn(1).when(locationService).deleteById(location.getId());
 
         this.mockMvc.perform(delete("/location")
+                        .header("Authorization", token)
                         .param("id", location.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())

@@ -51,6 +51,10 @@ public class RoomControllerTest {
                     .collectionSizeRange(0,5)
     );
 
+    private final String token = "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzb21lQGVtYWlsLmNvbS" +
+        "IsImV4cCI6MTcwNTU3NDIzMywibmFtZSI6Ik5MV1VaTlJjQiJ9.EFqoeJd7vHC4E1" +
+        "BMaj3f-mQVVssyJHx7tFLuWrYPr8JQSxemy1j5BOHtb0Y3o7Zb";
+
     @DisplayName("POST add room")
     @Test
     public void whenAddNewRoom_ThenReturnOkAndRoomWithId() throws Exception {
@@ -64,6 +68,7 @@ public class RoomControllerTest {
         doReturn(room).when(roomService).add(roomNoId);
 
         this.mockMvc.perform(post("/room")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(roomNoId)))
                 .andDo(print())
@@ -88,6 +93,7 @@ public class RoomControllerTest {
         object.put("price", room.getPrice());
 
         this.mockMvc.perform(post("/room")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(object.toString()))
                 .andDo(print())
@@ -105,7 +111,8 @@ public class RoomControllerTest {
         List<Room> rooms = mockGenerator.objects(Room.class, 5).toList();
         doReturn(rooms).when(roomService).findAll();
 
-        this.mockMvc.perform(get("/room/all"))
+        this.mockMvc.perform(get("/room/all")
+                        .header("Authorization", token))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -131,6 +138,7 @@ public class RoomControllerTest {
         doReturn(room).when(roomService).findById(room.getId());
 
         this.mockMvc.perform(get("/room")
+                        .header("Authorization", token)
                         .param("id", room.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -150,6 +158,7 @@ public class RoomControllerTest {
         doReturn(null).when(roomService).findById(room.getId());
 
         this.mockMvc.perform(get("/room")
+                        .header("Authorization", token)
                         .param("id", room.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())
@@ -166,6 +175,7 @@ public class RoomControllerTest {
         doReturn(updatedRoom).when(roomService).update(any(Room.class));
 
         this.mockMvc.perform(put("/room")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(updatedRoom)))
                 .andDo(print())
@@ -186,6 +196,7 @@ public class RoomControllerTest {
         doReturn(null).when(roomService).update(updatedRoom);
 
         this.mockMvc.perform(put("/room")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(updatedRoom)))
                 .andDo(print())
@@ -203,6 +214,7 @@ public class RoomControllerTest {
         doReturn(0).when(roomService).deleteById(room.getId());
 
         this.mockMvc.perform(delete("/room")
+                        .header("Authorization", token)
                         .param("id", room.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -218,6 +230,7 @@ public class RoomControllerTest {
         doReturn(1).when(roomService).deleteById(room.getId());
 
         this.mockMvc.perform(delete("/room")
+                        .header("Authorization", token)
                         .param("id", room.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())
@@ -241,6 +254,7 @@ public class RoomControllerTest {
         doReturn(operation).when(roomService).addOperation(room.getId(), operationNoId);
 
         this.mockMvc.perform(post("/room/operation")
+                        .header("Authorization", token)
                         .param("id", room.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(operationNoId)))
@@ -263,6 +277,7 @@ public class RoomControllerTest {
         doReturn(null).when(roomService).addOperation(room.getId(), operation);
 
         this.mockMvc.perform(post("/room/operation")
+                        .header("Authorization", token)
                         .param("id", room.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(operation)))
@@ -286,6 +301,7 @@ public class RoomControllerTest {
         doReturn(material).when(roomService).addMaterial(room.getId(), materialNoId);
 
         this.mockMvc.perform(post("/room/material")
+                        .header("Authorization", token)
                         .param("id", room.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(materialNoId)))
@@ -306,6 +322,7 @@ public class RoomControllerTest {
         doReturn(null).when(roomService).addMaterial(room.getId(), material);
 
         this.mockMvc.perform(post("/room/material")
+                        .header("Authorization", token)
                         .param("id", room.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(material)))
@@ -330,6 +347,7 @@ public class RoomControllerTest {
         doReturn(schedule).when(roomService).addSchedule(room.getId(), scheduleNoId);
 
         this.mockMvc.perform(post("/room/schedule")
+                        .header("Authorization", token)
                         .param("id", room.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(scheduleNoId)))
@@ -351,6 +369,7 @@ public class RoomControllerTest {
         doReturn(null).when(roomService).addSchedule(room.getId(), schedule);
 
         this.mockMvc.perform(post("/room/schedule")
+                        .header("Authorization", token)
                         .param("id", room.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(schedule)))

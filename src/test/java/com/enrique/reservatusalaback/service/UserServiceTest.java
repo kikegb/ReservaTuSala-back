@@ -16,6 +16,7 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +39,8 @@ public class UserServiceTest {
     private RoomService roomService;
     @Mock
     private OperationService operationService;
+    @Mock
+    private PasswordEncoder passwordEncoder;
     @InjectMocks
     private UserServiceImpl userService;
 
@@ -56,6 +59,7 @@ public class UserServiceTest {
         User user = mockGenerator.nextObject(User.class);
         when(userRepository.existsByCnifAndEmail(user.getCnif(), user.getEmail())).thenReturn(false);
         when(userRepository.save(any(User.class))).then(AdditionalAnswers.returnsFirstArg());
+        when(passwordEncoder.encode(user.getPassword())).then(AdditionalAnswers.returnsFirstArg());
 
         assertEquals(user, userService.add(user));
     }
