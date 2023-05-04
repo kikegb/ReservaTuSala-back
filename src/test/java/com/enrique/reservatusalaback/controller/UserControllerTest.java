@@ -18,6 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
@@ -50,6 +51,10 @@ public class UserControllerTest {
                     .stringLengthRange(9,9)
     );
 
+    private final String token = "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzb21lQGVtYWlsLmNvbS" +
+        "IsImV4cCI6MTcwNTU3NDIzMywibmFtZSI6Ik5MV1VaTlJjQiJ9.EFqoeJd7vHC4E1" +
+        "BMaj3f-mQVVssyJHx7tFLuWrYPr8JQSxemy1j5BOHtb0Y3o7Zb";
+
     @DisplayName("POST add user")
     @Test
     public void whenAddNewUser_ThenReturnOkAndUserWithId() throws Exception {
@@ -66,6 +71,7 @@ public class UserControllerTest {
         doReturn(user).when(userService).add(userNoId);
 
         this.mockMvc.perform(post("/user")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(userNoId)))
                 .andDo(print())
@@ -73,11 +79,12 @@ public class UserControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.id", is(user.getId())))
-                .andExpect(jsonPath("$.cif", is(user.getCnif())))
+                .andExpect(jsonPath("$.cnif", is(user.getCnif())))
                 .andExpect(jsonPath("$.name", is(user.getName())))
                 .andExpect(jsonPath("$.phone", is(user.getPhone())))
                 .andExpect(jsonPath("$.password", is(user.getPassword())))
                 .andExpect(jsonPath("$.email", is(user.getEmail())))
+                .andExpect(jsonPath("$.role", is(user.getRole().toString())))
                 .andExpect(jsonPath("$.deleted", is(user.isDeleted())));
     }
 
@@ -89,13 +96,14 @@ public class UserControllerTest {
         doReturn(null).when(userService).add(user);
 
         this.mockMvc.perform(post("/user")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(user)))
                 .andDo(print())
                 .andExpect(status().isConflict())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.code").exists())
-                .andExpect(jsonPath("$.code", is(2)))
+                .andExpect(jsonPath("$.code", is("2")))
                 .andExpect(jsonPath("$.description").exists())
                 .andExpect(jsonPath("$.description",
                         is("User conflict: There is already a user with that email or cif/nif.")));
@@ -113,6 +121,7 @@ public class UserControllerTest {
         object.put("email", user.getEmail());
 
         this.mockMvc.perform(post("/user")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(object.toString()))
                 .andDo(print())
@@ -121,7 +130,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.code", is("3")))
                 .andExpect(jsonPath("$.description",
                         is("Bad request: Request body has empty or wrong formatted data.")))
-                .andExpect(jsonPath("$.cif", is("CIF or NIF is required")));
+                .andExpect(jsonPath("$.cnif", is("CIF or NIF is required")));
     }
 
     @DisplayName("POST add user short phone")
@@ -136,6 +145,7 @@ public class UserControllerTest {
         object.put("email", user.getEmail());
 
         this.mockMvc.perform(post("/user")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(object.toString()))
                 .andDo(print())
@@ -153,24 +163,27 @@ public class UserControllerTest {
         List<User> users = mockGenerator.objects(User.class, 5).toList();
         doReturn(users).when(userService).findAll();
 
-        this.mockMvc.perform(get("/user/all"))
+        this.mockMvc.perform(get("/user/all")
+                        .header("Authorization", token))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(5)))
                 .andExpect(jsonPath("$[0].id", is(users.get(0).getId())))
-                .andExpect(jsonPath("$[0].cif", is(users.get(0).getCnif())))
+                .andExpect(jsonPath("$[0].cnif", is(users.get(0).getCnif())))
                 .andExpect(jsonPath("$[0].name", is(users.get(0).getName())))
                 .andExpect(jsonPath("$[0].phone", is(users.get(0).getPhone())))
                 .andExpect(jsonPath("$[0].password", is(users.get(0).getPassword())))
                 .andExpect(jsonPath("$[0].email", is(users.get(0).getEmail())))
+                .andExpect(jsonPath("$[0].role", is(users.get(0).getRole().toString())))
                 .andExpect(jsonPath("$[0].deleted", is(users.get(0).isDeleted())))
                 .andExpect(jsonPath("$[4].id", is(users.get(4).getId())))
-                .andExpect(jsonPath("$[4].cif", is(users.get(4).getCnif())))
+                .andExpect(jsonPath("$[4].cnif", is(users.get(4).getCnif())))
                 .andExpect(jsonPath("$[4].name", is(users.get(4).getName())))
                 .andExpect(jsonPath("$[4].phone", is(users.get(4).getPhone())))
                 .andExpect(jsonPath("$[4].password", is(users.get(4).getPassword())))
                 .andExpect(jsonPath("$[4].email", is(users.get(4).getEmail())))
+                .andExpect(jsonPath("$[4].role", is(users.get(4).getRole().toString())))
                 .andExpect(jsonPath("$[4].deleted", is(users.get(4).isDeleted())));
     }
 
@@ -181,16 +194,18 @@ public class UserControllerTest {
         doReturn(user).when(userService).findById(user.getId());
 
         this.mockMvc.perform(get("/user")
+                        .header("Authorization", token)
                         .param("id", user.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(user.getId())))
-                .andExpect(jsonPath("$.cif", is(user.getCnif())))
+                .andExpect(jsonPath("$.cnif", is(user.getCnif())))
                 .andExpect(jsonPath("$.name", is(user.getName())))
                 .andExpect(jsonPath("$.phone", is(user.getPhone())))
                 .andExpect(jsonPath("$.password", is(user.getPassword())))
                 .andExpect(jsonPath("$.email", is(user.getEmail())))
+                .andExpect(jsonPath("$.role", is(user.getRole().toString())))
                 .andExpect(jsonPath("$.deleted", is(user.isDeleted())));
     }
 
@@ -201,6 +216,7 @@ public class UserControllerTest {
         doReturn(null).when(userService).findById(user.getId());
 
         this.mockMvc.perform(get("/user")
+                        .header("Authorization", token)
                         .param("id", user.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())
@@ -218,17 +234,19 @@ public class UserControllerTest {
         doReturn(updatedUser).when(userService).update(any(User.class));
 
         this.mockMvc.perform(put("/user")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(updatedUser)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(updatedUser.getId())))
-                .andExpect(jsonPath("$.cif", is(updatedUser.getCnif())))
+                .andExpect(jsonPath("$.cnif", is(updatedUser.getCnif())))
                 .andExpect(jsonPath("$.name", is(updatedUser.getName())))
                 .andExpect(jsonPath("$.phone", is(updatedUser.getPhone())))
                 .andExpect(jsonPath("$.password", is(updatedUser.getPassword())))
                 .andExpect(jsonPath("$.email", is(updatedUser.getEmail())))
+                .andExpect(jsonPath("$.role", is(updatedUser.getRole().toString())))
                 .andExpect(jsonPath("$.deleted", is(updatedUser.isDeleted())));
     }
 
@@ -240,6 +258,7 @@ public class UserControllerTest {
         doReturn(null).when(userService).update(updatedUser);
 
         this.mockMvc.perform(put("/user")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(updatedUser)))
                 .andDo(print())
@@ -257,6 +276,7 @@ public class UserControllerTest {
         doReturn(0).when(userService).deleteById(user.getId());
 
         this.mockMvc.perform(delete("/user")
+                        .header("Authorization", token)
                         .param("id", user.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -272,6 +292,7 @@ public class UserControllerTest {
         doReturn(1).when(userService).deleteById(user.getId());
 
         this.mockMvc.perform(delete("/user")
+                        .header("Authorization", token)
                         .param("id", user.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())
@@ -295,6 +316,7 @@ public class UserControllerTest {
         doReturn(room).when(userService).addRoom(user.getId(), roomNoId);
 
         this.mockMvc.perform(post("/user/business/room")
+                        .header("Authorization", token)
                         .param("id", user.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(roomNoId)))
@@ -306,7 +328,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.location.id", is(room.getLocation().getId())))
                 .andExpect(jsonPath("$.name", is(room.getName())))
                 .andExpect(jsonPath("$.size", is(room.getSize())))
-                .andExpect(jsonPath("$.price", is(room.getPrice())))
+                .andExpect(jsonPath("$.price", is(BigDecimal.valueOf(room.getPrice()))))
                 .andExpect(jsonPath("$.deleted", is(room.isDeleted())));
     }
 
@@ -318,6 +340,7 @@ public class UserControllerTest {
         doReturn(null).when(userService).addRoom(user.getId(), room);
 
         this.mockMvc.perform(post("/user/business/room")
+                        .header("Authorization", token)
                         .param("id", user.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(room)))
@@ -343,6 +366,7 @@ public class UserControllerTest {
         doReturn(operation).when(userService).addBusinessOperation(user.getId(), operationNoId);
 
         this.mockMvc.perform(post("/user/business/operation")
+                        .header("Authorization", token)
                         .param("id", user.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(operationNoId)))
@@ -365,6 +389,7 @@ public class UserControllerTest {
         doReturn(null).when(userService).addBusinessOperation(user.getId(), operation);
 
         this.mockMvc.perform(post("/user/business/operation")
+                        .header("Authorization", token)
                         .param("id", user.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(operation)))
@@ -390,6 +415,7 @@ public class UserControllerTest {
         doReturn(operation).when(userService).addCustomerOperation(user.getId(), operationNoId);
 
         this.mockMvc.perform(post("/user/customer/operation")
+                        .header("Authorization", token)
                         .param("id", user.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(operationNoId)))
@@ -412,6 +438,7 @@ public class UserControllerTest {
         doReturn(null).when(userService).addCustomerOperation(user.getId(), operation);
 
         this.mockMvc.perform(post("/user/customer/operation")
+                        .header("Authorization", token)
                         .param("id", user.getId().toString())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(operation)))
@@ -428,11 +455,12 @@ public class UserControllerTest {
         if (user.getId() != null) {
             object.put("id", user.getId());
         }
-        object.put("cif", user.getCnif());
+        object.put("cnif", user.getCnif());
         object.put("name", user.getName());
         object.put("phone", user.getPhone());
         object.put("password", user.getPassword());
         object.put("email", user.getEmail());
+        object.put("role", user.getRole());
 
         return object.toString();
     }

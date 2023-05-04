@@ -46,6 +46,10 @@ public class OperationControllerTest {
                     .collectionSizeRange(0,5)
     );
 
+    private final String token = "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzb21lQGVtYWlsLmNvbS" +
+        "IsImV4cCI6MTcwNTU3NDIzMywibmFtZSI6Ik5MV1VaTlJjQiJ9.EFqoeJd7vHC4E1" +
+        "BMaj3f-mQVVssyJHx7tFLuWrYPr8JQSxemy1j5BOHtb0Y3o7Zb";
+
     @DisplayName("POST add operation")
     @Test
     public void whenAddNewOperation_ThenReturnOkAndOperationWithId() throws Exception {
@@ -59,6 +63,7 @@ public class OperationControllerTest {
         doReturn(operation).when(operationService).add(operationNoId);
 
         this.mockMvc.perform(post("/operation")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(operationNoId)))
                 .andDo(print())
@@ -83,6 +88,7 @@ public class OperationControllerTest {
         object.put("status", operation.getStatus());
 
         this.mockMvc.perform(post("/operation")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(object.toString()))
                 .andDo(print())
@@ -100,7 +106,8 @@ public class OperationControllerTest {
         List<Operation> operations = mockGenerator.objects(Operation.class, 5).toList();
         doReturn(operations).when(operationService).findAll();
 
-        this.mockMvc.perform(get("/operation/all"))
+        this.mockMvc.perform(get("/operation/all")
+                        .header("Authorization", token))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -126,6 +133,7 @@ public class OperationControllerTest {
         doReturn(operation).when(operationService).findById(operation.getId());
 
         this.mockMvc.perform(get("/operation")
+                        .header("Authorization", token)
                         .param("id", operation.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -145,6 +153,7 @@ public class OperationControllerTest {
         doReturn(null).when(operationService).findById(operation.getId());
 
         this.mockMvc.perform(get("/operation")
+                        .header("Authorization", token)
                         .param("id", operation.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())
@@ -161,6 +170,7 @@ public class OperationControllerTest {
         doReturn(updatedOperation).when(operationService).update(any(Operation.class));
 
         this.mockMvc.perform(put("/operation")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(updatedOperation)))
                 .andDo(print())
@@ -181,6 +191,7 @@ public class OperationControllerTest {
         doReturn(null).when(operationService).update(updatedOperation);
 
         this.mockMvc.perform(put("/operation")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(updatedOperation)))
                 .andDo(print())
@@ -198,6 +209,7 @@ public class OperationControllerTest {
         doReturn(0).when(operationService).deleteById(operation.getId());
 
         this.mockMvc.perform(delete("/operation")
+                        .header("Authorization", token)
                         .param("id", operation.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -213,6 +225,7 @@ public class OperationControllerTest {
         doReturn(1).when(operationService).deleteById(operation.getId());
 
         this.mockMvc.perform(delete("/operation")
+                        .header("Authorization", token)
                         .param("id", operation.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())

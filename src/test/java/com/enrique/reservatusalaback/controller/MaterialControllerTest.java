@@ -46,6 +46,10 @@ public class MaterialControllerTest {
                     .collectionSizeRange(0,5)
     );
 
+    private final String token = "Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJzb21lQGVtYWlsLmNvbS" +
+        "IsImV4cCI6MTcwNTU3NDIzMywibmFtZSI6Ik5MV1VaTlJjQiJ9.EFqoeJd7vHC4E1" +
+        "BMaj3f-mQVVssyJHx7tFLuWrYPr8JQSxemy1j5BOHtb0Y3o7Zb";
+
     @DisplayName("POST add material")
     @Test
     public void whenAddNewMaterial_ThenReturnOkAndMaterialWithId() throws Exception {
@@ -58,6 +62,7 @@ public class MaterialControllerTest {
         doReturn(material).when(materialService).add(materialNoId);
 
         this.mockMvc.perform(post("/material")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(materialNoId)))
                 .andDo(print())
@@ -78,6 +83,7 @@ public class MaterialControllerTest {
         object.put("quantity", material.getQuantity());
 
         this.mockMvc.perform(post("/material")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(object.toString()))
                 .andDo(print())
@@ -95,7 +101,8 @@ public class MaterialControllerTest {
         List<Material> materials = mockGenerator.objects(Material.class, 5).toList();
         doReturn(materials).when(materialService).findAll();
 
-        this.mockMvc.perform(get("/material/all"))
+        this.mockMvc.perform(get("/material/all")
+                        .header("Authorization", token))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -117,6 +124,7 @@ public class MaterialControllerTest {
         doReturn(material).when(materialService).findById(material.getId());
 
         this.mockMvc.perform(get("/material")
+                        .header("Authorization", token)
                         .param("id", material.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -134,6 +142,7 @@ public class MaterialControllerTest {
         doReturn(null).when(materialService).findById(material.getId());
 
         this.mockMvc.perform(get("/material")
+                        .header("Authorization", token)
                         .param("id", material.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())
@@ -151,6 +160,7 @@ public class MaterialControllerTest {
         doReturn(updatedMaterial).when(materialService).update(any(Material.class));
 
         this.mockMvc.perform(put("/material")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(updatedMaterial)))
                 .andDo(print())
@@ -170,6 +180,7 @@ public class MaterialControllerTest {
         doReturn(null).when(materialService).update(updatedMaterial);
 
         this.mockMvc.perform(put("/material")
+                        .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(updatedMaterial)))
                 .andDo(print())
@@ -187,6 +198,7 @@ public class MaterialControllerTest {
         doReturn(0).when(materialService).deleteById(material.getId());
 
         this.mockMvc.perform(delete("/material")
+                        .header("Authorization", token)
                         .param("id", material.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -202,6 +214,7 @@ public class MaterialControllerTest {
         doReturn(1).when(materialService).deleteById(material.getId());
 
         this.mockMvc.perform(delete("/material")
+                        .header("Authorization", token)
                         .param("id", material.getId().toString()))
                 .andDo(print())
                 .andExpect(status().isNotFound())
