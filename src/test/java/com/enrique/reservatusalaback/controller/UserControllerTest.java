@@ -311,6 +311,7 @@ public class UserControllerTest {
                 room.getLocation(),
                 room.getName(),
                 room.getSize(),
+                room.getCapacity(),
                 room.getPrice()
         );
         doReturn(room).when(userService).addRoom(user.getId(), roomNoId);
@@ -473,6 +474,7 @@ public class UserControllerTest {
         object.put("location", asJson(room.getLocation()));
         object.put("name", room.getName());
         object.put("size", room.getSize());
+        object.put("capacity", room.getCapacity());
         object.put("price", room.getPrice());
 
         return object.toString();

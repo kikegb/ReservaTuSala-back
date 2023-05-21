@@ -41,6 +41,10 @@ public class Room extends DbEntity{
     private double size;
 
     @NonNull
+    @NotNull(message = "Capacity is required")
+    private int capacity;
+
+    @NonNull
     @NotNull(message = "Price is required")
     private double price;
 

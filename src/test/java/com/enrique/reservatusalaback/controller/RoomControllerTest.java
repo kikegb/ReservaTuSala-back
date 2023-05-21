@@ -21,7 +21,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.lang.Math;
 
+import static java.lang.Math.abs;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -63,6 +65,7 @@ public class RoomControllerTest {
                 room.getLocation(),
                 room.getName(),
                 room.getSize(),
+                room.getCapacity(),
                 room.getPrice()
         );
         doReturn(room).when(roomService).add(roomNoId);
@@ -79,6 +82,7 @@ public class RoomControllerTest {
                 .andExpect(jsonPath("$.location.id", is(room.getLocation().getId())))
                 .andExpect(jsonPath("$.name", is(room.getName())))
                 .andExpect(jsonPath("$.size", is(room.getSize())))
+                .andExpect(jsonPath("$.capacity", is(room.getCapacity())))
                 .andExpect(jsonPath("$.price", is(room.getPrice())))
                 .andExpect(jsonPath("$.deleted", is(room.isDeleted())));
     }
@@ -90,6 +94,7 @@ public class RoomControllerTest {
         JSONObject object = new JSONObject();
         object.put("name", room.getName());
         object.put("size", room.getSize());
+        object.put("capacity", room.getCapacity());
         object.put("price", room.getPrice());
 
         this.mockMvc.perform(post("/room")
@@ -121,12 +126,14 @@ public class RoomControllerTest {
                 .andExpect(jsonPath("$[0].location.id", is(rooms.get(0).getLocation().getId())))
                 .andExpect(jsonPath("$[0].name", is(rooms.get(0).getName())))
                 .andExpect(jsonPath("$[0].size", is(rooms.get(0).getSize())))
+                .andExpect(jsonPath("$[0].capacity", is(rooms.get(0).getCapacity())))
                 .andExpect(jsonPath("$[0].price", is(rooms.get(0).getPrice())))
                 .andExpect(jsonPath("$[0].deleted", is(rooms.get(0).isDeleted())))
                 .andExpect(jsonPath("$[4].id", is(rooms.get(4).getId())))
                 .andExpect(jsonPath("$[4].location.id", is(rooms.get(4).getLocation().getId())))
                 .andExpect(jsonPath("$[4].name", is(rooms.get(4).getName())))
                 .andExpect(jsonPath("$[4].size", is(rooms.get(4).getSize())))
+                .andExpect(jsonPath("$[4].capacity", is(rooms.get(4).getCapacity())))
                 .andExpect(jsonPath("$[4].price", is(BigDecimal.valueOf(rooms.get(4).getPrice()))))
                 .andExpect(jsonPath("$[4].deleted", is(rooms.get(4).isDeleted())));
     }
@@ -147,6 +154,7 @@ public class RoomControllerTest {
                 .andExpect(jsonPath("$.location.id", is(room.getLocation().getId())))
                 .andExpect(jsonPath("$.name", is(room.getName())))
                 .andExpect(jsonPath("$.size", is(room.getSize())))
+                .andExpect(jsonPath("$.capacity", is(room.getCapacity())))
                 .andExpect(jsonPath("$.price", is(room.getPrice())))
                 .andExpect(jsonPath("$.deleted", is(room.isDeleted())));
     }
@@ -185,6 +193,7 @@ public class RoomControllerTest {
                 .andExpect(jsonPath("$.location.id", is(updatedRoom.getLocation().getId())))
                 .andExpect(jsonPath("$.name", is(updatedRoom.getName())))
                 .andExpect(jsonPath("$.size", is(updatedRoom.getSize())))
+                .andExpect(jsonPath("$.capacity", is(updatedRoom.getCapacity())))
                 .andExpect(jsonPath("$.price", is(updatedRoom.getPrice())))
                 .andExpect(jsonPath("$.deleted", is(updatedRoom.isDeleted())));
     }
@@ -296,7 +305,7 @@ public class RoomControllerTest {
         Material material = mockGenerator.nextObject(Material.class);
         Material materialNoId = new Material(
                 material.getMaterial(),
-                material.getQuantity()
+                abs(material.getQuantity())
         );
         doReturn(material).when(roomService).addMaterial(room.getId(), materialNoId);
 
@@ -319,6 +328,7 @@ public class RoomControllerTest {
     public void whenAddNewMaterialWithInvalidRoomId_ThenReturnNotFound() throws Exception {
         Room room = mockGenerator.nextObject(Room.class);
         Material material = mockGenerator.nextObject(Material.class);
+        material.setQuantity(abs(material.getQuantity()));
         doReturn(null).when(roomService).addMaterial(room.getId(), material);
 
         this.mockMvc.perform(post("/room/material")
@@ -389,6 +399,7 @@ public class RoomControllerTest {
         object.put("location", asJson(room.getLocation()));
         object.put("name", room.getName());
         object.put("size", room.getSize());
+        object.put("capacity", room.getCapacity());
         object.put("price", room.getPrice());
 
         return object.toString();
