@@ -62,6 +62,7 @@ public class RoomControllerTest {
     public void whenAddNewRoom_ThenReturnOkAndRoomWithId() throws Exception {
         Room room = mockGenerator.nextObject(Room.class);
         Room roomNoId = new Room(
+                room.getBusiness(),
                 room.getLocation(),
                 room.getName(),
                 room.getSize(),
@@ -255,6 +256,9 @@ public class RoomControllerTest {
         Room room = mockGenerator.nextObject(Room.class);
         Operation operation = mockGenerator.nextObject(Operation.class);
         Operation operationNoId = new Operation(
+                operation.getCustomer(),
+                operation.getBusiness(),
+                operation.getRoom(),
                 operation.getStart(),
                 operation.getEnd(),
                 operation.getCost(),

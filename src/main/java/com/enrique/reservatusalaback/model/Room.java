@@ -28,6 +28,12 @@ public class Room extends DbEntity{
     private Long id;
 
     @NonNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "business_id")
+    @JsonIgnoreProperties(value = {"businessOperations", "customerOperations", "rooms"})
+    private User business;
+
+    @NonNull
     @NotNull(message = "Location is required")
     @ManyToOne
     @JoinColumn(name = "location_id")
@@ -48,11 +54,6 @@ public class Room extends DbEntity{
     @NonNull
     @NotNull(message = "Price is required")
     private double price;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "business_id")
-    @JsonIgnoreProperties({"BusinessOperations", "CustomerOperations", "rooms"})
-    private User business;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")

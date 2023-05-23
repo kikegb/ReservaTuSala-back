@@ -55,6 +55,9 @@ public class OperationControllerTest {
     public void whenAddNewOperation_ThenReturnOkAndOperationWithId() throws Exception {
         Operation operation = mockGenerator.nextObject(Operation.class);
         Operation operationNoId = new Operation(
+                operation.getCustomer(),
+                operation.getBusiness(),
+                operation.getRoom(),
                 operation.getStart(),
                 operation.getEnd(),
                 operation.getCost(),

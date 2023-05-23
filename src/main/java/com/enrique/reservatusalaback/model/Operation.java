@@ -22,6 +22,24 @@ public class Operation extends DbEntity {
     private Long id;
 
     @NonNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "customer_id")
+    @JsonIgnoreProperties(value = {"businessOperations", "customerOperations", "rooms"})
+    private User customer;
+
+    @NonNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "business_id")
+    @JsonIgnoreProperties(value = {"businessOperations", "customerOperations", "rooms"})
+    private User business;
+
+    @NonNull
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "room_id")
+    @JsonIgnoreProperties(value = {"operations", "schedules", "materials"})
+    private Room room;
+
+    @NonNull
     @NotNull(message = "Start is required")
     @Column(name = "op_start")
     private LocalDateTime start;
@@ -39,20 +57,4 @@ public class Operation extends DbEntity {
     @NonNull
     @NotNull(message = "Status is required")
     private StatusCode status;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
-    @JsonIgnoreProperties({"BusinessOperations", "CustomerOperations", "rooms"})
-    private User customer;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "business_id")
-    @JsonIgnoreProperties({"BusinessOperations", "CustomerOperations", "rooms"})
-    private User business;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id")
-    @JsonIgnoreProperties({"operations", "schedules", "materials"})
-    private Room room;
-
 }

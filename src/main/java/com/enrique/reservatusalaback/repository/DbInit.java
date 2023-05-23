@@ -43,9 +43,20 @@ public class DbInit {
         User b1 = new User("87654321X", "Bisnes S.A.", "999999999", "password", "email@example.com", Role.BUSINESS);
         User c1 = new User("87654321X", "Helena Nito", "999999999", "p4ssw0rd", "hnito@gmail.com", Role.CUSTOMER);
         User a1 = new User("87654321X", "Administrator", "999999999", "admin", "admin@admin.com", Role.ADMIN);
-        userService.add(b1);
-        userService.add(c1);
-        userService.add(a1);
+        b1 = userService.add(b1);
+        c1 = userService.add(c1);
+        a1 = userService.add(a1);
+
+        Location l1 = new Location("Lost Avenue", "12", "65428", "Testville", "Segovia", "Spain");
+        l1 = locationRepository.save(l1);
+
+        Room r1 = new Room(b1, l1, "Sala reuniones 1", 9.76, 10, 17.5);
+        r1 = roomRepository.save(r1);
+
+        LocalDateTime oStart = LocalDateTime.of(2022, 11, 23, 15, 0);
+        LocalDateTime oEnd = LocalDateTime.of(2022, 11, 23, 18,0);
+        Operation o1 = new Operation(c1, b1, r1, oStart, oEnd, oStart.until(oEnd, ChronoUnit.HOURS), StatusCode.PENDING);
+        o1 = operationRepository.save(o1);
     }
 
     //@PostConstruct
@@ -65,7 +76,7 @@ public class DbInit {
         locationRepository.save(l1);
 
         double rCost = 17.5;
-        Room r1 = new Room(l1, "Sala reuniones 1", 9.76, 10, rCost);
+        Room r1 = new Room(b1, l1, "Sala reuniones 1", 9.76, 10, rCost);
 
         LocalTime sStart = LocalTime.of(8, 0);
         LocalTime sEnd = LocalTime.of(18, 30);
@@ -86,7 +97,7 @@ public class DbInit {
         // Create an operation associated with a business, a customer and a room
         LocalDateTime oStart = LocalDateTime.of(2022, 11, 23, 15, 0);
         LocalDateTime oEnd = LocalDateTime.of(2022, 11, 23, 18,0);
-        Operation o1 = new Operation(oStart, oEnd, oStart.until(oEnd, ChronoUnit.HOURS), StatusCode.PENDING);
+        Operation o1 = new Operation(c1, b1, r1, oStart, oEnd, oStart.until(oEnd, ChronoUnit.HOURS), StatusCode.PENDING);
         c1.setCustomerOperations(List.of(o1));
         b1.setBusinessOperations(List.of(o1));
         r1.setOperations(List.of(o1));
