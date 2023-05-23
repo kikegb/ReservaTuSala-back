@@ -1,15 +1,12 @@
 package com.enrique.reservatusalaback.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
@@ -42,5 +39,20 @@ public class Operation extends DbEntity {
     @NonNull
     @NotNull(message = "Status is required")
     private StatusCode status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    @JsonIgnoreProperties({"BusinessOperations", "CustomerOperations", "rooms"})
+    private User customer;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "business_id")
+    @JsonIgnoreProperties({"BusinessOperations", "CustomerOperations", "rooms"})
+    private User business;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "room_id")
+    @JsonIgnoreProperties({"operations", "schedules", "materials"})
+    private Room room;
 
 }

@@ -1,5 +1,6 @@
 package com.enrique.reservatusalaback.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -47,6 +48,11 @@ public class Room extends DbEntity{
     @NonNull
     @NotNull(message = "Price is required")
     private double price;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "business_id")
+    @JsonIgnoreProperties({"BusinessOperations", "CustomerOperations", "rooms"})
+    private User business;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
