@@ -57,6 +57,7 @@ public class Room extends DbEntity{
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
+    @JsonIgnoreProperties(value = {"room"})
     private List<Operation> operations;
 
     @OneToMany(fetch = FetchType.LAZY)

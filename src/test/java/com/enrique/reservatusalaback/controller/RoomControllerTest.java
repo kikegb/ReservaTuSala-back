@@ -24,8 +24,7 @@ import java.util.List;
 import java.lang.Math;
 
 import static java.lang.Math.abs;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -69,7 +68,7 @@ public class RoomControllerTest {
                 room.getCapacity(),
                 room.getPrice()
         );
-        doReturn(room).when(roomService).add(roomNoId);
+        doReturn(room).when(roomService).add(any(Room.class));
 
         this.mockMvc.perform(post("/room")
                         .header("Authorization", token)
@@ -80,6 +79,7 @@ public class RoomControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.id", is(room.getId())))
+                .andExpect(jsonPath("$.business.id", is(room.getBusiness().getId())))
                 .andExpect(jsonPath("$.location.id", is(room.getLocation().getId())))
                 .andExpect(jsonPath("$.name", is(room.getName())))
                 .andExpect(jsonPath("$.size", is(room.getSize())))
@@ -124,6 +124,7 @@ public class RoomControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(5)))
                 .andExpect(jsonPath("$[0].id", is(rooms.get(0).getId())))
+                .andExpect(jsonPath("$[0].business.id", is(rooms.get(0).getBusiness().getId())))
                 .andExpect(jsonPath("$[0].location.id", is(rooms.get(0).getLocation().getId())))
                 .andExpect(jsonPath("$[0].name", is(rooms.get(0).getName())))
                 .andExpect(jsonPath("$[0].size", is(rooms.get(0).getSize())))
@@ -131,11 +132,12 @@ public class RoomControllerTest {
                 .andExpect(jsonPath("$[0].price", is(rooms.get(0).getPrice())))
                 .andExpect(jsonPath("$[0].deleted", is(rooms.get(0).isDeleted())))
                 .andExpect(jsonPath("$[4].id", is(rooms.get(4).getId())))
+                .andExpect(jsonPath("$[4].business.id", is(rooms.get(4).getBusiness().getId())))
                 .andExpect(jsonPath("$[4].location.id", is(rooms.get(4).getLocation().getId())))
                 .andExpect(jsonPath("$[4].name", is(rooms.get(4).getName())))
                 .andExpect(jsonPath("$[4].size", is(rooms.get(4).getSize())))
                 .andExpect(jsonPath("$[4].capacity", is(rooms.get(4).getCapacity())))
-                .andExpect(jsonPath("$[4].price", is(BigDecimal.valueOf(rooms.get(4).getPrice()))))
+                .andExpect(jsonPath("$[4].price", is(rooms.get(4).getPrice())))
                 .andExpect(jsonPath("$[4].deleted", is(rooms.get(4).isDeleted())));
     }
 
@@ -264,7 +266,7 @@ public class RoomControllerTest {
                 operation.getCost(),
                 operation.getStatus()
         );
-        doReturn(operation).when(roomService).addOperation(room.getId(), operationNoId);
+        doReturn(operation).when(roomService).addOperation(any(Long.class), any(Operation.class));
 
         this.mockMvc.perform(post("/room/operation")
                         .header("Authorization", token)
@@ -278,7 +280,7 @@ public class RoomControllerTest {
                 .andExpect(jsonPath("$.id", is(operation.getId())))
                 .andExpect(jsonPath("$.start", is(operation.getStart().toString())))
                 .andExpect(jsonPath("$.end", is(operation.getEnd().toString())))
-                .andExpect(jsonPath("$.cost", is((BigDecimal.valueOf(operation.getCost())))))
+                .andExpect(jsonPath("$.cost", equalTo(operation.getCost())))
                 .andExpect(jsonPath("$.status", is(operation.getStatus().toString())));
     }
 
@@ -371,8 +373,8 @@ public class RoomControllerTest {
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.id", is(schedule.getId())))
                 .andExpect(jsonPath("$.weekDay", is(schedule.getWeekDay())))
-                .andExpect(jsonPath("$.start", is(schedule.getStart().toString())))
-                .andExpect(jsonPath("$.end", is(schedule.getEnd().toString())));
+                .andExpect(jsonPath("$.start", is(schedule.getStart().toString().substring(0, 17))))
+                .andExpect(jsonPath("$.end", is(schedule.getEnd().toString().substring(0, 17))));
     }
 
     @DisplayName("POST add schedule invalid id")
@@ -400,6 +402,9 @@ public class RoomControllerTest {
         if (room.getId() != null) {
             object.put("id", room.getId());
         }
+        JSONObject business = new JSONObject();
+        business.put("id", room.getBusiness().getId());
+        object.put("business", business);
         object.put("location", asJson(room.getLocation()));
         object.put("name", room.getName());
         object.put("size", room.getSize());
@@ -414,6 +419,15 @@ public class RoomControllerTest {
         if (operation.getId() != null) {
             object.put("id", operation.getId());
         }
+        JSONObject business = new JSONObject();
+        business.put("id", operation.getBusiness().getId());
+        object.put("business", business);
+        JSONObject customer = new JSONObject();
+        customer.put("id", operation.getCustomer().getId());
+        object.put("customer", customer);
+        JSONObject room = new JSONObject();
+        room.put("id", operation.getRoom().getId());
+        object.put("room", room);
         object.put("start", operation.getStart());
         object.put("end", operation.getEnd());
         object.put("cost", operation.getCost());

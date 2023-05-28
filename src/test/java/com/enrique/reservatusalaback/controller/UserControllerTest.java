@@ -315,7 +315,7 @@ public class UserControllerTest {
                 room.getCapacity(),
                 room.getPrice()
         );
-        doReturn(room).when(userService).addRoom(user.getId(), roomNoId);
+        doReturn(room).when(userService).addRoom(any(Long.class), any(Room.class));
 
         this.mockMvc.perform(post("/user/business/room")
                         .header("Authorization", token)
@@ -368,7 +368,7 @@ public class UserControllerTest {
                 operation.getCost(),
                 operation.getStatus()
         );
-        doReturn(operation).when(userService).addBusinessOperation(user.getId(), operationNoId);
+        doReturn(operation).when(userService).addBusinessOperation(any(Long.class), any(Operation.class));
 
         this.mockMvc.perform(post("/user/business/operation")
                         .header("Authorization", token)
@@ -420,7 +420,7 @@ public class UserControllerTest {
                 operation.getCost(),
                 operation.getStatus()
         );
-        doReturn(operation).when(userService).addCustomerOperation(user.getId(), operationNoId);
+        doReturn(operation).when(userService).addCustomerOperation(any(Long.class), any(Operation.class));
 
         this.mockMvc.perform(post("/user/customer/operation")
                         .header("Authorization", token)
@@ -478,11 +478,36 @@ public class UserControllerTest {
         if (room.getId() != null) {
             object.put("id", room.getId());
         }
+        JSONObject business = new JSONObject();
+        business.put("id", room.getBusiness().getId());
+        object.put("business", business);
         object.put("location", asJson(room.getLocation()));
         object.put("name", room.getName());
         object.put("size", room.getSize());
         object.put("capacity", room.getCapacity());
         object.put("price", room.getPrice());
+
+        return object.toString();
+    }
+
+    static String asJsonString(final Operation operation) throws JSONException {
+        JSONObject object = new JSONObject();
+        if (operation.getId() != null) {
+            object.put("id", operation.getId());
+        }
+        JSONObject business = new JSONObject();
+        business.put("id", operation.getBusiness().getId());
+        object.put("business", business);
+        JSONObject customer = new JSONObject();
+        customer.put("id", operation.getCustomer().getId());
+        object.put("customer", customer);
+        JSONObject room = new JSONObject();
+        room.put("id", operation.getRoom().getId());
+        object.put("room", room);
+        object.put("start", operation.getStart());
+        object.put("end", operation.getEnd());
+        object.put("cost", operation.getCost());
+        object.put("status", operation.getStatus());
 
         return object.toString();
     }
@@ -500,18 +525,5 @@ public class UserControllerTest {
         object.put("country", location.getCountry());
 
         return object;
-    }
-
-    static String asJsonString(final Operation operation) throws JSONException {
-        JSONObject object = new JSONObject();
-        if (operation.getId() != null) {
-            object.put("id", operation.getId());
-        }
-        object.put("start", operation.getStart());
-        object.put("end", operation.getEnd());
-        object.put("cost", operation.getCost());
-        object.put("status", operation.getStatus());
-
-        return object.toString();
     }
 }
