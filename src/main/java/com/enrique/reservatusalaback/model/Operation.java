@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class Operation extends DbEntity {
+public class Operation {
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)

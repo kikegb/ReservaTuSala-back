@@ -1,5 +1,6 @@
 package com.enrique.reservatusalaback.service.impl;
 
+import com.enrique.reservatusalaback.model.Material;
 import com.enrique.reservatusalaback.model.Operation;
 import com.enrique.reservatusalaback.repository.OperationRepository;
 import com.enrique.reservatusalaback.service.OperationService;
@@ -40,9 +41,7 @@ public class OperationServiceImpl implements OperationService {
     public int deleteById(final Long id) {
         Optional<Operation> result = operationRepository.findById(id);
         if (result.isPresent()) {
-            Operation operation = result.get();
-            operation.setDeleted(true);
-            operationRepository.save(operation);
+            operationRepository.deleteById(id);
             return 0;
         }
         return 1;

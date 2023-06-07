@@ -23,7 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
-public class User extends DbEntity{
+public class User{
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)

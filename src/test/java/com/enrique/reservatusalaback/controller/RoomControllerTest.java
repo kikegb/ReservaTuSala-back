@@ -84,8 +84,7 @@ public class RoomControllerTest {
                 .andExpect(jsonPath("$.name", is(room.getName())))
                 .andExpect(jsonPath("$.size", is(room.getSize())))
                 .andExpect(jsonPath("$.capacity", is(room.getCapacity())))
-                .andExpect(jsonPath("$.price", is(room.getPrice())))
-                .andExpect(jsonPath("$.deleted", is(room.isDeleted())));
+                .andExpect(jsonPath("$.price", is(room.getPrice())));
     }
 
     @DisplayName("POST add room empty location")
@@ -130,15 +129,13 @@ public class RoomControllerTest {
                 .andExpect(jsonPath("$[0].size", is(rooms.get(0).getSize())))
                 .andExpect(jsonPath("$[0].capacity", is(rooms.get(0).getCapacity())))
                 .andExpect(jsonPath("$[0].price", is(rooms.get(0).getPrice())))
-                .andExpect(jsonPath("$[0].deleted", is(rooms.get(0).isDeleted())))
                 .andExpect(jsonPath("$[4].id", is(rooms.get(4).getId())))
                 .andExpect(jsonPath("$[4].business.id", is(rooms.get(4).getBusiness().getId())))
                 .andExpect(jsonPath("$[4].location.id", is(rooms.get(4).getLocation().getId())))
                 .andExpect(jsonPath("$[4].name", is(rooms.get(4).getName())))
                 .andExpect(jsonPath("$[4].size", is(rooms.get(4).getSize())))
                 .andExpect(jsonPath("$[4].capacity", is(rooms.get(4).getCapacity())))
-                .andExpect(jsonPath("$[4].price", is(rooms.get(4).getPrice())))
-                .andExpect(jsonPath("$[4].deleted", is(rooms.get(4).isDeleted())));
+                .andExpect(jsonPath("$[4].price", is(rooms.get(4).getPrice())));
     }
 
     @DisplayName("GET room by valid id")
@@ -158,8 +155,7 @@ public class RoomControllerTest {
                 .andExpect(jsonPath("$.name", is(room.getName())))
                 .andExpect(jsonPath("$.size", is(room.getSize())))
                 .andExpect(jsonPath("$.capacity", is(room.getCapacity())))
-                .andExpect(jsonPath("$.price", is(room.getPrice())))
-                .andExpect(jsonPath("$.deleted", is(room.isDeleted())));
+                .andExpect(jsonPath("$.price", is(room.getPrice())));
     }
 
     @DisplayName("GET room by invalid id")
@@ -197,8 +193,7 @@ public class RoomControllerTest {
                 .andExpect(jsonPath("$.name", is(updatedRoom.getName())))
                 .andExpect(jsonPath("$.size", is(updatedRoom.getSize())))
                 .andExpect(jsonPath("$.capacity", is(updatedRoom.getCapacity())))
-                .andExpect(jsonPath("$.price", is(updatedRoom.getPrice())))
-                .andExpect(jsonPath("$.deleted", is(updatedRoom.isDeleted())));
+                .andExpect(jsonPath("$.price", is(updatedRoom.getPrice())));
     }
 
     @DisplayName("PUT update room invalid id")

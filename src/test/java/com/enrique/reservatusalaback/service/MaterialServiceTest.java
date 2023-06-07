@@ -115,8 +115,7 @@ public class MaterialServiceTest {
         when(materialRepository.save(any(Material.class))).then(AdditionalAnswers.returnsFirstArg());
 
         assertEquals(0, materialService.deleteById(material.getId()));
-        verify(materialRepository).save(materialCaptor.capture());
-        assertTrue(materialCaptor.getValue().isDeleted());
+        verify(materialRepository).deleteById(material.getId());
     }
 
     @DisplayName("Test delete material invalid id")
@@ -126,6 +125,6 @@ public class MaterialServiceTest {
         when(materialRepository.findById(material.getId())).thenReturn(Optional.empty());
 
         assertEquals(1, materialService.deleteById(material.getId()));
-        verify(materialRepository, never()).save(material);
+        verify(materialRepository, never()).deleteById(material.getId());
     }
 }

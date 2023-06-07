@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class Material extends DbEntity {
+public class Material {
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)

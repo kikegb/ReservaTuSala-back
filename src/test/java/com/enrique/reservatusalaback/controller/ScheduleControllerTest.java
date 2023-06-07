@@ -72,8 +72,7 @@ public class ScheduleControllerTest {
                 .andExpect(jsonPath("$.id", is(schedule.getId())))
                 .andExpect(jsonPath("$.weekDay", is(schedule.getWeekDay())))
                 .andExpect(jsonPath("$.start", is(schedule.getStart().toString())))
-                .andExpect(jsonPath("$.end", is(schedule.getEnd().toString())))
-                .andExpect(jsonPath("$.deleted", is(schedule.isDeleted())));
+                .andExpect(jsonPath("$.end", is(schedule.getEnd().toString())));
     }
 
     @DisplayName("POST add schedule empty start")
@@ -113,12 +112,10 @@ public class ScheduleControllerTest {
                 .andExpect(jsonPath("$[0].weekDay", is(schedules.get(0).getWeekDay())))
                 .andExpect(jsonPath("$[0].start", is(schedules.get(0).getStart().toString())))
                 .andExpect(jsonPath("$[0].end", is(schedules.get(0).getEnd().toString())))
-                .andExpect(jsonPath("$[0].deleted", is(schedules.get(0).isDeleted())))
                 .andExpect(jsonPath("$[4].id", is(schedules.get(4).getId())))
                 .andExpect(jsonPath("$[4].weekDay", is(schedules.get(4).getWeekDay())))
                 .andExpect(jsonPath("$[4].start", is(schedules.get(4).getStart().toString())))
-                .andExpect(jsonPath("$[4].end", is(schedules.get(4).getEnd().toString())))
-                .andExpect(jsonPath("$[4].deleted", is(schedules.get(4).isDeleted())));
+                .andExpect(jsonPath("$[4].end", is(schedules.get(4).getEnd().toString())));
     }
 
     @DisplayName("GET schedule by valid id")
@@ -136,8 +133,7 @@ public class ScheduleControllerTest {
                 .andExpect(jsonPath("$.id", is(schedule.getId())))
                 .andExpect(jsonPath("$.weekDay", is(schedule.getWeekDay())))
                 .andExpect(jsonPath("$.start", is(schedule.getStart().toString())))
-                .andExpect(jsonPath("$.end", is(schedule.getEnd().toString())))
-                .andExpect(jsonPath("$.deleted", is(schedule.isDeleted())));
+                .andExpect(jsonPath("$.end", is(schedule.getEnd().toString())));
     }
 
     @DisplayName("GET schedule by invalid id")
@@ -173,8 +169,7 @@ public class ScheduleControllerTest {
                 .andExpect(jsonPath("$.id", is(updatedSchedule.getId())))
                 .andExpect(jsonPath("$.weekDay", is(updatedSchedule.getWeekDay())))
                 .andExpect(jsonPath("$.start", is(updatedSchedule.getStart().toString())))
-                .andExpect(jsonPath("$.end", is(updatedSchedule.getEnd().toString())))
-                .andExpect(jsonPath("$.deleted", is(updatedSchedule.isDeleted())));
+                .andExpect(jsonPath("$.end", is(updatedSchedule.getEnd().toString())));
     }
 
     @DisplayName("PUT update schedule invalid id")

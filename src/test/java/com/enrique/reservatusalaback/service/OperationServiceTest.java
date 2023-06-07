@@ -115,8 +115,7 @@ public class OperationServiceTest {
         when(operationRepository.save(any(Operation.class))).then(AdditionalAnswers.returnsFirstArg());
 
         assertEquals(0, operationService.deleteById(operation.getId()));
-        verify(operationRepository).save(operationCaptor.capture());
-        assertTrue(operationCaptor.getValue().isDeleted());
+        verify(operationRepository).deleteById(operation.getId());
     }
 
     @DisplayName("Test delete operation invalid id")
@@ -126,6 +125,6 @@ public class OperationServiceTest {
         when(operationRepository.findById(operation.getId())).thenReturn(Optional.empty());
 
         assertEquals(1, operationService.deleteById(operation.getId()));
-        verify(operationRepository, never()).save(operation);
+        verify(operationRepository, never()).deleteById(operation.getId());
     }
 }

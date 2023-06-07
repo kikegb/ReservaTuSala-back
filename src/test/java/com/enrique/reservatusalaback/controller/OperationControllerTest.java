@@ -80,8 +80,7 @@ public class OperationControllerTest {
                 .andExpect(jsonPath("$.start", is(operation.getStart().toString())))
                 .andExpect(jsonPath("$.end", is(operation.getEnd().toString())))
                 .andExpect(jsonPath("$.cost", is(BigDecimal.valueOf(operation.getCost()))))
-                .andExpect(jsonPath("$.status", is(operation.getStatus().toString())))
-                .andExpect(jsonPath("$.deleted", is(operation.isDeleted())));
+                .andExpect(jsonPath("$.status", is(operation.getStatus().toString())));
     }
 
     @DisplayName("POST add operation empty start")
@@ -126,7 +125,6 @@ public class OperationControllerTest {
                 .andExpect(jsonPath("$[0].end", is(operations.get(0).getEnd().toString())))
                 .andExpect(jsonPath("$[0].cost", is(BigDecimal.valueOf(operations.get(0).getCost()))))
                 .andExpect(jsonPath("$[0].status", is(operations.get(0).getStatus().toString())))
-                .andExpect(jsonPath("$[0].deleted", is(operations.get(0).isDeleted())))
                 .andExpect(jsonPath("$[4].id", is(operations.get(4).getId())))
                 .andExpect(jsonPath("$[4].business.id", is(operations.get(4).getBusiness().getId())))
                 .andExpect(jsonPath("$[4].customer.id", is(operations.get(4).getCustomer().getId())))
@@ -134,8 +132,7 @@ public class OperationControllerTest {
                 .andExpect(jsonPath("$[4].start", is(operations.get(4).getStart().toString())))
                 .andExpect(jsonPath("$[4].end", is(operations.get(4).getEnd().toString())))
                 .andExpect(jsonPath("$[4].cost", equalTo(operations.get(4).getCost())))
-                .andExpect(jsonPath("$[4].status", is(operations.get(4).getStatus().toString())))
-                .andExpect(jsonPath("$[4].deleted", is(operations.get(4).isDeleted())));
+                .andExpect(jsonPath("$[4].status", is(operations.get(4).getStatus().toString())));
     }
 
     @DisplayName("GET operation by valid id")
@@ -157,8 +154,7 @@ public class OperationControllerTest {
                 .andExpect(jsonPath("$.start", is(operation.getStart().toString())))
                 .andExpect(jsonPath("$.end", is(operation.getEnd().toString())))
                 .andExpect(jsonPath("$.cost", is(BigDecimal.valueOf(operation.getCost()))))
-                .andExpect(jsonPath("$.status", is(operation.getStatus().toString())))
-                .andExpect(jsonPath("$.deleted", is(operation.isDeleted())));
+                .andExpect(jsonPath("$.status", is(operation.getStatus().toString())));
     }
 
     @DisplayName("GET operation by invalid id")
@@ -198,8 +194,7 @@ public class OperationControllerTest {
                 .andExpect(jsonPath("$.start", is(updatedOperation.getStart().toString())))
                 .andExpect(jsonPath("$.end", is(updatedOperation.getEnd().toString())))
                 .andExpect(jsonPath("$.cost", is(BigDecimal.valueOf(updatedOperation.getCost()))))
-                .andExpect(jsonPath("$.status", is(updatedOperation.getStatus().toString())))
-                .andExpect(jsonPath("$.deleted", is(updatedOperation.isDeleted())));
+                .andExpect(jsonPath("$.status", is(updatedOperation.getStatus().toString())));
     }
 
     @DisplayName("PUT update operation invalid id")

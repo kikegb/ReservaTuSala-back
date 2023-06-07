@@ -17,7 +17,7 @@ import java.time.LocalTime;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class Schedule extends DbEntity {
+public class Schedule{
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)

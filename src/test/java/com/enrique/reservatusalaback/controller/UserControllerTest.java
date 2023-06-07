@@ -84,8 +84,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.phone", is(user.getPhone())))
                 .andExpect(jsonPath("$.password", is(user.getPassword())))
                 .andExpect(jsonPath("$.email", is(user.getEmail())))
-                .andExpect(jsonPath("$.role", is(user.getRole().toString())))
-                .andExpect(jsonPath("$.deleted", is(user.isDeleted())));
+                .andExpect(jsonPath("$.role", is(user.getRole().toString())));
     }
 
     @DisplayName("POST add already existent user")
@@ -176,15 +175,13 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$[0].password", is(users.get(0).getPassword())))
                 .andExpect(jsonPath("$[0].email", is(users.get(0).getEmail())))
                 .andExpect(jsonPath("$[0].role", is(users.get(0).getRole().toString())))
-                .andExpect(jsonPath("$[0].deleted", is(users.get(0).isDeleted())))
                 .andExpect(jsonPath("$[4].id", is(users.get(4).getId())))
                 .andExpect(jsonPath("$[4].cnif", is(users.get(4).getCnif())))
                 .andExpect(jsonPath("$[4].name", is(users.get(4).getName())))
                 .andExpect(jsonPath("$[4].phone", is(users.get(4).getPhone())))
                 .andExpect(jsonPath("$[4].password", is(users.get(4).getPassword())))
                 .andExpect(jsonPath("$[4].email", is(users.get(4).getEmail())))
-                .andExpect(jsonPath("$[4].role", is(users.get(4).getRole().toString())))
-                .andExpect(jsonPath("$[4].deleted", is(users.get(4).isDeleted())));
+                .andExpect(jsonPath("$[4].role", is(users.get(4).getRole().toString())));
     }
 
     @DisplayName("GET user by valid id")
@@ -205,8 +202,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.phone", is(user.getPhone())))
                 .andExpect(jsonPath("$.password", is(user.getPassword())))
                 .andExpect(jsonPath("$.email", is(user.getEmail())))
-                .andExpect(jsonPath("$.role", is(user.getRole().toString())))
-                .andExpect(jsonPath("$.deleted", is(user.isDeleted())));
+                .andExpect(jsonPath("$.role", is(user.getRole().toString())));
     }
 
     @DisplayName("GET user by invalid id")
@@ -246,8 +242,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.phone", is(updatedUser.getPhone())))
                 .andExpect(jsonPath("$.password", is(updatedUser.getPassword())))
                 .andExpect(jsonPath("$.email", is(updatedUser.getEmail())))
-                .andExpect(jsonPath("$.role", is(updatedUser.getRole().toString())))
-                .andExpect(jsonPath("$.deleted", is(updatedUser.isDeleted())));
+                .andExpect(jsonPath("$.role", is(updatedUser.getRole().toString())));
     }
 
     @DisplayName("PUT update user invalid id")
@@ -330,8 +325,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.location.id", is(room.getLocation().getId())))
                 .andExpect(jsonPath("$.name", is(room.getName())))
                 .andExpect(jsonPath("$.size", is(room.getSize())))
-                .andExpect(jsonPath("$.price", is(BigDecimal.valueOf(room.getPrice()))))
-                .andExpect(jsonPath("$.deleted", is(room.isDeleted())));
+                .andExpect(jsonPath("$.price", is(BigDecimal.valueOf(room.getPrice()))));
     }
 
     @DisplayName("POST add room invalid id")

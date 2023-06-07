@@ -40,9 +40,7 @@ public class LocationServiceImpl implements LocationService {
     public int deleteById(final Long id) {
         Optional<Location> result = locationRepository.findById(id);
         if (result.isPresent()) {
-            Location location = result.get();
-            location.setDeleted(true);
-            locationRepository.save(location);
+            locationRepository.deleteById(id);
             return 0;
         }
         return 1;

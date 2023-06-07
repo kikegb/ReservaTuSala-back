@@ -136,8 +136,7 @@ public class UserServiceTest {
         when(userRepository.save(any(User.class))).then(AdditionalAnswers.returnsFirstArg());
 
         assertEquals(0, userService.deleteById(user.getId()));
-        verify(userRepository).save(userCaptor.capture());
-        assertTrue(userCaptor.getValue().isDeleted());
+        verify(userRepository).deleteById(user.getId());
     }
 
     @DisplayName("Test delete user invalid id")
@@ -147,7 +146,7 @@ public class UserServiceTest {
         when(userRepository.findById(user.getId())).thenReturn(Optional.empty());
 
         assertEquals(1, userService.deleteById(user.getId()));
-        verify(userRepository, never()).save(user);
+        verify(userRepository, never()).deleteById(user.getId());
     }
 
     @DisplayName("Test add a room successfully")

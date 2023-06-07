@@ -79,8 +79,7 @@ public class LocationControllerTest {
                 .andExpect(jsonPath("$.postcode", is(location.getPostcode())))
                 .andExpect(jsonPath("$.town", is(location.getTown())))
                 .andExpect(jsonPath("$.province", is(location.getProvince())))
-                .andExpect(jsonPath("$.country", is(location.getCountry())))
-                .andExpect(jsonPath("$.deleted", is(location.isDeleted())));
+                .andExpect(jsonPath("$.country", is(location.getCountry())));
     }
 
     @DisplayName("POST add location empty street")
@@ -126,15 +125,13 @@ public class LocationControllerTest {
                 .andExpect(jsonPath("$[0].town", is(locations.get(0).getTown())))
                 .andExpect(jsonPath("$[0].province", is(locations.get(0).getProvince())))
                 .andExpect(jsonPath("$[0].country", is(locations.get(0).getCountry())))
-                .andExpect(jsonPath("$[0].deleted", is(locations.get(0).isDeleted())))
                 .andExpect(jsonPath("$[4].id", is(locations.get(4).getId())))
                 .andExpect(jsonPath("$[4].street", is(locations.get(4).getStreet())))
                 .andExpect(jsonPath("$[4].number", is(locations.get(4).getNumber())))
                 .andExpect(jsonPath("$[4].postcode", is(locations.get(4).getPostcode())))
                 .andExpect(jsonPath("$[4].town", is(locations.get(4).getTown())))
                 .andExpect(jsonPath("$[4].province", is(locations.get(4).getProvince())))
-                .andExpect(jsonPath("$[4].country", is(locations.get(4).getCountry())))
-                .andExpect(jsonPath("$[4].deleted", is(locations.get(4).isDeleted())));
+                .andExpect(jsonPath("$[4].country", is(locations.get(4).getCountry())));
     }
 
     @DisplayName("GET location by valid id")
@@ -155,8 +152,7 @@ public class LocationControllerTest {
                 .andExpect(jsonPath("$.postcode", is(location.getPostcode())))
                 .andExpect(jsonPath("$.town", is(location.getTown())))
                 .andExpect(jsonPath("$.province", is(location.getProvince())))
-                .andExpect(jsonPath("$.country", is(location.getCountry())))
-                .andExpect(jsonPath("$.deleted", is(location.isDeleted())));
+                .andExpect(jsonPath("$.country", is(location.getCountry())));
     }
 
     @DisplayName("GET location by invalid id")
@@ -195,8 +191,7 @@ public class LocationControllerTest {
                 .andExpect(jsonPath("$.postcode", is(updatedLocation.getPostcode())))
                 .andExpect(jsonPath("$.town", is(updatedLocation.getTown())))
                 .andExpect(jsonPath("$.province", is(updatedLocation.getProvince())))
-                .andExpect(jsonPath("$.country", is(updatedLocation.getCountry())))
-                .andExpect(jsonPath("$.deleted", is(updatedLocation.isDeleted())));
+                .andExpect(jsonPath("$.country", is(updatedLocation.getCountry())));
     }
 
     @DisplayName("PUT update location invalid id")

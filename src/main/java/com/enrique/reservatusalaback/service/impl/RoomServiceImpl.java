@@ -49,9 +49,7 @@ public class RoomServiceImpl implements RoomService {
     public int deleteById(final Long id) {
         Optional<Room> result = roomRepository.findById(id);
         if (result.isPresent()) {
-            Room room = result.get();
-            room.setDeleted(true);
-            roomRepository.save(room);
+            roomRepository.deleteById(id);
             return 0;
         }
         return 1;

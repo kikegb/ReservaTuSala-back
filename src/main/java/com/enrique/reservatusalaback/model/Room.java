@@ -21,7 +21,7 @@ import java.util.List;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class Room extends DbEntity{
+public class Room{
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)

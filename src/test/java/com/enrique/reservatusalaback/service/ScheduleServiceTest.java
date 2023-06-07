@@ -115,8 +115,7 @@ public class ScheduleServiceTest {
         when(scheduleRepository.save(any(Schedule.class))).then(AdditionalAnswers.returnsFirstArg());
 
         assertEquals(0, scheduleService.deleteById(schedule.getId()));
-        verify(scheduleRepository).save(scheduleCaptor.capture());
-        assertTrue(scheduleCaptor.getValue().isDeleted());
+        verify(scheduleRepository).deleteById(schedule.getId());
     }
 
     @DisplayName("Test delete schedule invalid id")
@@ -126,6 +125,6 @@ public class ScheduleServiceTest {
         when(scheduleRepository.findById(schedule.getId())).thenReturn(Optional.empty());
 
         assertEquals(1, scheduleService.deleteById(schedule.getId()));
-        verify(scheduleRepository, never()).save(schedule);
+        verify(scheduleRepository, never()).deleteById(schedule.getId());
     }
 }

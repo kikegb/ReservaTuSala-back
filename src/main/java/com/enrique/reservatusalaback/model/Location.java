@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 @Data
 @RequiredArgsConstructor
 @NoArgsConstructor
-public class Location extends DbEntity {
+public class Location {
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)

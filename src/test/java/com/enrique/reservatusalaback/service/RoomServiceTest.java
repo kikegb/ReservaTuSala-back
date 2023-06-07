@@ -124,8 +124,7 @@ public class RoomServiceTest {
         when(roomRepository.save(any(Room.class))).then(AdditionalAnswers.returnsFirstArg());
 
         assertEquals(0, roomService.deleteById(room.getId()));
-        verify(roomRepository).save(roomCaptor.capture());
-        assertTrue(roomCaptor.getValue().isDeleted());
+        verify(roomRepository).deleteById(room.getId());
     }
 
     @DisplayName("Test delete room invalid id")
@@ -135,7 +134,7 @@ public class RoomServiceTest {
         when(roomRepository.findById(room.getId())).thenReturn(Optional.empty());
 
         assertEquals(1, roomService.deleteById(room.getId()));
-        verify(roomRepository, never()).save(room);
+        verify(roomRepository, never()).deleteById(room.getId());
     }
 
     @DisplayName("Test add operation successfully")

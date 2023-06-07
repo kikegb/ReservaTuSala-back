@@ -1,5 +1,6 @@
 package com.enrique.reservatusalaback.service.impl;
 
+import com.enrique.reservatusalaback.model.Material;
 import com.enrique.reservatusalaback.model.Operation;
 import com.enrique.reservatusalaback.model.Room;
 import com.enrique.reservatusalaback.model.User;
@@ -59,9 +60,7 @@ public class UserServiceImpl implements UserService {
     public int deleteById(final Long id) {
         Optional<User> result = userRepository.findById(id);
         if (result.isPresent()) {
-            User user = result.get();
-            user.setDeleted(true);
-            userRepository.save(user);
+            userRepository.deleteById(id);
             return 0;
         }
         return 1;

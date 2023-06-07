@@ -71,8 +71,7 @@ public class MaterialControllerTest {
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.id", is(material.getId())))
                 .andExpect(jsonPath("$.material", is(material.getMaterial())))
-                .andExpect(jsonPath("$.quantity", is(material.getQuantity())))
-                .andExpect(jsonPath("$.deleted", is(material.isDeleted())));
+                .andExpect(jsonPath("$.quantity", is(material.getQuantity())));
     }
 
     @DisplayName("POST add material empty material")
@@ -110,11 +109,9 @@ public class MaterialControllerTest {
                 .andExpect(jsonPath("$[0].id", is(materials.get(0).getId())))
                 .andExpect(jsonPath("$[0].material", is(materials.get(0).getMaterial())))
                 .andExpect(jsonPath("$[0].quantity", is(materials.get(0).getQuantity())))
-                .andExpect(jsonPath("$[0].deleted", is(materials.get(0).isDeleted())))
                 .andExpect(jsonPath("$[4].id", is(materials.get(4).getId())))
                 .andExpect(jsonPath("$[4].material", is(materials.get(4).getMaterial())))
-                .andExpect(jsonPath("$[4].quantity", is(materials.get(4).getQuantity())))
-                .andExpect(jsonPath("$[4].deleted", is(materials.get(4).isDeleted())));
+                .andExpect(jsonPath("$[4].quantity", is(materials.get(4).getQuantity())));
     }
 
     @DisplayName("GET material by valid id")
@@ -131,8 +128,7 @@ public class MaterialControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(material.getId())))
                 .andExpect(jsonPath("$.material", is(material.getMaterial())))
-                .andExpect(jsonPath("$.quantity", is(material.getQuantity())))
-                .andExpect(jsonPath("$.deleted", is(material.isDeleted())));
+                .andExpect(jsonPath("$.quantity", is(material.getQuantity())));
     }
 
     @DisplayName("GET material by invalid id")
@@ -168,8 +164,7 @@ public class MaterialControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(updatedMaterial.getId())))
                 .andExpect(jsonPath("$.material", is(updatedMaterial.getMaterial())))
-                .andExpect(jsonPath("$.quantity", is(updatedMaterial.getQuantity())))
-                .andExpect(jsonPath("$.deleted", is(updatedMaterial.isDeleted())));
+                .andExpect(jsonPath("$.quantity", is(updatedMaterial.getQuantity())));
     }
 
     @DisplayName("PUT update material invalid id")
