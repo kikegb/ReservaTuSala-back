@@ -11,6 +11,7 @@ import com.enrique.reservatusalaback.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +68,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public Room addRoom(final Long id, final Room room) {
         Optional<User> result = userRepository.findById(id);
         if (result.isPresent()) {
@@ -80,6 +82,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public Operation addBusinessOperation(final Long id, final Operation operation) {
         Optional<User> result = userRepository.findById(id);
         if (result.isPresent()) {
@@ -93,6 +96,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public Operation addCustomerOperation(final Long id, final Operation operation) {
         Optional<User> result = userRepository.findById(id);
         if (result.isPresent()) {

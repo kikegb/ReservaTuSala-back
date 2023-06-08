@@ -9,6 +9,7 @@ import com.enrique.reservatusalaback.model.Room;
 import com.enrique.reservatusalaback.model.Schedule;
 import com.enrique.reservatusalaback.model.StatusCode;
 import com.enrique.reservatusalaback.model.User;
+import com.enrique.reservatusalaback.service.RoomService;
 import com.enrique.reservatusalaback.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,6 +38,8 @@ public class DbInit {
     private OperationRepository operationRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoomService roomService;
 
     @PostConstruct
     private void insertUsers() {
@@ -52,6 +55,16 @@ public class DbInit {
 
         Room r1 = new Room(b1, l1, "Sala reuniones 1", 9.76, 10, 17.5);
         r1 = roomRepository.save(r1);
+
+        Material m1 = new Material("Chair", 5);
+        Material m2 = new Material("Whiteboard", 1);
+        m1 = roomService.addMaterial(r1.getId(), m1);
+        m2 = roomService.addMaterial(r1.getId(), m2);
+
+        LocalTime sStart = LocalTime.of(8, 0);
+        LocalTime sEnd = LocalTime.of(18, 0);
+        Schedule s1 = new Schedule(0, sStart, sEnd);
+        s1 = roomService.addSchedule(r1.getId(), s1);
 
         LocalDateTime oStart = LocalDateTime.of(2022, 11, 23, 15, 0);
         LocalDateTime oEnd = LocalDateTime.of(2022, 11, 23, 18,0);
