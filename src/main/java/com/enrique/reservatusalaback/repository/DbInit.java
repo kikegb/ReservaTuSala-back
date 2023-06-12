@@ -66,8 +66,8 @@ public class DbInit {
         Schedule s1 = new Schedule(0, sStart, sEnd);
         s1 = roomService.addSchedule(r1.getId(), s1);
 
-        LocalDateTime oStart = LocalDateTime.of(2022, 11, 23, 15, 0);
-        LocalDateTime oEnd = LocalDateTime.of(2022, 11, 23, 18,0);
+        LocalDateTime oStart = LocalDateTime.of(2023, 6, 25, 10, 0);
+        LocalDateTime oEnd = LocalDateTime.of(2023, 6, 25, 12,0);
         Operation o1 = new Operation(c1, b1, r1, oStart, oEnd, oStart.until(oEnd, ChronoUnit.HOURS), StatusCode.PENDING);
         o1 = operationRepository.save(o1);
     }
