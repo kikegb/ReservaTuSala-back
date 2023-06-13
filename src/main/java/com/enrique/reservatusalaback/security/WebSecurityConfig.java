@@ -3,6 +3,7 @@ package com.enrique.reservatusalaback.security;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -38,6 +39,7 @@ public class WebSecurityConfig {
 
         http.csrf().disable();
         http.cors();
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/user").permitAll();
         http.authorizeRequests().antMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

@@ -44,7 +44,7 @@ public class DbInit {
     @PostConstruct
     private void insertUsers() {
         User b1 = new User("87654321X", "Bisnes S.A.", "999999999", "password", "email@example.com", Role.BUSINESS);
-        User c1 = new User("87654321X", "Helena Nito", "999999999", "p4ssw0rd", "hnito@gmail.com", Role.CUSTOMER);
+        User c1 = new User("87654321X", "Helena Nito", "999999999", "password", "hnito@gmail.com", Role.CUSTOMER);
         User a1 = new User("87654321X", "Administrator", "999999999", "admin", "admin@admin.com", Role.ADMIN);
         b1 = userService.add(b1);
         c1 = userService.add(c1);
