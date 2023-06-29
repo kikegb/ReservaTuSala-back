@@ -115,8 +115,7 @@ public class LocationServiceTest {
         when(locationRepository.save(any(Location.class))).then(AdditionalAnswers.returnsFirstArg());
 
         assertEquals(0, locationService.deleteById(location.getId()));
-        verify(locationRepository).save(locationCaptor.capture());
-        assertTrue(locationCaptor.getValue().isDeleted());
+        verify(locationRepository).deleteById(location.getId());
     }
 
     @DisplayName("Test delete location invalid id")
@@ -126,6 +125,6 @@ public class LocationServiceTest {
         when(locationRepository.findById(location.getId())).thenReturn(Optional.empty());
 
         assertEquals(1, locationService.deleteById(location.getId()));
-        verify(locationRepository, never()).save(location);
+        verify(locationRepository, never()).deleteById(location.getId());
     }
 }

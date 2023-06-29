@@ -1,5 +1,6 @@
 package com.enrique.reservatusalaback.service.impl;
 
+import com.enrique.reservatusalaback.model.Material;
 import com.enrique.reservatusalaback.model.Operation;
 import com.enrique.reservatusalaback.model.Room;
 import com.enrique.reservatusalaback.model.User;
@@ -10,6 +11,7 @@ import com.enrique.reservatusalaback.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +52,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User update(final User user) {
         if (userRepository.existsById(user.getId())) {
+            if (!userRepository.findById(user.getId()).get().getPassword().equals(user.getPassword())) {
+                user.setPassword(passwordEncoder.encode(user.getPassword()));
+            }
             return userRepository.save(user);
         }
         return null;
@@ -59,15 +64,14 @@ public class UserServiceImpl implements UserService {
     public int deleteById(final Long id) {
         Optional<User> result = userRepository.findById(id);
         if (result.isPresent()) {
-            User user = result.get();
-            user.setDeleted(true);
-            userRepository.save(user);
+            userRepository.deleteById(id);
             return 0;
         }
         return 1;
     }
 
     @Override
+    @Transactional
     public Room addRoom(final Long id, final Room room) {
         Optional<User> result = userRepository.findById(id);
         if (result.isPresent()) {
@@ -81,6 +85,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public Operation addBusinessOperation(final Long id, final Operation operation) {
         Optional<User> result = userRepository.findById(id);
         if (result.isPresent()) {
@@ -94,6 +99,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public Operation addCustomerOperation(final Long id, final Operation operation) {
         Optional<User> result = userRepository.findById(id);
         if (result.isPresent()) {

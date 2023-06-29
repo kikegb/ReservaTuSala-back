@@ -1,5 +1,6 @@
 package com.enrique.reservatusalaback.service.impl;
 
+import com.enrique.reservatusalaback.model.Material;
 import com.enrique.reservatusalaback.model.Schedule;
 import com.enrique.reservatusalaback.repository.ScheduleRepository;
 import com.enrique.reservatusalaback.service.ScheduleService;
@@ -40,9 +41,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     public int deleteById(final Long id) {
         Optional<Schedule> result = scheduleRepository.findById(id);
         if (result.isPresent()) {
-            Schedule schedule = result.get();
-            schedule.setDeleted(true);
-            scheduleRepository.save(schedule);
+            scheduleRepository.deleteById(id);
             return 0;
         }
         return 1;

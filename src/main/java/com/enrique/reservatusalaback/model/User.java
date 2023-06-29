@@ -5,14 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -23,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
-public class User extends DbEntity{
+public class User{
 
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE)
@@ -56,15 +49,15 @@ public class User extends DbEntity{
     @NotNull(message = "User role is required")
     private Role role;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "business_id")
     private List<Room> rooms;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "business_id")
     private List<Operation> BusinessOperations;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "customer_id")
     private List<Operation> CustomerOperations;
 }

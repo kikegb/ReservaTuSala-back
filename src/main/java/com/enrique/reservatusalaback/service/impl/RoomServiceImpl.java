@@ -10,7 +10,9 @@ import com.enrique.reservatusalaback.service.OperationService;
 import com.enrique.reservatusalaback.service.RoomService;
 import com.enrique.reservatusalaback.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Hibernate;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,15 +51,14 @@ public class RoomServiceImpl implements RoomService {
     public int deleteById(final Long id) {
         Optional<Room> result = roomRepository.findById(id);
         if (result.isPresent()) {
-            Room room = result.get();
-            room.setDeleted(true);
-            roomRepository.save(room);
+            roomRepository.deleteById(id);
             return 0;
         }
         return 1;
     }
 
     @Override
+    @Transactional
     public Operation addOperation(final Long id, final Operation operation) {
         Optional<Room> result = roomRepository.findById(id);
         if (result.isPresent()) {
@@ -71,6 +72,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    @Transactional
     public Schedule addSchedule(final Long id, final Schedule schedule) {
         Optional<Room> result = roomRepository.findById(id);
         if (result.isPresent()) {
@@ -84,6 +86,7 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    @Transactional
     public Material addMaterial(final Long id, final Material material) {
         Optional<Room> result = roomRepository.findById(id);
         if (result.isPresent()) {

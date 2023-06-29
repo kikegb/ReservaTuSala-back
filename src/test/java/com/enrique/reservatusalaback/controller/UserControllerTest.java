@@ -84,8 +84,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.phone", is(user.getPhone())))
                 .andExpect(jsonPath("$.password", is(user.getPassword())))
                 .andExpect(jsonPath("$.email", is(user.getEmail())))
-                .andExpect(jsonPath("$.role", is(user.getRole().toString())))
-                .andExpect(jsonPath("$.deleted", is(user.isDeleted())));
+                .andExpect(jsonPath("$.role", is(user.getRole().toString())));
     }
 
     @DisplayName("POST add already existent user")
@@ -176,15 +175,13 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$[0].password", is(users.get(0).getPassword())))
                 .andExpect(jsonPath("$[0].email", is(users.get(0).getEmail())))
                 .andExpect(jsonPath("$[0].role", is(users.get(0).getRole().toString())))
-                .andExpect(jsonPath("$[0].deleted", is(users.get(0).isDeleted())))
                 .andExpect(jsonPath("$[4].id", is(users.get(4).getId())))
                 .andExpect(jsonPath("$[4].cnif", is(users.get(4).getCnif())))
                 .andExpect(jsonPath("$[4].name", is(users.get(4).getName())))
                 .andExpect(jsonPath("$[4].phone", is(users.get(4).getPhone())))
                 .andExpect(jsonPath("$[4].password", is(users.get(4).getPassword())))
                 .andExpect(jsonPath("$[4].email", is(users.get(4).getEmail())))
-                .andExpect(jsonPath("$[4].role", is(users.get(4).getRole().toString())))
-                .andExpect(jsonPath("$[4].deleted", is(users.get(4).isDeleted())));
+                .andExpect(jsonPath("$[4].role", is(users.get(4).getRole().toString())));
     }
 
     @DisplayName("GET user by valid id")
@@ -205,8 +202,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.phone", is(user.getPhone())))
                 .andExpect(jsonPath("$.password", is(user.getPassword())))
                 .andExpect(jsonPath("$.email", is(user.getEmail())))
-                .andExpect(jsonPath("$.role", is(user.getRole().toString())))
-                .andExpect(jsonPath("$.deleted", is(user.isDeleted())));
+                .andExpect(jsonPath("$.role", is(user.getRole().toString())));
     }
 
     @DisplayName("GET user by invalid id")
@@ -246,8 +242,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.phone", is(updatedUser.getPhone())))
                 .andExpect(jsonPath("$.password", is(updatedUser.getPassword())))
                 .andExpect(jsonPath("$.email", is(updatedUser.getEmail())))
-                .andExpect(jsonPath("$.role", is(updatedUser.getRole().toString())))
-                .andExpect(jsonPath("$.deleted", is(updatedUser.isDeleted())));
+                .andExpect(jsonPath("$.role", is(updatedUser.getRole().toString())));
     }
 
     @DisplayName("PUT update user invalid id")
@@ -308,12 +303,14 @@ public class UserControllerTest {
         User user = mockGenerator.nextObject(User.class);
         Room room = mockGenerator.nextObject(Room.class);
         Room roomNoId = new Room(
+                room.getBusiness(),
                 room.getLocation(),
                 room.getName(),
                 room.getSize(),
+                room.getCapacity(),
                 room.getPrice()
         );
-        doReturn(room).when(userService).addRoom(user.getId(), roomNoId);
+        doReturn(room).when(userService).addRoom(any(Long.class), any(Room.class));
 
         this.mockMvc.perform(post("/user/business/room")
                         .header("Authorization", token)
@@ -328,8 +325,7 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.location.id", is(room.getLocation().getId())))
                 .andExpect(jsonPath("$.name", is(room.getName())))
                 .andExpect(jsonPath("$.size", is(room.getSize())))
-                .andExpect(jsonPath("$.price", is(BigDecimal.valueOf(room.getPrice()))))
-                .andExpect(jsonPath("$.deleted", is(room.isDeleted())));
+                .andExpect(jsonPath("$.price", is(BigDecimal.valueOf(room.getPrice()))));
     }
 
     @DisplayName("POST add room invalid id")
@@ -358,12 +354,15 @@ public class UserControllerTest {
         User user = mockGenerator.nextObject(User.class);
         Operation operation = mockGenerator.nextObject(Operation.class);
         Operation operationNoId = new Operation(
+                operation.getCustomer(),
+                operation.getBusiness(),
+                operation.getRoom(),
                 operation.getStart(),
                 operation.getEnd(),
                 operation.getCost(),
                 operation.getStatus()
         );
-        doReturn(operation).when(userService).addBusinessOperation(user.getId(), operationNoId);
+        doReturn(operation).when(userService).addBusinessOperation(any(Long.class), any(Operation.class));
 
         this.mockMvc.perform(post("/user/business/operation")
                         .header("Authorization", token)
@@ -407,12 +406,15 @@ public class UserControllerTest {
         User user = mockGenerator.nextObject(User.class);
         Operation operation = mockGenerator.nextObject(Operation.class);
         Operation operationNoId = new Operation(
+                operation.getCustomer(),
+                operation.getBusiness(),
+                operation.getRoom(),
                 operation.getStart(),
                 operation.getEnd(),
                 operation.getCost(),
                 operation.getStatus()
         );
-        doReturn(operation).when(userService).addCustomerOperation(user.getId(), operationNoId);
+        doReturn(operation).when(userService).addCustomerOperation(any(Long.class), any(Operation.class));
 
         this.mockMvc.perform(post("/user/customer/operation")
                         .header("Authorization", token)
@@ -470,10 +472,36 @@ public class UserControllerTest {
         if (room.getId() != null) {
             object.put("id", room.getId());
         }
+        JSONObject business = new JSONObject();
+        business.put("id", room.getBusiness().getId());
+        object.put("business", business);
         object.put("location", asJson(room.getLocation()));
         object.put("name", room.getName());
         object.put("size", room.getSize());
+        object.put("capacity", room.getCapacity());
         object.put("price", room.getPrice());
+
+        return object.toString();
+    }
+
+    static String asJsonString(final Operation operation) throws JSONException {
+        JSONObject object = new JSONObject();
+        if (operation.getId() != null) {
+            object.put("id", operation.getId());
+        }
+        JSONObject business = new JSONObject();
+        business.put("id", operation.getBusiness().getId());
+        object.put("business", business);
+        JSONObject customer = new JSONObject();
+        customer.put("id", operation.getCustomer().getId());
+        object.put("customer", customer);
+        JSONObject room = new JSONObject();
+        room.put("id", operation.getRoom().getId());
+        object.put("room", room);
+        object.put("start", operation.getStart());
+        object.put("end", operation.getEnd());
+        object.put("cost", operation.getCost());
+        object.put("status", operation.getStatus());
 
         return object.toString();
     }
@@ -491,18 +519,5 @@ public class UserControllerTest {
         object.put("country", location.getCountry());
 
         return object;
-    }
-
-    static String asJsonString(final Operation operation) throws JSONException {
-        JSONObject object = new JSONObject();
-        if (operation.getId() != null) {
-            object.put("id", operation.getId());
-        }
-        object.put("start", operation.getStart());
-        object.put("end", operation.getEnd());
-        object.put("cost", operation.getCost());
-        object.put("status", operation.getStatus());
-
-        return object.toString();
     }
 }

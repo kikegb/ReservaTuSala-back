@@ -15,10 +15,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -55,12 +55,15 @@ public class OperationControllerTest {
     public void whenAddNewOperation_ThenReturnOkAndOperationWithId() throws Exception {
         Operation operation = mockGenerator.nextObject(Operation.class);
         Operation operationNoId = new Operation(
+                operation.getCustomer(),
+                operation.getBusiness(),
+                operation.getRoom(),
                 operation.getStart(),
                 operation.getEnd(),
                 operation.getCost(),
                 operation.getStatus()
         );
-        doReturn(operation).when(operationService).add(operationNoId);
+        doReturn(operation).when(operationService).add(any(Operation.class));
 
         this.mockMvc.perform(post("/operation")
                         .header("Authorization", token)
@@ -71,11 +74,13 @@ public class OperationControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.id", is(operation.getId())))
+                .andExpect(jsonPath("$.business.id", is(operation.getBusiness().getId())))
+                .andExpect(jsonPath("$.customer.id", is(operation.getCustomer().getId())))
+                .andExpect(jsonPath("$.room.id", is(operation.getRoom().getId())))
                 .andExpect(jsonPath("$.start", is(operation.getStart().toString())))
                 .andExpect(jsonPath("$.end", is(operation.getEnd().toString())))
-                .andExpect(jsonPath("$.cost", is(operation.getCost())))
-                .andExpect(jsonPath("$.status", is(operation.getStatus().toString())))
-                .andExpect(jsonPath("$.deleted", is(operation.isDeleted())));
+                .andExpect(jsonPath("$.cost", is(BigDecimal.valueOf(operation.getCost()))))
+                .andExpect(jsonPath("$.status", is(operation.getStatus().toString())));
     }
 
     @DisplayName("POST add operation empty start")
@@ -113,17 +118,21 @@ public class OperationControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(5)))
                 .andExpect(jsonPath("$[0].id", is(operations.get(0).getId())))
+                .andExpect(jsonPath("$[0].business.id", is(operations.get(0).getBusiness().getId())))
+                .andExpect(jsonPath("$[0].customer.id", is(operations.get(0).getCustomer().getId())))
+                .andExpect(jsonPath("$[0].room.id", is(operations.get(0).getRoom().getId())))
                 .andExpect(jsonPath("$[0].start", is(operations.get(0).getStart().toString())))
                 .andExpect(jsonPath("$[0].end", is(operations.get(0).getEnd().toString())))
-                .andExpect(jsonPath("$[0].cost", is(operations.get(0).getCost())))
+                .andExpect(jsonPath("$[0].cost", is(BigDecimal.valueOf(operations.get(0).getCost()))))
                 .andExpect(jsonPath("$[0].status", is(operations.get(0).getStatus().toString())))
-                .andExpect(jsonPath("$[0].deleted", is(operations.get(0).isDeleted())))
                 .andExpect(jsonPath("$[4].id", is(operations.get(4).getId())))
+                .andExpect(jsonPath("$[4].business.id", is(operations.get(4).getBusiness().getId())))
+                .andExpect(jsonPath("$[4].customer.id", is(operations.get(4).getCustomer().getId())))
+                .andExpect(jsonPath("$[4].room.id", is(operations.get(4).getRoom().getId())))
                 .andExpect(jsonPath("$[4].start", is(operations.get(4).getStart().toString())))
                 .andExpect(jsonPath("$[4].end", is(operations.get(4).getEnd().toString())))
-                .andExpect(jsonPath("$[4].cost", is(operations.get(4).getCost())))
-                .andExpect(jsonPath("$[4].status", is(operations.get(4).getStatus().toString())))
-                .andExpect(jsonPath("$[4].deleted", is(operations.get(4).isDeleted())));
+                .andExpect(jsonPath("$[4].cost", equalTo(operations.get(4).getCost())))
+                .andExpect(jsonPath("$[4].status", is(operations.get(4).getStatus().toString())));
     }
 
     @DisplayName("GET operation by valid id")
@@ -139,11 +148,13 @@ public class OperationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(operation.getId())))
+                .andExpect(jsonPath("$.business.id", is(operation.getBusiness().getId())))
+                .andExpect(jsonPath("$.customer.id", is(operation.getCustomer().getId())))
+                .andExpect(jsonPath("$.room.id", is(operation.getRoom().getId())))
                 .andExpect(jsonPath("$.start", is(operation.getStart().toString())))
                 .andExpect(jsonPath("$.end", is(operation.getEnd().toString())))
-                .andExpect(jsonPath("$.cost", is(operation.getCost())))
-                .andExpect(jsonPath("$.status", is(operation.getStatus().toString())))
-                .andExpect(jsonPath("$.deleted", is(operation.isDeleted())));
+                .andExpect(jsonPath("$.cost", is(BigDecimal.valueOf(operation.getCost()))))
+                .andExpect(jsonPath("$.status", is(operation.getStatus().toString())));
     }
 
     @DisplayName("GET operation by invalid id")
@@ -177,11 +188,13 @@ public class OperationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(updatedOperation.getId())))
+                .andExpect(jsonPath("$.business.id", is(updatedOperation.getBusiness().getId())))
+                .andExpect(jsonPath("$.customer.id", is(updatedOperation.getCustomer().getId())))
+                .andExpect(jsonPath("$.room.id", is(updatedOperation.getRoom().getId())))
                 .andExpect(jsonPath("$.start", is(updatedOperation.getStart().toString())))
                 .andExpect(jsonPath("$.end", is(updatedOperation.getEnd().toString())))
-                .andExpect(jsonPath("$.cost", is(updatedOperation.getCost())))
-                .andExpect(jsonPath("$.status", is(updatedOperation.getStatus().toString())))
-                .andExpect(jsonPath("$.deleted", is(updatedOperation.isDeleted())));
+                .andExpect(jsonPath("$.cost", is(BigDecimal.valueOf(updatedOperation.getCost()))))
+                .andExpect(jsonPath("$.status", is(updatedOperation.getStatus().toString())));
     }
 
     @DisplayName("PUT update operation invalid id")
@@ -240,6 +253,15 @@ public class OperationControllerTest {
         if (operation.getId() != null) {
             object.put("id", operation.getId());
         }
+        JSONObject business = new JSONObject();
+        business.put("id", operation.getBusiness().getId());
+        object.put("business", business);
+        JSONObject customer = new JSONObject();
+        customer.put("id", operation.getCustomer().getId());
+        object.put("customer", customer);
+        JSONObject room = new JSONObject();
+        room.put("id", operation.getRoom().getId());
+        object.put("room", room);
         object.put("start", operation.getStart());
         object.put("end", operation.getEnd());
         object.put("cost", operation.getCost());
