@@ -13,7 +13,7 @@ In this repository we have the backend of ReservaTuSala, a web application for m
 ### Installation
 1. Clone this repository.
    ```shell
-   git clone https://gitlab.com/profile-sevilla/practicas-22-23/reservatusala-back.git
+   git clone https://github.com/kikegb/ReservaTuSala-back.git
    ```
 2. Move to the new directory.
    ```shell
