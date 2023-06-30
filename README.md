@@ -1,7 +1,7 @@
 # ReservaTuSala-Back
 
 ## Introduction
-In this repository we have the backend of ReservaTuSala, a web application for managing meeting room reservations. The project has been developed with Java Spring Boot and works with a PostgreSQL database in a Docker container.
+In this repository we have the backend of ReservaTuSala, a web application for managing meeting room reservations. The project has been developed with Java Spring Boot and works with a PostgreSQL database in a Docker container. The frontend of the project is available in [this repository](https://github.com/kikegb/ReservaTuSala-front).
 
 
 ## Getting Started
@@ -29,7 +29,7 @@ In this repository we have the backend of ReservaTuSala, a web application for m
    ```
 
 ### Swagger
-With the application running, the Swagger API docuemntation is aviable [here](https://localhost:8081/swagger-ui/index.html).
+With the application running, the Swagger API docuemntation is available [here](https://localhost:8081/swagger-ui/index.html).
    
 ## Database schema
 We use a database to store all the information following the schema showed in the image below.
