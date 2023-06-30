@@ -1,4 +1,8 @@
-# Project1-Back
+# ReservaTuSala-Back
+
+## Introduction
+In this repository we have the backend of ReservaTuSala, a web application for managing meeting room reservations. The project has been developed with Java Spring Boot and works with a PostgreSQL database in a Docker container.
+
 
 ## Getting Started
 
