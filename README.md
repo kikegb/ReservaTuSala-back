@@ -23,6 +23,9 @@
    ```shell
    mvn spring-boot:run
    ```
+
+### Swagger
+With the application running, the Swagger API docuemntation is aviable [here](localhost:8081/swagger-ui/index.html).
    
 ## Database schema
 We use a database to store all the information following the schema showed in the image below.
