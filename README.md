@@ -29,7 +29,7 @@ In this repository we have the backend of ReservaTuSala, a web application for m
    ```
 
 ### Swagger
-With the application running, the Swagger API documentation is available [here](https://localhost:8081/swagger-ui/index.html).
+With the application running, the Swagger API documentation is available [here](http://localhost:8081/swagger-ui/index.html).
    
 ## Database schema
 We use a database to store all the information following the schema showed in the image below.
