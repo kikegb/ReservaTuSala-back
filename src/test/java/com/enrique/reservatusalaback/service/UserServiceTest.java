@@ -1,8 +1,8 @@
 package com.enrique.reservatusalaback.service;
 
-import com.enrique.reservatusalaback.model.User;
 import com.enrique.reservatusalaback.model.Operation;
 import com.enrique.reservatusalaback.model.Room;
+import com.enrique.reservatusalaback.model.User;
 import com.enrique.reservatusalaback.repository.UserRepository;
 import com.enrique.reservatusalaback.service.impl.UserServiceImpl;
 import org.jeasy.random.EasyRandom;
@@ -10,25 +10,15 @@ import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.AdditionalAnswers;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
@@ -111,6 +101,8 @@ public class UserServiceTest {
         updatedUser.setId(user.getId());
         when(userRepository.existsById(user.getId())).thenReturn(true);
         when(userRepository.save(any(User.class))).then(AdditionalAnswers.returnsFirstArg());
+        when(userRepository.findById(any(Long.class))).thenReturn(Optional.of(user));
+        when(passwordEncoder.encode(any(String.class))).thenReturn(updatedUser.getPassword());
 
         assertNotEquals(user, userService.update(updatedUser));
         assertEquals(updatedUser, userService.update(updatedUser));
@@ -133,7 +125,6 @@ public class UserServiceTest {
     public void givenValidId_whenDeletingById_thenDeletedIsTrue_andReturnCode0() {
         User user = mockGenerator.nextObject(User.class);
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
-        when(userRepository.save(any(User.class))).then(AdditionalAnswers.returnsFirstArg());
 
         assertEquals(0, userService.deleteById(user.getId()));
         verify(userRepository).deleteById(user.getId());

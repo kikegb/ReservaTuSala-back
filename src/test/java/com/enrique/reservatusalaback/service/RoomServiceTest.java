@@ -11,24 +11,14 @@ import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.AdditionalAnswers;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class RoomServiceTest {
@@ -121,7 +111,6 @@ public class RoomServiceTest {
     public void givenValidId_whenDeletingById_thenDeletedIsTrue_andReturnCode0() {
         Room room = mockGenerator.nextObject(Room.class);
         when(roomRepository.findById(room.getId())).thenReturn(Optional.of(room));
-        when(roomRepository.save(any(Room.class))).then(AdditionalAnswers.returnsFirstArg());
 
         assertEquals(0, roomService.deleteById(room.getId()));
         verify(roomRepository).deleteById(room.getId());

@@ -8,24 +8,14 @@ import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.AdditionalAnswers;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class LocationServiceTest {
@@ -112,7 +102,6 @@ public class LocationServiceTest {
     public void givenValidId_whenDeletingById_thenDeletedIsTrue_andReturnCode0() {
         Location location = mockGenerator.nextObject(Location.class);
         when(locationRepository.findById(location.getId())).thenReturn(Optional.of(location));
-        when(locationRepository.save(any(Location.class))).then(AdditionalAnswers.returnsFirstArg());
 
         assertEquals(0, locationService.deleteById(location.getId()));
         verify(locationRepository).deleteById(location.getId());
