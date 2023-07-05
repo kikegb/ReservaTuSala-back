@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User add(final User user) {
-        if (userRepository.existsByCnifAndEmail(user.getCnif(), user.getEmail())) {
+        if (userRepository.existsByCnifOrEmail(user.getCnif(), user.getEmail())) {
             return null;
         }
         User newUser = new User(

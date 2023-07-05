@@ -47,7 +47,7 @@ public class UserServiceTest {
     @Test
     public void whenAddingNewUser_thenReturnUser() {
         User user = mockGenerator.nextObject(User.class);
-        when(userRepository.existsByCnifAndEmail(user.getCnif(), user.getEmail())).thenReturn(false);
+        when(userRepository.existsByCnifOrEmail(user.getCnif(), user.getEmail())).thenReturn(false);
         when(userRepository.save(any(User.class))).thenReturn(user);
         when(passwordEncoder.encode(user.getPassword())).then(AdditionalAnswers.returnsFirstArg());
 
@@ -58,7 +58,7 @@ public class UserServiceTest {
     @Test
     public void whenAddingAlreadyExistentUser_thenReturnNull() {
         User user = mockGenerator.nextObject(User.class);
-        when(userRepository.existsByCnifAndEmail(user.getCnif(), user.getEmail())).thenReturn(true);
+        when(userRepository.existsByCnifOrEmail(user.getCnif(), user.getEmail())).thenReturn(true);
 
         assertNull(userService.add(user));
         verify(userRepository, never()).save(user);
